@@ -1,3 +1,3 @@
-#!/bin/ksh
+#!/bin/bash
 
-/usr/bin/python3 manage.py runserver 0.0.0.0:8000
+/usr/bin/python manage.py runserver 0.0.0.0:8000
