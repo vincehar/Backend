@@ -24,7 +24,7 @@ SECRET_KEY = '1fqjjpf=2y_qo0cmehc1_f_5--z&g58&&jm=wsmx!6j3uusc(3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
+#TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -58,11 +58,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'upto',
-    'mongo_auth',
-    'mongo_auth.contrib',
+    #'mongo_auth',
+    #'mongo_auth.contrib',
     'sekizai',
     'django_browserid',
-    'mongoengine',
+    'mongoengine.django.mongo_auth',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -70,32 +70,30 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'mongo_auth.middleware.LazyUserMiddleware',
+    #'mongo_auth.middleware.LazyUserMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'mongo_auth.contrib.context_processors.mongo_auth',
-    'sekizai.context_processors.sekizai',
-)
+
 
 AUTHENTICATION_BACKENDS = (
-    'mongo_auth.backends.MongoEngineBackend',
-    'mongo_auth.backends.FacebookBackend',
-    'mongo_auth.backends.TwitterBackend',
-    'mongo_auth.backends.FoursquareBackend',
-    'mongo_auth.backends.GoogleBackend',
-    'mongo_auth.backends.BrowserIDBackend',
-    'mongo_auth.backends.LazyUserBackend',
+    'mongoengine.django.auth.MongoEngineBackend',
+    #'mongo_auth.backends.MongoEngineBackend',
+    #'mongo_auth.backends.FacebookBackend',
+    #'mongo_auth.backends.TwitterBackend',
+    #'mongo_auth.backends.FoursquareBackend',
+    #'mongo_auth.backends.GoogleBackend',
+    #'mongo_auth.backends.BrowserIDBackend',
+    #'mongo_auth.backends.LazyUserBackend',
 )
 
 ROOT_URLCONF = 'NHPartners.urls'
 
 WSGI_APPLICATION = 'NHPartners.wsgi.application'
 
-USER_CLASS = 'mongo_auth.contrib.models.User'
+#USER_CLASS = 'mongo_auth.contrib.models.User'
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
@@ -107,8 +105,8 @@ DATABASES = {
     }
 }
 
-#AUTH_USER_MODEL = 'mongo_auth.MongoUser'
-#MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'
+AUTH_USER_MODEL = 'mongo_auth.MongoUser'
+MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'
 SESSION_ENGINE = 'mongoengine.django.sessions'
 SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
 mongoengine.connect('psa', host='mongodb://localhost/psa')
@@ -127,23 +125,16 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.7/howto/static-files/
-
-#TEMPLATE_DIRS = (
-#    os.path.join(os.path.realpath(os.path.dirname(__file__)), '../templates'),
-#)
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS_DIRS': True,
         'DIRS': [
             os.path.join(os.path.realpath(os.path.dirname(__file__)), '../templates')
         ],
+
         'OPTIONS': {
             'context_processors': [
-                # Insert your TEMPLATE_CONTEXT_PROCESSORS here or use this
-                # list if you haven't customized them:
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.i18n',
@@ -151,10 +142,10 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
+                #'mongo_auth.contrib.context_processors.mongo_auth',
+                #'sekizai.context_processors.sekizai',
             ],
-            'loaders': [
-                # insert your TEMPLATE_LOADERS here
-            ]
+            'debug' : [True]
         },
     },
 ]
