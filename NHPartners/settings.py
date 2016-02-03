@@ -56,6 +56,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'upto',
     'mongo_auth',
     'mongo_auth.contrib',
@@ -106,8 +107,8 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'mongo_auth.MongoUser'
-MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'
+#AUTH_USER_MODEL = 'mongo_auth.MongoUser'
+#MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'
 SESSION_ENGINE = 'mongoengine.django.sessions'
 SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
 mongoengine.connect('psa', host='mongodb://localhost/psa')
@@ -129,9 +130,34 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-TEMPLATE_DIRS = (
-    os.path.join(os.path.realpath(os.path.dirname(__file__)), '../templates'),
-)
+#TEMPLATE_DIRS = (
+#    os.path.join(os.path.realpath(os.path.dirname(__file__)), '../templates'),
+#)
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(os.path.realpath(os.path.dirname(__file__)), '../templates')
+        ],
+        'OPTIONS': {
+            'context_processors': [
+                # Insert your TEMPLATE_CONTEXT_PROCESSORS here or use this
+                # list if you haven't customized them:
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ],
+            'loaders': [
+                # insert your TEMPLATE_LOADERS here
+            ]
+        },
+    },
+]
 
 STATIC_URL = '/static/'
 
