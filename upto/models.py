@@ -6,7 +6,7 @@ import mongoengine
 
 class Users(mongoengine.Document):
 
-	user = EmbeddedModelField('User')
+	user = EmbeddedModelField('User', required=True)
 	wishes = ListField(EmbeddedModelField('Wishes'))
 
 class Wishes(mongoengine.Document):

@@ -1,0 +1,51 @@
+Avant tout, il faut synchroniser les versions de spackages nécessaires.
+dans packages.txt il y a la liste des packages et leur version.
+
+il faut lancer la commande de desinstll suivante pour chaque package:
+
+sudo pip unistall <nom package>
+
+et installer la bonne version:
+
+sudo pip install <nom package>==<version> (exactement comme les lignes du fichier)
+
+
+pour s'amuser avec le shell, il faut créer la db upto.
+dans un shell, taper la commande "mongo"
+
+ubuntu@ubuntu-upto:~/PycharmProjects/NHPartners$ mongo
+MongoDB shell version: 2.4.9
+connecting to: test
+Server has startup warnings: 
+Fri Feb  5 19:50:44.517 [initandlisten] 
+Fri Feb  5 19:50:44.517 [initandlisten] ** NOTE: This is a 32 bit MongoDB binary.
+Fri Feb  5 19:50:44.517 [initandlisten] **       32 bit builds are limited to less than 2GB of data (or less with --journal).
+Fri Feb  5 19:50:44.517 [initandlisten] **       See http://dochub.mongodb.org/core/32bit
+Fri Feb  5 19:50:44.612 [initandlisten] 
+
+Ensuite il faut taper use upto pour créer la db upto.
+
+> use upto
+switched to db upto
+
+Ensuite onpeut aller dans le shell.
+
+dans le terminal, dans /home/ubuntu/PycharmProjects/NHPartners il faut taper la commande :
+
+./manage.py shell
+
+
+
+une fois qu'on a créé des wishes dans le shell, on trouve les collections existantes avec la commande :
+
+> db.getCollectionNames()
+[ "system.indexes", "wishes" ]
+
+pour requeter dans les wishes, il faut taper la commande ;
+
+> db.wishes.find().pretty()
+{ "_id" : ObjectId("56b4f0ff43035612dab79e5c"), "title" : "Foot!" }
+{ "_id" : ObjectId("56b4f10f43035612dab79e5d"), "title" : "Cinema?" }
+{ "_id" : ObjectId("56b4f12043035612dab79e5e"), "title" : "Boire un verre" }
+> 
+
