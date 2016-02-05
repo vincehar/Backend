@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+import mongoengine
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -26,6 +28,24 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+ADMINS = (
+    # ('Your Name', 'your_email@example.com'),
+)
+
+MANAGERS = ADMINS
+
+# MongoDB settings
+MONGODB_DATABASES = {
+    'default': {'name': 'django_mongoengine'}
+}
+DJANGO_MONGOENGINE_OVERRIDE_ADMIN = True
+
+
+DATABASES = {
+    'default': {'ENGINE': 'django.db.backends.dummy'}
+}
+
+SITE_ID = 1
 
 # Application definition
 
@@ -36,7 +56,13 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_facebook',
+    'django.contrib.sites',
+    'upto',
+    'mongo_auth',
+    'mongo_auth.contrib',
+    'sekizai',
+    'django_browserid',
+    'mongoengine',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -44,16 +70,32 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'mongo_auth.middleware.LazyUserMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'mongo_auth.contrib.context_processors.mongo_auth',
+    'sekizai.context_processors.sekizai',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'mongo_auth.backends.MongoEngineBackend',
+    'mongo_auth.backends.FacebookBackend',
+    'mongo_auth.backends.TwitterBackend',
+    'mongo_auth.backends.FoursquareBackend',
+    'mongo_auth.backends.GoogleBackend',
+    'mongo_auth.backends.BrowserIDBackend',
+    'mongo_auth.backends.LazyUserBackend',
+)
 
 ROOT_URLCONF = 'NHPartners.urls'
 
 WSGI_APPLICATION = 'NHPartners.wsgi.application'
 
+USER_CLASS = 'mongo_auth.contrib.models.User'
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
@@ -64,6 +106,12 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+#AUTH_USER_MODEL = 'mongo_auth.MongoUser'
+#MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'
+SESSION_ENGINE = 'mongoengine.django.sessions'
+SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
+mongoengine.connect('psa', host='mongodb://localhost/psa')
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -82,30 +130,34 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
+#TEMPLATE_DIRS = (
+#    os.path.join(os.path.realpath(os.path.dirname(__file__)), '../templates'),
+#)
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(os.path.realpath(os.path.dirname(__file__)), '../templates')
+        ],
+        'OPTIONS': {
+            'context_processors': [
+                # Insert your TEMPLATE_CONTEXT_PROCESSORS here or use this
+                # list if you haven't customized them:
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ],
+            'loaders': [
+                # insert your TEMPLATE_LOADERS here
+            ]
+        },
+    },
+]
+
 STATIC_URL = '/static/'
 
-# --------------------------------------------------------
-#               FACEBOOK API
-# --------------------------------------------------------
-FACEBOOK_APP_ID = '222535738090638'
-FACEBOOK_APP_SECRET = '09a2f8b2122cd05061e50fa00dcc999a'
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.core.context_processors.tz',
-    'django.core.context_processors.request',
-    'django.contrib.messages.context_processors.messages',
-    'django_facebook.context_processors.facebook',
-)
-
-AUTHENTICATION_BACKENDS = (
-    'django_facebook.auth_backends.FacebookBackend',
-    'django.contrib.auth.backends.ModelBackend',
-)
-
-AUTH_USER_MODEL = 'django_facebook.FacebookCustomUser'
-AUTH_PROFILE_MODULE = 'django_facebook.FacebookProfile'
