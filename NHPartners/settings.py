@@ -36,14 +36,16 @@ ADMINS = (
 MANAGERS = ADMINS
 
 # MongoDB settings
-MONGODB_DATABASES = {
-    'default': {'name': 'django_mongoengine'}
-}
-DJANGO_MONGOENGINE_OVERRIDE_ADMIN = True
-
-
+#MONGODB_DATABASES = {
+#    'default': {'name': 'django_mongoengine'}
+#}
+#DJANGO_MONGOENGINE_OVERRIDE_ADMIN = True
+#
+#
 DATABASES = {
-    'default': {'ENGINE': 'django.db.backends.dummy'}
+    'default': {
+        'ENGINE': 'django.db.backends.dummy'
+    }
 }
 
 SITE_ID = 1
@@ -62,6 +64,7 @@ INSTALLED_APPS = (
     #'mongo_auth',
     #'mongo_auth.contrib',
     'sekizai',
+    'mongoengine',
     'django_browserid',
     'mongoengine.django.mongo_auth',
 )
@@ -80,6 +83,7 @@ MIDDLEWARE_CLASSES = (
 
 
 AUTHENTICATION_BACKENDS = (
+    'django_mongoengine.mongo_auth.backends.MongoEngineBackend',
     'mongoengine.django.auth.MongoEngineBackend',
     #'mongo_auth.backends.MongoEngineBackend',
     #'mongo_auth.backends.FacebookBackend',
@@ -99,18 +103,12 @@ WSGI_APPLICATION = 'NHPartners.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 
 AUTH_USER_MODEL = 'mongo_auth.MongoUser'
 MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'
 SESSION_ENGINE = 'mongoengine.django.sessions'
 SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
-mongoengine.connect('psa', host='mongodb://localhost/psa')
+mongoengine.connect('upto', host='mongodb://localhost/upto')
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
