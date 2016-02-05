@@ -5,56 +5,64 @@ from mongoengine.django.auth import User
 
 import mongoengine
 
+
 class Users(mongoengine.Document):
-	user = EmbeddedModelField('User', required=True)
-	wishes = ListField(EmbeddedModelField('Wishes'))
-	logs = ListField(EmbeddedModelField('Logs'))
+    user = EmbeddedModelField('User', required=True)
+    wishes = ListField(EmbeddedModelField('Wishes'))
+    logs = ListField(EmbeddedModelField('Logs'))
+    friends = ListField(EmbeddedModelField('Relationships'))
+    messages = ListField(EmbeddedModelField('Messages'))
+    categories_Selected = ListField(EmbeddedModelField('Categories'))
+    medias = ListField(EmbeddedModelField('Medias'))
+    events_Owned = ListField(EmbeddedModelField('Events'))
+
 
 class Wishes(mongoengine.Document):
-	title = mongoengine.StringField(required=True)
+    title = mongoengine.StringField(required=True)
+
 
 class Logs(mongoengine.Document):
-	ip_address = mongoengine.StringField(required=True)
-	date = mongoengine.DateTimeField(required=True)
-	action = mongoengine.StringField(required=True)
+    ip_address = mongoengine.StringField(required=True)
+    date = mongoengine.DateTimeField(required=True)
+    action = mongoengine.StringField(required=True)
+
 
 class Relationships(mongoengine.Document):
-	users = mongoengine.ListField(EmbeddedModelField('Users'))
-	users_friends = mongoengine.ListField(EmbeddedModelField('Users'))
-	blocked = mongoengine.BooleanField()
+    friend = mongoengine.ListField(EmbeddedModelField('Users'))
+    blocked = mongoengine.BooleanField()
+
 
 class Categories(mongoengine.Document):
-	name = mongoengine.StringField(required=True)
+    name = mongoengine.StringField(required=True)
 
-class SelectedCategories(mongoengine.Document):
-	categories = mongoengine.ListField(EmbeddedModelField('Categories'))
-	users = mongoengine.ListField(EmbeddedModelField('Users'))
 
 class Messages(mongoengine.Document):
-	creation_date = mongoengine.DateTimeField()
-	content = mongoengine.BinaryField()
-	users = mongoengine.ListField(EmbeddedModelField('Users'))
-	events = mongoengine.ListField(EmbeddedModelField('Events'))
+    creation_date = mongoengine.DateTimeField()
+    content = mongoengine.BinaryField()
+    event = EmbeddedModelField('Events')
+
 
 class Events(mongoengine.Document):
-	name = mongoengine.StringField(required=True)
-	start_date = mongoengine.DateTimeField(required=True)
-	end_date = mongoengine.DateTimeField(required=True)
-	address = mongoengine.StringField()
-	price = mongoengine.FloatField()
-	#devise = models
-	categories = mongoengine.ListField(EmbeddedModelField('Categories'))
-	eventStatus = mongoengine.ListField(EmbeddedModelField('EventStatus'))
+    name = mongoengine.StringField(required=True)
+    start_date = mongoengine.DateTimeField(required=True)
+    end_date = mongoengine.DateTimeField(required=True)
+    address = mongoengine.StringField()
+    price = mongoengine.FloatField()
+    #devise = models
+    categories = mongoengine.ListField(EmbeddedModelField('Categories'))
+    eventStatus = EmbeddedModelField('EventStatus')
+
 
 class EventStatus(mongoengine.Document):
-	name = mongoengine.StringField(required=True)
+    name = mongoengine.StringField(required=True)
+
 
 class Medias(mongoengine.Document):
-	content = mongoengine.BinaryField()
-	label = mongoengine.StringField()
-	users = mongoengine.ListField(EmbeddedModelField('Users'))
-	events = mongoengine.ListField(EmbeddedModelField('Events'))
+    content = mongoengine.BinaryField()
+    label = mongoengine.StringField()
+    event = EmbeddedModelField('Events', required=True)
+    album = EmbeddedModelField('Album')
 
-class Albums(mongoengine.Document):
-	events = mongoengine.ListField(EmbeddedModelField('Events'))
-	name = mongoengine.StringField(required=True)
+
+class Album(mongoengine.Document):
+    name = mongoengine.StringField(required=True)
