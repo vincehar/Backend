@@ -12,3 +12,8 @@ class Users(mongoengine.Document):
 class Wishes(mongoengine.Document):
 
 	title = mongoengine.StringField(required=True)
+
+class EventLogUsers(mongoengine.BaseDocument)
+	ip_address = mongoengine.StringField(required=True)
+	connection_date = mongoengine.DateTimeField(required=True)
+	users = ListField(EmbeddedModelField('Users'))
