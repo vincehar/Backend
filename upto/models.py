@@ -8,14 +8,15 @@ import mongoengine
 class Users(mongoengine.Document):
 	user = EmbeddedModelField('User', required=True)
 	wishes = ListField(EmbeddedModelField('Wishes'))
+	logs = ListField(EmbeddedModelField('Logs'))
 
 class Wishes(mongoengine.Document):
 	title = mongoengine.StringField(required=True)
 
-class EventLogUsers(mongoengine.Document):
+class Logs(mongoengine.Document):
 	ip_address = mongoengine.StringField(required=True)
-	connection_date = mongoengine.DateTimeField(required=True)
-	users = mongoengine.ListField(EmbeddedModelField('Users'))
+	date = mongoengine.DateTimeField(required=True)
+	action = mongoengine.StringField(required=True)
 
 class Relationships(mongoengine.Document):
 	users = mongoengine.ListField(EmbeddedModelField('Users'))
