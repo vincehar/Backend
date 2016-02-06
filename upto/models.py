@@ -2,35 +2,16 @@ from django.db import models as orimodels
 #from mongo_auth.contrib.models import User
 from djangotoolbox.fields import ListField, EmbeddedModelField
 from mongoengine.django.auth import User
-from mongoengine import EmbeddedDocument, Document, EmbeddedDocumentField, StringField, ListField
+from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocumentField, StringField, ListField, DateTimeField, BinaryField, BooleanField
 
 class Wishes(EmbeddedDocument):
 
 	title = StringField(required=True)
 
-
-class Users(Document):
-
-	user = EmbeddedDocumentField('User')
-	wishes = ListField(EmbeddedDocumentField('Wishes'))
-    logs = ListField(EmbeddedDocumentField('Logs'))
-    friends = ListField(EmbeddedDocumentField('Relationships'))
-    messages = ListField(EmbeddedDocumentField('Messages'))
-    categories_Selected = ListField(EmbeddedDocumentField('Categories'))
-    medias = ListField(EmbeddedDocumentField('Medias'))
-    events_Owned = ListField(EmbeddedDocumentField('Events'))
-
-
-
 class Logs(EmbeddedDocument):
-    ip_address = StringField(required=True)
-    date = DateTimeField(required=True)
-    action = StringField(required=True)
-
-
-class Relationships(EmbeddedDocument):
-    friend = ListField(EmbeddedDocument('Users'))
-    blocked = BooleanField()
+	ip_address = StringField(required=True)
+	date = DateTimeField(required=True)
+	action = StringField(required=True)
 
 
 class Categories(EmbeddedDocument):
@@ -42,6 +23,8 @@ class Messages(EmbeddedDocument):
     content = BinaryField()
     event = EmbeddedDocumentField('Events')
 
+class EventStatus(EmbeddedDocument):
+    name = StringField(required=True)
 
 class Events(Document):
     name = StringField(required=True)
@@ -53,10 +36,8 @@ class Events(Document):
     categories = ListField(EmbeddedDocumentField('Categories'))
     eventStatus = EmbeddedDocumentField('EventStatus')
 
-
-class EventStatus(EmbeddedDocument):
+class Album(EmbeddedDocument):
     name = StringField(required=True)
-
 
 class Medias(Document):
     content = BinaryField()
@@ -65,5 +46,27 @@ class Medias(Document):
     album = EmbeddedDocumentField('Album')
 
 
-class Album(EmbeddedDocument):
-    name = StringField(required=True)
+class Users(Document):
+
+	user = EmbeddedDocumentField('User')
+	wishes = ListField(EmbeddedDocumentField('Wishes'))
+	logs = ListField(EmbeddedDocumentField('Logs'))
+	#friends = ListField(EmbeddedDocumentField('Relationships'))
+	messages = ListField(EmbeddedDocumentField('Messages'))
+	categories_Selected = ListField(EmbeddedDocumentField('Categories'))
+	medias = ListField(EmbeddedDocumentField('Medias'))
+	events_Owned = ListField(EmbeddedDocumentField('Events'))
+
+
+#class Relationships(EmbeddedDocument):
+#	friend = ListField(EmbeddedDocument('Users'))
+#	blocked = BooleanField()
+
+
+
+
+
+
+
+
+
