@@ -1,14 +1,16 @@
 from django.db import models as orimodels
 #from mongo_auth.contrib.models import User
-from djangotoolbox.fields import ListField, EmbeddedModelField
+#from djangotoolbox.fields import ListField, EmbeddedModelField
 from mongoengine.django.auth import User
-import mongoengine
+from mongoengine import EmbeddedDocument, Document, EmbeddedDocumentField, StringField, ListField
 
-class Users(mongoengine.Document):
+class Wishes(EmbeddedDocument):
 
-	user = EmbeddedModelField('User', required=True)
-	wishes = ListField(EmbeddedModelField('Wishes'))
+	title = StringField(required=True)
 
-class Wishes(mongoengine.Document):
 
-	title = mongoengine.StringField(required=True)
+class Users(Document):
+
+	user = EmbeddedDocumentField('User')
+	wishes = ListField(EmbeddedDocumentField('Wishes'))
+

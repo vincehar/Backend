@@ -34,18 +34,92 @@ dans le terminal, dans /home/ubuntu/PycharmProjects/NHPartners il faut taper la 
 
 ./manage.py shell
 
+> execfile('upto/mock.py')
+
+une fois qu'on a créé tout ça, on trouve les collections existantes avec la commande :
 
 
-une fois qu'on a créé des wishes dans le shell, on trouve les collections existantes avec la commande :
+ubuntu@ubuntu-upto:~/PycharmProjects/NHPartners$ mongo
+MongoDB shell version: 2.4.9
+connecting to: test
+Server has startup warnings:
+Fri Feb  5 19:50:44.517 [initandlisten]
+Fri Feb  5 19:50:44.517 [initandlisten] ** NOTE: This is a 32 bit MongoDB binary.
+Fri Feb  5 19:50:44.517 [initandlisten] **       32 bit builds are limited to less than 2GB of data (or less with --journal).
+Fri Feb  5 19:50:44.517 [initandlisten] **       See http://dochub.mongodb.org/core/32bit
+Fri Feb  5 19:50:44.612 [initandlisten]
+
+Ensuite il faut taper use upto pour créer la db upto.
+
+> use upto
+switched to db upto
+
 
 > db.getCollectionNames()
-[ "system.indexes", "wishes" ]
+[ "system.indexes", "user", "users", "wishes" ]
+
+
+> db.users.find().pretty()
+{
+	"_id" : ObjectId("56b5a35d4303560ddb96df43"),
+	"user" : {
+		"_id" : ObjectId("56b5a2604303560ddb96df42"),
+		"_cls" : "User",
+		"username" : "alex",
+		"is_staff" : false,
+		"is_active" : true,
+		"is_superuser" : false,
+		"last_login" : ISODate("2016-02-06T07:36:00.677Z"),
+		"date_joined" : ISODate("2016-02-06T07:36:00.687Z"),
+		"user_permissions" : [ ]
+	},
+	"wishes" : [
+		{
+			"title" : "foot"
+		}
+	]
+}
+{
+	"_id" : ObjectId("56b5a8784303560f5e30a67d"),
+	"user" : {
+		"_id" : ObjectId("56b5a8784303560f5e30a67c"),
+		"_cls" : "User",
+		"username" : "marc",
+		"is_staff" : false,
+		"is_active" : true,
+		"is_superuser" : false,
+		"last_login" : ISODate("2016-02-06T08:02:00.614Z"),
+		"date_joined" : ISODate("2016-02-06T08:02:00.614Z"),
+		"user_permissions" : [ ]
+	},
+	"wishes" : [
+		{
+			"title" : "cine"
+		}
+	]
+}
+>
+
+
 
 pour requeter dans les wishes, il faut taper la commande ;
 
-> db.wishes.find().pretty()
-{ "_id" : ObjectId("56b4f0ff43035612dab79e5c"), "title" : "Foot!" }
-{ "_id" : ObjectId("56b4f10f43035612dab79e5d"), "title" : "Cinema?" }
-{ "_id" : ObjectId("56b4f12043035612dab79e5e"), "title" : "Boire un verre" }
-> 
+> db.users.find({}, {wishes:true}).pretty()
+{
+	"_id" : ObjectId("56b5a35d4303560ddb96df43"),
+	"wishes" : [
+		{
+			"title" : "foot"
+		}
+	]
+}
+{
+	"_id" : ObjectId("56b5a8784303560f5e30a67d"),
+	"wishes" : [
+		{
+			"title" : "cine"
+		}
+	]
+}
+
 
