@@ -2,11 +2,13 @@ from django.db import models as orimodels
 #from mongo_auth.contrib.models import User
 from djangotoolbox.fields import ListField, EmbeddedModelField
 from mongoengine.django.auth import User
+import datetime
 from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocumentField, \
     ReferenceField, StringField, ListField, DateTimeField, BinaryField, BooleanField, ObjectIdField
 from bson import ObjectId
 
 class Wishes(EmbeddedDocument):
+    user_id = ReferenceField('Users')
     wish_id = ObjectIdField(default=ObjectId)
     title = StringField(required=True)
     interested = ListField(ReferenceField('Users'))
@@ -53,19 +55,28 @@ class Medias(Document):
     album = EmbeddedDocumentField('Album')
 
 class UsersRelationships(EmbeddedDocument):
+    """
+    Class used to manage relationships beetwen Users instances.
+    """
+    rel_id = ObjectIdField(default=ObjectId)
     from_user = ReferenceField('Users')
     to_user = ReferenceField('Users')
     active = BooleanField()
     symetrical = BooleanField()
     blocked = BooleanField()
+    date_created = DateTimeField(default=datetime.datetime.now())
 
     def make_symetrical(self):
         """
         Method used to make a relationship symetrical, i.e user a follows back user b.
         :return: self
         """
+        self.active=True
         self.symetrical=True
-        self.save()
+        return self
+
+    def activate(self):
+        self.active=True
         return self
 
 class Users(Document):
@@ -83,6 +94,13 @@ class Users(Document):
     events_Owned = ListField(EmbeddedDocumentField('Events'))
     Interested_in = ListField(EmbeddedDocumentField('Wishes'))
 
+    def date_joined(self):
+        """
+        Get the date when the user has registered.
+        :return: datetime.datetime
+        """
+        return self.user.date_joined
+
     def relate_to_user(self, user):
         """
         Method used to relate to another user, i.e follow a user.
@@ -90,7 +108,9 @@ class Users(Document):
         :return: self
         """
         rel= UsersRelationships(from_user=self, to_user=user, active=False, symetrical=False, blocked=False)
+        user.friends.append(rel)
         self.friends.append(rel)
+        user.save()
         self.save()
         return self
 
@@ -100,18 +120,52 @@ class Users(Document):
         :param user: instance of Users class
         :return: self
         """
-        rel = UsersRelationships.objects.get(from_user=user, to_user=self)
-        rel.make_symetrical()
+        #Activate the relationship and mak it symetrical
+        relfrom = next((r for r in user.friends if r.to_user.id==self.id and r.from_user.id==user.id), None)
+        relfrom.make_symetrical()
+        user.save()
+        #Remove the original relaitonship and create a symetrical one the other way and activate it
+        relto = next((r for r in self.friends if r.to_user.id==self.id and  r.from_user.id==user.id), None)
+        self.friends.remove(relto)
+        rel = UsersRelationships(from_user=self, to_user=user, active=True, symetrical=True, blocked=False)
+        self.friends.append(rel)
         self.save()
         return self
 
+    def accept_follower(self, user):
+        """
+        Method used to activate a relationship, i.e accept a follower
+        :param user:
+        :return:
+        """
+        relfrom = next((r for r in user.friends if r.to_user.id==self.id and r.from_user.id==user.id), None)
+        relfrom.activate()
+        user.save()
+        relto = next((r for r in self.friends if r.to_user.id==self.id and r.from_user.id==user.id), None)
+        self.friends.remove(relto)
+        self.friends.append(relfrom)
+        self.save()
+
+        return self
+
     def create_wish(self, _title):
-        wish = Wishes(title=_title)
+        """
+        Method used to create a wish
+        :param _title:
+        :return: self
+        """
+        wish = Wishes(user_id=self.id, title=_title)
         self.wishes.append(wish)
         self.save()
         return self
 
     def interests_to_wish(self, _user, _wish):
+        """
+        Method user to 'wish_back'. i.e signal that tuhe user is interested in the activity.
+        :param _user:
+        :param _wish:
+        :return: self
+        """
         user = Users.objects.get(id=_user.id)
         wish = next((w for w in user.wishes if w.wish_id==_wish.wish_id), None)
         wish.add_interested(self)
@@ -119,4 +173,11 @@ class Users(Document):
         self.save()
         user.save()
         return self
+
+    def my_wishes(self):
+        return self.wishes
+
+
+
+
 
