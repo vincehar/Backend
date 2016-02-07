@@ -120,15 +120,7 @@ class Users(Document):
         :param user: instance of Users class
         :return: self
         """
-        #Activate the relationship and mak it symetrical
-        relfrom = next((r for r in user.friends if r.to_user.id==self.id and r.from_user.id==user.id), None)
-        relfrom.make_symetrical()
-        user.save()
-        #Remove the original relaitonship and create a symetrical one the other way and activate it
-        relto = next((r for r in self.friends if r.to_user.id==self.id and  r.from_user.id==user.id), None)
-        self.friends.remove(relto)
-        rel = UsersRelationships(from_user=self, to_user=user, active=True, symetrical=True, blocked=False)
-        self.friends.append(rel)
+        Users.objects(friends__from_user=user, friends__to_user=self).update(set__friends__S__active=True, set__friends__S__symetrical=True)
         self.save()
         return self
 
@@ -138,12 +130,7 @@ class Users(Document):
         :param user:
         :return:
         """
-        relfrom = next((r for r in user.friends if r.to_user.id==self.id and r.from_user.id==user.id), None)
-        relfrom.activate()
-        user.save()
-        relto = next((r for r in self.friends if r.to_user.id==self.id and r.from_user.id==user.id), None)
-        self.friends.remove(relto)
-        self.friends.append(relfrom)
+        Users.objects(friends__from_user=user, friends__to_user=self).update(set__friends__S__active=True)
         self.save()
 
         return self
