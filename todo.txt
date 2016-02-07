@@ -123,3 +123,5 @@ pour requeter dans les wishes, il faut taper la commande ;
 }
 
 
+supprimer la db:
+> db.dropDatabase()
