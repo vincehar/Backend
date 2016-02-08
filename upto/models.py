@@ -162,6 +162,17 @@ class Users(Document):
         user.save()
         return self
 
+    def add_media(self, _binaryMedia, _label, _event):
+        """
+        Method used to add a Media to a users's Media collection
+        :param _binaryMedia:
+        :return: self
+        """
+        media = Medias()
+        self.medias.append(media)
+        self.save()
+        return self
+
     def my_wishes(self):
         return self.wishes
 

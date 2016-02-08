@@ -20,6 +20,8 @@ alex=Users.objects.get(user=User.objects.get(username='alex'))
 marc=Users.objects.get(user=User.objects.get(username='marc'))
 vincent=Users.objects.get(user=User.objects.get(username='vincent'))
 marc.create_wish('cine')
+marc.create_wish('Je veux voir les etoiles !!!')
+marc.create_wish('Je vais coder en python ce soir')
 marc.save()
 
 
