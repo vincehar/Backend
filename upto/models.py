@@ -35,6 +35,7 @@ class Messages(EmbeddedDocument):
 class EventStatus(EmbeddedDocument):
     name = StringField(required=True)
 
+
 class Events(Document):
     name = StringField(required=True)
     start_date = DateTimeField(required=True)
