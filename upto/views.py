@@ -7,7 +7,8 @@ def index(request):
 
 def account(request):
     #try
-    context = Users.objects
-    return render(request, 'upto/myAccount.html', context)
+    context = Users.objects().first()
+    print context.username
+    #return render(request, 'upto/myAccount.html', context)
     '''except Users
     '''
