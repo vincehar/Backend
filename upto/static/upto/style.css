@@ -1,0 +1,25 @@
+body {
+    background: white url("images/background.gif") no-repeat right bottom;
+}
+
+div#header {
+    background-color:blue;
+}
+
+div#content {
+    background-color:yellow;
+    float:right;
+	width:100%;
+}
+
+div#rightAdvertise {
+    background-color:red;
+	float:right;
+	width:100px;
+	height:400px;
+}
+
+div#sigin {
+    background-color:black;
+    float:left;
+}
