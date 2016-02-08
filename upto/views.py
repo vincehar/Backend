@@ -12,9 +12,4 @@ def account(request):
     context = {
         'one_user': user,
     }
-'''
-    WishesNumber = Wishes.document_bases.
-    count = {
-        'wishesNumber': WishesNumber,
-    }'''
     return render(request, 'upto/myAccount.html', context)
