@@ -7,6 +7,6 @@ urlpatterns = [
     # url(r'^$', 'NHPartners.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
     #url(r'^', include('mongo_auth.contrib.urls')),
-
+    url(r'^upto/', include('upto.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
