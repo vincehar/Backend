@@ -7,8 +7,8 @@ def index(request):
 
 def account(request):
     # test with a user
-    user_id = '56b8f12d43035630c76c9360'
-    user = Users.objects.get(user__username='alex')
+    user_id = Users.objects.get(user__username='marc').id
+    user = Users.objects.get(id=user_id)
     context = {
         'one_user': user,
     }
@@ -21,3 +21,10 @@ def user_info(request, nom_user):
         'user': user,
     }
     return render(request, 'upto/accountDetails.html', context)
+
+def allwishes(request):
+    w = Users.objects.only('id', 'user.username', 'wishes')
+    context = {
+        'wishes': w,
+    }
+    return render(request, 'upto/wishes.html', context)

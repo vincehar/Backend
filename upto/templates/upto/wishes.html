@@ -1,0 +1,16 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Wishes</title>
+</head>
+<body>
+{% if wishes %}
+    {% for wish in wishes %}
+        {% if wish.wishes %}
+            <div>username : {{ wish.user.username }}</div>
+            <div>wishes:</div>
+            {% for w in wish.wishes %}
+                <div>{{ w.title }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+{% endif %}

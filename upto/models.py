@@ -115,9 +115,9 @@ class Users(Document):
         :param user: instance of Users class
         :return: self
         """
-        rel = UsersRelationships(from_user=self, to_user=None, active=False, symetrical=False, blocked=False, status='Followed')
+        rel = UsersRelationships(from_user=self, to_user=None, active=False, symetrical=False, blocked=False, status='Follower')
         user.friends.append(rel)
-        relself = UsersRelationships(from_user=None, to_user=user, active=False, symetrical=False, blocked=False, status='Follower')
+        relself = UsersRelationships(from_user=None, to_user=user, active=False, symetrical=False, blocked=False, status='Followed')
         self.friends.append(relself)
         user.save()
         self.save()
