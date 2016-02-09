@@ -129,8 +129,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         #'DIRS_DIRS': True,
         'DIRS': [
-            '/home/ubuntu/PycharmProjects/NHPartners/upto/templates'
-            #os.path.join(os.path.realpath(os.path.dirname(__file__)), '../templates')
+            os.path.join(os.path.realpath(os.path.dirname(__file__)), '../upto/templates')
         ],
 
         'OPTIONS': {

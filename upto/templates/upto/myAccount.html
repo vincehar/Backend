@@ -5,6 +5,7 @@
     <title>Hello {{ one_user.user.username}}</title>
 </head>
 <body>
+{% load extras %}
 {% if one_user %}
     <div>username : {{ one_user.user.username}}</div>
     <div>id user : {{ one_user.user.id}}</div>
@@ -15,11 +16,11 @@
     <div id="wishes">{{ wish.title }}</div>
 {% endfor %}
 
-    <h2>Total wishes : {{ wishesNumber }}</h2>
+    <h2>Total wishes : {{ one_user.wishes|wishNumber }}</h2>
 
     <h3>Friends</h3>
 {% for friend in one_user.friends %}
-    <div id="friends">{{ friend.from_user.user.username }}</div>
+    <div id="friends">{{ friend.to_user.user.username }}</div>
 {% endfor %}
 
 {% else %}

@@ -13,6 +13,7 @@ class Wishes(EmbeddedDocument):
     title = StringField(required=True)
     interested = ListField(ReferenceField('Users'))
 
+
     def add_interested(self, user):
         self.interested.append(user)
 
@@ -59,12 +60,18 @@ class UsersRelationships(EmbeddedDocument):
     """
     Class used to manage relationships beetwen Users instances.
     """
+    RELATIONSHIPS_TYPES = (
+        ('Follower', 'Follower'),
+		('Followed', 'Followed'),
+    )
+
     rel_id = ObjectIdField(default=ObjectId)
     from_user = ReferenceField('Users')
     to_user = ReferenceField('Users')
     active = BooleanField()
     symetrical = BooleanField()
     blocked = BooleanField()
+    status = StringField(choices=RELATIONSHIPS_TYPES)
     date_created = DateTimeField(default=datetime.datetime.now())
 
     def make_symetrical(self):
@@ -108,9 +115,10 @@ class Users(Document):
         :param user: instance of Users class
         :return: self
         """
-        rel= UsersRelationships(from_user=self, to_user=user, active=False, symetrical=False, blocked=False)
+        rel = UsersRelationships(from_user=self, to_user=None, active=False, symetrical=False, blocked=False, status='Followed')
         user.friends.append(rel)
-        self.friends.append(rel)
+        relself = UsersRelationships(from_user=None, to_user=user, active=False, symetrical=False, blocked=False, status='Follower')
+        self.friends.append(relself)
         user.save()
         self.save()
         return self
