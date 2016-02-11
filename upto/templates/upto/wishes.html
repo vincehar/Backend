@@ -12,14 +12,20 @@
             <div>wishes:</div>
             {% for w in wish.wishes %}
                 <div>{{ w.title }}</div>
+        <div>{{ w.events_Owned.name }}</div>
             {% endfor %}
+            {% for event in wish.events_Owned %}
+    <div id="wishes">
+        <div>Event : {{ event.name }}</div>
+    </div>
+    {% endfor %}
         {% endif %}
     </div>
     {% endfor %}
 {% endif %}
 
 {% if events %}
-    {% for event in events %}
+    {% for event in wish.events_Owned %}
     <div id="wishes">
         <div>Event : {{ event.name }}</div>
     </div>

@@ -1,14 +1,28 @@
 from upto.models import User, Users, Wishes, UsersRelationships, Events
+from pymongo import Connection
 import datetime
 
+# Clean users
+databaseName = "upto"
+connection = Connection()
+collection = connection[databaseName]
+users = collection['users']
+events = collection['events_Owned']
+
+print "------------------------------------------"
+print "         clearing Users Collection"
+print "------------------------------------------"
+users.remove()
+
 for use in ['alex', 'vincent', 'marc']:
-    print(use)
+    print('create user : ' + use)
     try:
         user = User.objects.get(username=use)
     except User.DoesNotExist:
         u=User.objects.create(username=use)
         u.save()
 
+Users.objects
 
 #
 us=Users.objects.get_or_create(user=User.objects.get(username='marc'))
@@ -20,20 +34,25 @@ usa=Users.objects.get_or_create(user=User.objects.get(username='alex'))
 alex=Users.objects.get(user=User.objects.get(username='alex'))
 marc=Users.objects.get(user=User.objects.get(username='marc'))
 vincent=Users.objects.get(user=User.objects.get(username='vincent'))
+#----------------
+#Wishes part
+#----------------
 marc.create_wish('cine')
 marc.create_wish('Je veux voir les etoiles !!!')
 marc.create_wish('Je vais coder en python ce soir')
-#create_event(self, _name, _startDate, _endDate):
-marc.create_event('Sortie Ski a la Clusaz', datetime.datetime.today(), datetime.datetime.today())
 marc.save()
 alex.create_wish('Qui pour un sparring en boxe ce soir ?')
 alex.save()
 vincent.create_wish('Courir au bout du monde !')
 vincent.save()
 
-
-
-
+#----------------
+#Events part
+#----------------
+#create_event(self, _name, _startDate, _endDate):
+marc.create_event('Sortie Ski a la Clusaz', datetime.datetime.today(), datetime.datetime.today())
+vincent.create_event('Particper a la gaypride', datetime.datetime.today(), datetime.datetime.today())
+alex.create_event('Aller au concert des 2b3', datetime.datetime.today(), datetime.datetime.today())
 
 
 alex.relate_to_user(marc)
