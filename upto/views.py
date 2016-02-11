@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import Http404, HttpResponse
-from .models import Users, Wishes
+from .models import Users, Wishes, Events
 
 
 def index(request):
@@ -14,7 +14,7 @@ def account(request):
     context = {
         'one_user': user,
     }
-    return render(request, 'upto/myAccount.html', context)
+    return render(request, 'upto/myaccount.html', context)
 
 
 def userdetails(request, username):
@@ -25,8 +25,10 @@ def userdetails(request, username):
     return render(request, 'upto/userdetails.html', context)
 
 
-def allwishes(request):
-    w = Users.objects.only('id', 'user.username', 'wishes')
+def allwishesAndEvent(request):
+
+    w = Users.objects.order_by('events_Owned.start_date')#.only('wishes')
+    w = Users.objects.order_by('events_Owned.start_date')
     context = {
         'wishes': w,
     }

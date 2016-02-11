@@ -1,0 +1,7 @@
+div#wishes {
+	border-color:grey;
+	border-style:groove;
+	border-width:1px;
+	padding:3px;
+	margin:3px;
+}

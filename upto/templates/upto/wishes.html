@@ -1,16 +1,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Wishes</title>
+       <link rel="stylesheet" type="text/css" href="../../static/upto/wishes.css">
 </head>
 <body>
 {% if wishes %}
     {% for wish in wishes %}
+    <div id="wishes">
         {% if wish.wishes %}
             <div>username : {{ wish.user.username }}</div>
             <div>wishes:</div>
             {% for w in wish.wishes %}
                 <div>{{ w.title }}</div>
+        <div>{{ w.events_Owned.name }}</div>
             {% endfor %}
+            {% for event in wish.events_Owned %}
+    <div id="wishes">
+        <div>Event : {{ event.name }}</div>
+    </div>
+    {% endfor %}
         {% endif %}
+    </div>
+    {% endfor %}
+{% endif %}
+
+{% if events %}
+    {% for event in wish.events_Owned %}
+    <div id="wishes">
+        <div>Event : {{ event.name }}</div>
+    </div>
     {% endfor %}
 {% endif %}

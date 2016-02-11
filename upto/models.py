@@ -38,7 +38,9 @@ class EventStatus(EmbeddedDocument):
     name = StringField(required=True)
 
 
-class Events(Document):
+class Events(EmbeddedDocument):
+    user_id = ReferenceField('Users')
+    event_id = ObjectIdField(default=ObjectId)
     name = StringField(required=True)
     start_date = DateTimeField(required=True)
     end_date = DateTimeField(required=True)
@@ -102,7 +104,7 @@ class Users(Document):
     categories_Selected = ListField(EmbeddedDocumentField('Categories'))
     medias = ListField(EmbeddedDocumentField('Medias'))
     events_Owned = ListField(EmbeddedDocumentField('Events'))
-    Interested_in = ListField(EmbeddedDocumentField('Wishes'))
+    interested_in = ListField(EmbeddedDocumentField('Wishes'))
 
     def date_joined(self):
         """
@@ -157,6 +159,21 @@ class Users(Document):
         self.save()
         return self
 
+
+    def create_event(self, _name, _start_date, _end_date):
+        """
+        Method user to create an event
+        :param _user:
+        :param _name:
+        :param _startDate:
+        :param _endDate:
+        :return: self
+        """
+        event = Events(user_id=self.id, name=_name, start_date=_start_date, end_date=_end_date)
+        self.events_Owned.append(event)
+        self.save()
+        return self
+
     def interests_to_wish(self, _user, _wish):
         """
         Method user to 'wish_back'. i.e signal that tuhe user is interested in the activity.
@@ -167,7 +184,7 @@ class Users(Document):
         user = Users.objects.get(id=_user.id)
         wish = next((w for w in user.wishes if w.wish_id==_wish.wish_id), None)
         wish.add_interested(self)
-        self.Interested_in.append(wish)
+        self.interested_in.append(wish)
         self.save()
         user.save()
         return self
