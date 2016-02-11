@@ -38,6 +38,8 @@ class EventStatus(EmbeddedDocument):
 
 
 class Events(Document):
+    user_id = ReferenceField('Users')
+    event_id = ObjectIdField(default=ObjectId)
     name = StringField(required=True)
     start_date = DateTimeField(required=True)
     end_date = DateTimeField(required=True)
@@ -152,6 +154,20 @@ class Users(Document):
         """
         wish = Wishes(user_id=self.id, title=_title)
         self.wishes.append(wish)
+        self.save()
+        return self
+
+    def create_event(self, _name, _startDate, _endDate):
+        """
+        Method user to create an event
+        :param _user:
+        :param _name:
+        :param _startDate:
+        :param _endDate:
+        :return: self
+        """
+        event = Events(user_id=self.id, name=_name, start_date=_startDate, end_date=_endDate)
+        self.events_Owned.append(event)
         self.save()
         return self
 

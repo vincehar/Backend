@@ -1,4 +1,5 @@
-from upto.models import User, Users, Wishes, UsersRelationships
+from upto.models import User, Users, Wishes, UsersRelationships, Events
+import datetime
 
 for use in ['alex', 'vincent', 'marc']:
     print(use)
@@ -22,7 +23,17 @@ vincent=Users.objects.get(user=User.objects.get(username='vincent'))
 marc.create_wish('cine')
 marc.create_wish('Je veux voir les etoiles !!!')
 marc.create_wish('Je vais coder en python ce soir')
+#create_event(self, _name, _startDate, _endDate):
+marc.create_event('Sortie Ski a la Clusaz', datetime.datetime.today(), datetime.datetime.today())
 marc.save()
+alex.create_wish('Qui pour un sparring en boxe ce soir ?')
+alex.save()
+vincent.create_wish('Courir au bout du monde !')
+vincent.save()
+
+
+
+
 
 
 alex.relate_to_user(marc)

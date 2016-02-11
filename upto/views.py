@@ -22,9 +22,11 @@ def user_info(request, nom_user):
     }
     return render(request, 'upto/accountDetails.html', context)
 
-def allwishes(request):
+def allwishesAndEvent(request):
     w = Users.objects.only('id', 'user.username', 'wishes')
+    e = Users.objects.only('id', 'user.username', 'events_Owned')
     context = {
         'wishes': w,
+        'events': e,
     }
     return render(request, 'upto/wishes.html', context)
