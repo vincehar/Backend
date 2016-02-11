@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.http import Http404, HttpResponse
 from .models import Users, Wishes
 
+
 def index(request):
     return render(request, 'upto/index.html')
+
 
 def account(request):
     # test with a user
@@ -14,13 +16,14 @@ def account(request):
     }
     return render(request, 'upto/myAccount.html', context)
 
-def user_info(request, nom_user):
-    user_name = nom_user
-    user = Users.objects.get(user__username=user_name)
+
+def userdetails(request, username):
+    user = Users.objects.get(user__username=username)
     context = {
         'user': user,
     }
-    return render(request, 'upto/accountDetails.html', context)
+    return render(request, 'upto/userdetails.html', context)
+
 
 def allwishes(request):
     w = Users.objects.only('id', 'user.username', 'wishes')

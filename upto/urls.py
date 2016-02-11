@@ -6,5 +6,5 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^account/$', views.account, name='account'),
     url(r'^wishes/$', views.allwishes, name='wishes'),
-    url(r'^account/(?P<nom_user>[a-z]+)/$', views.user_info, name='user_info')
+    url(r'^userdetails/(?P<username>\w+)/$', views.userdetails, name='userdetails')
 ]

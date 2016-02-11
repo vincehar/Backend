@@ -7,6 +7,7 @@ from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocument
     ReferenceField, StringField, ListField, DateTimeField, BinaryField, BooleanField, ObjectIdField
 from bson import ObjectId
 
+
 class Wishes(EmbeddedDocument):
     user_id = ReferenceField('Users')
     wish_id = ObjectIdField(default=ObjectId)
@@ -14,8 +15,8 @@ class Wishes(EmbeddedDocument):
     interested = ListField(ReferenceField('Users'))
 
 
-    def add_interested(self, user):
-        self.interested.append(user)
+def add_interested(self, user):
+    self.interested.append(user)
 
 
 class Logs(EmbeddedDocument):
@@ -86,6 +87,7 @@ class UsersRelationships(EmbeddedDocument):
     def activate(self):
         self.active=True
         return self
+
 
 class Users(Document):
     """
