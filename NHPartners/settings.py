@@ -27,7 +27,11 @@ DEBUG = True
 
 #TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'http://127.0.0.1:8000',
+]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -67,10 +71,13 @@ INSTALLED_APPS = (
     'mongoengine',
     'django_browserid',
     'mongoengine.django.mongo_auth',
+   	'rest_framework',
+ 	'corsheaders',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -93,6 +100,23 @@ AUTHENTICATION_BACKENDS = (
     #'mongo_auth.backends.BrowserIDBackend',
     #'mongo_auth.backends.LazyUserBackend',
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAdminUser',
+        ),
+    'PAGE_SIZE': 10,
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.TemplateHTMLRenderer',
+        ),
+         'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}
 
 ROOT_URLCONF = 'NHPartners.urls'
 

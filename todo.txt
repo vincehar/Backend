@@ -125,3 +125,16 @@ pour requeter dans les wishes, il faut taper la commande ;
 
 supprimer la db:
 > db.dropDatabase()
+
+
+#-------------------------------------------------------------
+# Installations des packages pour JSON / rest framework
+#-------------------------------------------------------------
+
+sudo pip install djangorestframework
+
+download https://pypi.python.org/packages/source/d/django-cors-headers/django-cors-headers-1.1.0.tar.gz#md5=204728fda96f9951ebfd8c2cabb54dfb
+unzip
+
+sudo python setup.py install
+#-------------------------------------------------------------
