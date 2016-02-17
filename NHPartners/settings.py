@@ -71,13 +71,13 @@ INSTALLED_APPS = (
     'mongoengine',
     'django_browserid',
     'mongoengine.django.mongo_auth',
-   	'rest_framework',
- 	'corsheaders',
+    'rest_framework',
+    'corsheaders',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware'
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
