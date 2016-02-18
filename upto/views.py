@@ -54,7 +54,7 @@ def allwishesAndEvent(request):
     #3 - Append list Object + users (string)
     context = {
         'wishesAndEvent': wishesAndEvents,
-        'eventsList': sorted(eventsList, key=methodcaller('get_ref_date'), reverse=True),
+        'eventsList': eventsList,#sorted(eventsList, key=methodcaller('get_ref_date'), reverse=True),
     }
     #if request.accepted_renderer.format == 'html':
     return render(request, 'upto/wishes.html', context)

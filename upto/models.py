@@ -15,7 +15,7 @@ class Wishes(EmbeddedDocument):
     interested = ListField(ReferenceField('Users'))
 
     def get_ref_date(self):
-        self.creation_date
+	return self.creation_date
 
     def add_interested(self, user):
         self.interested.append(user)
@@ -53,7 +53,7 @@ class Events(EmbeddedDocument):
     eventStatus = EmbeddedDocumentField('EventStatus')
 
     def get_ref_date(self):
-        self.start_date
+        return self.start_date
 
 
 class Album(EmbeddedDocument):
