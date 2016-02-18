@@ -41,10 +41,6 @@ def userdetails(request, username):
     return Response(serializer.data)
 
 
-    #    serializer = MySerializer(instance=context)
-    #    data = serializer.data
-    #    return Response(data)
-
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def allwishesAndEvent(request):
     eventsList = list()
