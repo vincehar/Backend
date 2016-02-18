@@ -12,8 +12,11 @@ class Wishes(EmbeddedDocument):
     user_id = ReferenceField('Users')
     wish_id = ObjectIdField(default=ObjectId)
     title = StringField(required=True)
+    creation_date = DateTimeField()
     interested = ListField(ReferenceField('Users'))
 
+    def get_ref_date(self):
+	return self.creation_date
 
 def add_interested(self, user):
     self.interested.append(user)
@@ -50,6 +53,10 @@ class Events(EmbeddedDocument):
     categories = ListField(EmbeddedDocumentField('Categories'))
     eventStatus = EmbeddedDocumentField('EventStatus')
 
+    def get_ref_date(self):
+        return self.start_date
+
+
 class Album(EmbeddedDocument):
     name = StringField(required=True)
 
@@ -65,7 +72,7 @@ class UsersRelationships(EmbeddedDocument):
     """
     RELATIONSHIPS_TYPES = (
         ('Follower', 'Follower'),
-		('Followed', 'Followed'),
+        ('Followed', 'Followed'),
     )
 
     rel_id = ObjectIdField(default=ObjectId)
@@ -145,16 +152,16 @@ class Users(Document):
         """
         Users.objects(friends__from_user=user, friends__to_user=self).update(set__friends__S__active=True)
         self.save()
-
         return self
 
-    def create_wish(self, _title):
+    def create_wish(self, _title, _creation_date):
         """
         Method used to create a wish
         :param _title:
+        :param _creation_date:
         :return: self
         """
-        wish = Wishes(user_id=self.id, title=_title)
+        wish = Wishes(user_id=self.id, title=_title, creation_date=_creation_date)
         self.wishes.append(wish)
         self.save()
         return self

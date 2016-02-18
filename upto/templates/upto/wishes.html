@@ -4,28 +4,22 @@
        <link rel="stylesheet" type="text/css" href="../../static/upto/wishes.css">
 </head>
 <body>
-{% if user_wishes %}
-    {% for wish in user_wishes %}
-    <div id="wishes">
-        {% if wish.wishes %}
-            <div>username : {{ wish.user.username }}</div>
-            <div>wishes:</div>
-            {% for w in wish.wishes %}
-                <div>{{ w.title }}</div>
-        <div>{{ w.events_Owned.name }}</div>
-
-    </div>
-    {% endfor %}
+    <div>
+        {% if eventsList %}
+            {% for object in eventsList %}
+                {% if object.title %}
+                <div class="wishes">
+                    <div>Wish : {{ object.title }}</div>
+                    <div>Date : {{ object.creation_date|date:"c" }}</div>
+                </div>
+                {% endif %}
+                {% if object.name %}
+                <div class="events">
+                    <div>Event : {{ object.name }}</div>
+                    <div>Date : {{ object.start_date|date:"c" }}</div>
+                </div>
+                {% endif %}
+            {% endfor %}
         {% endif %}
     </div>
-    {% endfor %}
-{% endif %}
-
-    <h1>{{ user_events }}</h1>
-    {% for event in user_events %}
-        {% for e in event.events_Owned %}
-            <div id="wishes">
-                <div>Event : {{ e.name }}</div>
-            </div>
-        {% endfor %}
-    {% endfor %}
+</body>

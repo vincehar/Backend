@@ -1,7 +1,26 @@
-div#wishes {
+.wishes {
 	border-color:grey;
 	border-style:groove;
 	border-width:1px;
 	padding:3px;
-	margin:3px;
+	margin:10px;
+    background-color:pink;
+}
+
+.events {
+	border-color:grey;
+	border-style:groove;
+	border-width:1px;
+	padding:3px;
+	margin:10px;
+    background-color:yellow;
+}
+
+
+.test{
+   background-color:yellow;
+}
+
+.mainList{
+
 }
