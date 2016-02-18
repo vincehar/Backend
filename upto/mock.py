@@ -62,7 +62,7 @@ alex.relate_to_user(marc)
 
 vincent.relate_to_user(alex)
 
-alex.interests_to_wish(marc, marc.wishes[0])
+#alex.interests_to_wish(marc, marc.wishes[0])
 
 alex.accept_follower(vincent)
 

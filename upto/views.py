@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import Http404, HttpResponse
 from .models import Users, Wishes, Events
-#from serializers import MySerializer
+from serializers import UserDetailsSerializer
 from rest_framework.decorators import api_view, renderer_classes, permission_classes
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -23,17 +23,24 @@ def account(request):
     }
     return render(request, 'upto/myaccount.html', context)
 
+
 @api_view(('GET',))
-@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
-def user_info(request, nom_user):
-    user_name = nom_user
-    user = Users.objects.get(user__username=user_name)
-    context = {
-        'user': user,
-    }
-    #if request.accepted_renderer.format == 'html':
-    return render(request, 'upto/accountDetails.html', context)
-    #else:
+@permission_classes((AllowAny, ))
+@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
+def userdetails(request, username):
+
+    user = Users.objects.get(user__username=username)
+
+    if request.accepted_renderer.format == 'html':
+        context = {
+            'user': user,
+        }
+        return render(request, 'upto/userdetails.html', context)
+
+    serializer = UserDetailsSerializer(instance=user)
+    return Response(serializer.data)
+
+
     #    serializer = MySerializer(instance=context)
     #    data = serializer.data
     #    return Response(data)

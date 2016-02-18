@@ -72,6 +72,7 @@ INSTALLED_APPS = (
     'django_browserid',
     'mongoengine.django.mongo_auth',
     'rest_framework',
+    'rest_framework_mongoengine',
     'corsheaders',
 )
 

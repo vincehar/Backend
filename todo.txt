@@ -138,3 +138,9 @@ unzip
 
 sudo python setup.py install
 #-------------------------------------------------------------
+
+
+#-------------------------------------------------------------
+# Installations du package django rest framework mongoengine
+#-------------------------------------------------------------
+ sudo pip install django-rest-framework-mongoengine
