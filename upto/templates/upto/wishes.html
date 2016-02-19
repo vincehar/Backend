@@ -6,20 +6,22 @@
 <body>
     <div>
         {% if eventsList %}
-            {% for object in eventsList %}
-                {% if object.title %}
-                <div class="wishes">
-                    <div>Wish : {{ object.title }}</div>
-                    <div>Date : {{ object.creation_date|date:"c" }}</div>
-                </div>
-                {% endif %}
-                {% if object.name %}
-                <div class="events">
-                    <div>Event : {{ object.name }}</div>
-                    <div>Date : {{ object.start_date|date:"c" }}</div>
-                </div>
-                {% endif %}
-            {% endfor %}
+                {% for object in eventsList %}
+                    {% if object.title %}
+                    <div class="wishes">
+                        <div>Wish : {{ object.title }}</div>
+                        <div>Date : {{ object.creation_date|date:"c" }}</div>
+                    </div>
+                    {% endif %}
+                    {% if object.name %}
+                    <div class="events">
+                        <div>Event : {{ object.name }}</div>
+                        <div>Date : {{ object.start_date|date:"c" }}</div>
+                        <div>Name : {{ object.user.username }}</div>
+                        <a href="../event/{{ object.event_id }}">{{ object.event_id }} </a>
+                    </div>
+                    {% endif %}
+                {% endfor %}
         {% endif %}
     </div>
 </body>
