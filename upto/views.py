@@ -9,7 +9,6 @@ from rest_framework.response import Response
 from itertools import chain
 from operator import itemgetter, attrgetter, methodcaller
 from collections import defaultdict
-import datetime
 
 
 def index(request):
@@ -25,19 +24,21 @@ def account(request):
     return render(request, 'upto/myaccount.html', context)
 
 @api_view(('GET',))
-@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
-def user_info(request, nom_user):
-    user_name = nom_user
-    user = Users.objects.get(user__username=user_name)
-    context = {
-        'user': user,
-    }
-    #if request.accepted_renderer.format == 'html':
-    return render(request, 'upto/accountDetails.html', context)
-    #else:
-    #    serializer = MySerializer(instance=context)
-    #    data = serializer.data
-    #    return Response(data)
+@permission_classes((AllowAny, ))
+@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
+def userdetails(request, username):
+
+    user = Users.objects.get(user__username=username)
+
+    if request.accepted_renderer.format == 'html':
+        context = {
+            'user': user,
+        }
+        return render(request, 'upto/userdetails.html', context)
+
+    serializer = UserDetailsSerializer(instance=user)
+    return Response(serializer.data)
+
 
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def allwishesAndEvent(request):
