@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Details</title>
+    <h1>User Details</h1>
+</head>
+<body>
+<div id="content">
+        <h2>Hello {{user.user.username}}</h2>
+        <div id="username" title="username">Login : {{user.user.username}}</div>
+        <br/>
+        <div id="first_name" title="first_name">First name : {{user.user.first_name}}</div>
+        <div id="last_name" title="last_name">Last name : {{user.user.last_name}}</div>
+        <div id="email" title="email">Email : {{user.user.email}}</div>
+        <br/>
+        <div id="is_active" title="is_active">Is active : {{user.user.is_active}}</div>
+        <div id="is_staff" title="is_staff">Is staff : {{user.user.is_staff}}</div>
+        <div id="is_superuser" title="is_superuser">Is superuser : {{user.user.is_superuser}}</div>
+        <br />
+        <div id="last_login" title="last_login">Last Login : {{user.user.last_login}}</div>
+        <div id="date_joined" title="date_joined">Date Joined : {{user.user.last_joined}}</div>
+</div>
+</body>
+</html>
