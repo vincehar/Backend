@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from itertools import chain
 from operator import itemgetter, attrgetter, methodcaller
 from collections import defaultdict
+import datetime
 
 
 def index(request):
@@ -22,7 +23,6 @@ def account(request):
         'one_user': user,
     }
     return render(request, 'upto/myaccount.html', context)
-
 
 @api_view(('GET',))
 @permission_classes((AllowAny, ))
@@ -43,25 +43,71 @@ def userdetails(request, username):
 
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def allwishesAndEvent(request):
-    eventsList = list()
-    wishesAndEvents = Users.objects
-
-    for users in wishesAndEvents:
-        #1 - lister tous les wishes + users
-        for event in users.events_Owned:
-            eventsList.append(event)
-         #2 - lister tous les events + users
-        for wish in users.wishes:
-            eventsList.append(wish)
-
-    #3 - Append list Object + users (string)
+    tmplst = list()
+    usersList = Users.objects
+    for user in usersList:
+        for event in user.events_Owned:
+                tmplst.append(event)
+        for wish in user.wishes:
+                tmplst.append(wish)
     context = {
-        'wishesAndEvent': wishesAndEvents,
-        'eventsList': eventsList,#sorted(eventsList, key=methodcaller('get_ref_date'), reverse=True),
+        'eventsList': sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True),
     }
+
     #if request.accepted_renderer.format == 'html':
     return render(request, 'upto/wishes.html', context)
     #else:
     #    serializer = MySerializer(instance=context)
      #   data = serializer.data
       #  return Response(data)
+
+def getEventInfo(request, _event_id):
+    currentUser = Users.objects.get(events_Owned__event_id=_event_id)
+    for event in currentUser.events_Owned:
+        print event
+        if event.event_id == _event_id:
+            print event
+            eventObject = event
+
+    context = {
+        'currentEvent': currentUser
+    }
+
+    return render(request, 'upto/eventDetails.html', context)
+
+def createWish(request, _user_id):
+    """
+    View used to create a wish for a user
+    :rtype: object
+    :param _id_user:
+    :param request:
+    """
+    #1 - get user with id
+    current_user = _user_id
+    #2 - get wish title from form
+    _wish_title = request.POST['wish']
+    current_user.create_wish(_wish_title, datetime.datetime.today())
+    return render(request, 'upto/wishes.html')
+
+def createEvent(request):
+    """
+    View used to create a wish for a user
+    :rtype: object
+    :param _id_user:
+    :param request:
+    """
+    try:
+        #1 - get event_id
+        name = 'marc'
+        current_user = Users.objects.get(user__username=name)
+        #2 - get wish title from form
+        eventName = request.POST['eventName']
+
+        start_date = datetime.datetime.strptime(request.POST['start_date'], "%Y-%m-%d %H:%M")
+        end_date = datetime.datetime.strptime(request.POST['end_date'], "%Y-%m-%d %H:%M")
+
+        current_user.create_event(eventName, start_date, end_date)
+    except Users.DoesNotExist:
+        raise Http404('Event id does not exist')
+    else:
+        return render(request, 'upto/wishes.html')
