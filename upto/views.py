@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import Http404, HttpResponse
 from .models import Users, Wishes, Events
-#from serializers import MySerializer
+from serializers import UserDetailsSerializer
 from rest_framework.decorators import api_view, renderer_classes, permission_classes
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from itertools import chain
 from operator import itemgetter, attrgetter, methodcaller
 from collections import defaultdict
+import datetime
 
 
 def index(request):
