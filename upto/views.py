@@ -37,6 +37,7 @@ def userdetails(request, username):
         }
         return render(request, 'upto/userdetails.html', context)
 
+    #no comment
     serializer = UserDetailsSerializer(instance=user)
     return Response(serializer.data)
 
