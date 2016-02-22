@@ -38,6 +38,7 @@ class Messages(EmbeddedDocument):
     content = BinaryField()
     event = EmbeddedDocumentField('Events')
 
+
 class EventStatus(EmbeddedDocument):
     name = StringField(required=True)
 
@@ -52,6 +53,7 @@ class Events(Document):
     user_id = ReferenceField('Users')
     event_id = ObjectIdField(default=ObjectId)
     name = StringField(required=True)
+    creation_date = DateTimeField()
     start_date = DateTimeField(required=True)
     end_date = DateTimeField(required=True)
     address = EmbeddedDocumentField('Address')
@@ -59,6 +61,7 @@ class Events(Document):
     #devise = models
     categories = ListField(EmbeddedDocumentField('Categories'))
     eventStatus = EmbeddedDocumentField('EventStatus')
+
 
     def get_ref_date(self):
         return self.start_date
@@ -162,19 +165,18 @@ class Users(Document):
         self.save()
         return self
 
-    def create_wish(self, _title, _creation_date):
+    def create_wish(self, _title):
         """
         Method used to create a wish
         :param _title:
         :param _creation_date:
         :return: self
         """
-        wish = Wishes(user_id=self.id, title=_title, creation_date=_creation_date)
+        wish = Wishes(user_id=self.id, title=_title, creation_date=datetime.datetime.today())
         self.wishes.append(wish)
         wish.save()
         self.save()
         return self
-
 
     def create_event(self, _name, _start_date, _end_date):
         """
@@ -185,7 +187,7 @@ class Users(Document):
         :param _endDate:
         :return: self
         """
-        event = Events(user_id=self.id, name=_name, start_date=_start_date, end_date=_end_date)
+        event = Events(user_id=self.id, name=_name, start_date=_start_date, end_date=_end_date, creation_date=datetime.datetime.today())
         event.save()
         self.events_Owned.append(event)
         self.save()

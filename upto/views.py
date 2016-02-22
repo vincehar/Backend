@@ -81,7 +81,7 @@ def createWish(request, _user_id):
     current_user = _user_id
     #2 - get wish title from form
     _wish_title = request.POST['wish']
-    current_user.create_wish(_wish_title, datetime.datetime.today())
+    current_user.create_wish(_wish_title)
     return render(request, 'upto/wishes.html')
 
 def createEvent(request):
