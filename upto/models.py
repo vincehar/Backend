@@ -1,3 +1,4 @@
+from django.core.mail.backends.console import EmailBackend
 from django.db import models as orimodels
 #from mongo_auth.contrib.models import User
 from djangotoolbox.fields import ListField, EmbeddedModelField
@@ -40,14 +41,20 @@ class Messages(EmbeddedDocument):
 class EventStatus(EmbeddedDocument):
     name = StringField(required=True)
 
+class Address(EmbeddedDocument):
+    address_1 = StringField()
+    address_2 = StringField()
+    city = StringField()
+    state = StringField()
+    zip_code = StringField()
 
-class Events(EmbeddedDocument):
+class Events(Document):
     user_id = ReferenceField('Users')
     event_id = ObjectIdField(default=ObjectId)
     name = StringField(required=True)
     start_date = DateTimeField(required=True)
     end_date = DateTimeField(required=True)
-    address = StringField()
+    address = EmbeddedDocumentField('Address')
     price = FloatField()
     #devise = models
     categories = ListField(EmbeddedDocumentField('Categories'))
@@ -103,6 +110,7 @@ class Users(Document):
     Main class representing the Users entities.
     This is the class in which everything is embedded.
     """
+    user_id = ObjectIdField(default=ObjectId)
     user = EmbeddedDocumentField('User')
     wishes = ListField(EmbeddedDocumentField('Wishes'))
     logs = ListField(EmbeddedDocumentField('Logs'))
