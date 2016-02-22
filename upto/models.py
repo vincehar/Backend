@@ -9,7 +9,7 @@ from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocument
 from bson import ObjectId
 
 
-class Wishes(EmbeddedDocument):
+class Wishes(Document):
     user_id = ReferenceField('Users')
     wish_id = ObjectIdField(default=ObjectId)
     title = StringField(required=True)
@@ -171,6 +171,7 @@ class Users(Document):
         """
         wish = Wishes(user_id=self.id, title=_title, creation_date=_creation_date)
         self.wishes.append(wish)
+        wish.save()
         self.save()
         return self
 
@@ -185,6 +186,7 @@ class Users(Document):
         :return: self
         """
         event = Events(user_id=self.id, name=_name, start_date=_start_date, end_date=_end_date)
+        event.save()
         self.events_Owned.append(event)
         self.save()
         return self

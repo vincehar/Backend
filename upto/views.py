@@ -63,15 +63,11 @@ def allwishesAndEvent(request):
       #  return Response(data)
 
 def getEventInfo(request, _event_id):
-    currentUser = Users.objects.get(events_Owned__event_id=_event_id)
-    for event in currentUser.events_Owned:
-        print event
-        if event.event_id == _event_id:
-            print event
-            eventObject = event
-
+    event = Events.objects.get(id=_event_id)
+    user = Users.objects.get(events_Owned__id=_event_id)
     context = {
-        'currentEvent': currentUser
+        'currentEvent': event,
+        'ownedUser': user,
     }
 
     return render(request, 'upto/eventDetails.html', context)
@@ -99,8 +95,9 @@ def createEvent(request):
     """
     try:
         #1 - get event_id
-        name = 'marc'
-        current_user = Users.objects.get(user__username=name)
+        #name = 'marc'
+        print request.POST['user_id']
+        current_user = Users.objects.get(id=request.POST['user_id'])
         #2 - get wish title from form
         eventName = request.POST['eventName']
 

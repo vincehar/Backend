@@ -18,7 +18,7 @@
                         <div>Event : {{ object.name }}</div>
                         <div>Date : {{ object.start_date|date:"c" }}</div>
                         <div>Name : {{ object.user.username }}</div>
-                        <a href="../event/{{ object.event_id }}">{{ object.event_id }} </a>
+                        <a href="../event/{{ object.id }}">{{ object.id }} </a>
                     </div>
                     {% endif %}
                 {% endfor %}

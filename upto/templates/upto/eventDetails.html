@@ -5,26 +5,28 @@
     <title>test</title>
 </head>
 <body>
-{% for event in currentEvent.events_Owned %}
-<div>{{ event.name }}</div>
+
+<div>{{ currentEvent.name }}</div>
+<div>{{ ownedUser.user.username }}</div>
 <h1>Create a wish</h1>
+<!--
 <form action="{% url 'createwish' %}" method="post">
 {% csrf_token %}
     <input type="text" name="wish" />
 <input type="submit" value="Create Wish" />
 </form>
-
+<!--
 <h1>Create an event</h1>
 <form action="{% url 'createevent' %}" method="post">
 {% csrf_token %}
     <div>Event Name : <input type="text" name="eventName" /></div>
-    <div>Owner : <input type="text" name="user_id" value="{{ event.user_id.user_id }}"/></div>
+    <div>Owner : {{ event.user_id.user.username }}<input type="text" name="user_id" value="{{ event.user_id.id }}"/></div>
+
     <div>Start date : <input type="datetime" name="start_date" /></div>
     <div>End date : <input type="datetime" name="end_date" /></div>
 
 <input type="submit" value="Create Event" />
-</form>
-{% endfor %}
+</form>-->
 
 </body>
 </html>
