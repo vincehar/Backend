@@ -11,13 +11,14 @@
                     <div class="wishes">
                         <div>Wish : {{ object.title }}</div>
                         <div>Date : {{ object.creation_date|date:"c" }}</div>
+                        <div>Fucking user :  {{ object.user_id.user.username }}</div>
                     </div>
                     {% endif %}
                     {% if object.name %}
                     <div class="events">
                         <div>Event : {{ object.name }}</div>
                         <div>Date : {{ object.start_date|date:"c" }}</div>
-                        <div>Name : {{ object.user.username }}</div>
+                        <div>Fucking user :  {{ object.user_id.user.username }}</div>
                         <a href="../event/{{ object.id }}">{{ object.id }} </a>
                     </div>
                     {% endif %}

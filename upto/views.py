@@ -45,14 +45,14 @@ def userdetails(request, username):
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def allwishesAndEvent(request):
     tmplst = list()
-    usersList = Users.objects
-    for user in usersList:
-        for event in user.events_Owned:
-                tmplst.append(event)
-        for wish in user.wishes:
-                tmplst.append(wish)
+
+    for event in Events.objects:
+        tmplst.append(event)
+    for wish in Wishes.objects:
+        tmplst.append(wish)
     context = {
         'eventsList': sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True),
+        'users': Users.objects
     }
 
     #if request.accepted_renderer.format == 'html':
@@ -64,10 +64,8 @@ def allwishesAndEvent(request):
 
 def getEventInfo(request, _event_id):
     event = Events.objects.get(id=_event_id)
-    user = Users.objects.get(events_Owned__id=_event_id)
     context = {
         'currentEvent': event,
-        'ownedUser': user,
     }
 
     return render(request, 'upto/eventDetails.html', context)
