@@ -7,14 +7,13 @@
 <body>
 {% for event in currentEvent.events_Owned %}
 <div>{{ event.name }}</div>
-<!--
 <h1>Create a wish</h1>
 <form action="{% url 'createwish' %}" method="post">
 {% csrf_token %}
     <input type="text" name="wish" />
 <input type="submit" value="Create Wish" />
 </form>
--->
+
 <h1>Create an event</h1>
 <form action="{% url 'createevent' %}" method="post">
 {% csrf_token %}
