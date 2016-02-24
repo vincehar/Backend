@@ -37,15 +37,15 @@ vincent=Users.objects.get(user=User.objects.get(username='vincent'))
 #----------------
 #Wishes part
 #----------------
-marc.create_wish('cine')
-marc.create_wish('Je veux voir les etoiles !!!')
+marc.create_wish('cine', datetime.datetime.today())
+marc.create_wish('Je veux voir les etoiles !!!', datetime.datetime.today())
 marc.create_event('Sortie Ski a la Clusaz', datetime.datetime.today(), datetime.datetime.today())
-marc.create_wish('Je vais coder en python ce soir')
+marc.create_wish('Je vais coder en python ce soir', datetime.datetime.today())
 marc.save()
-alex.create_wish('Qui pour un sparring en boxe ce soir ?')
+alex.create_wish('Qui pour un sparring en boxe ce soir ?', datetime.datetime.today())
 alex.create_event('Aller au concert des 2b3', datetime.datetime.today(), datetime.datetime.today())
 alex.save()
-vincent.create_wish('Courir au bout du monde !')
+vincent.create_wish('Courir au bout du monde !', datetime.datetime.today())
 vincent.create_event('Particper a la gaypride', datetime.datetime.today(), datetime.datetime.today())
 vincent.save()
 
