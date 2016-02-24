@@ -9,7 +9,7 @@ from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocument
 from bson import ObjectId
 
 
-class Wishes(Document):
+class Wishes(EmbeddedDocument):
     user_id = ReferenceField('Users')
     wish_id = ObjectIdField(default=ObjectId)
     title = StringField(required=True)
