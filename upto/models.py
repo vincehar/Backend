@@ -9,12 +9,15 @@ from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocument
 from bson import ObjectId
 
 
-class Wishes(Document):
+class Wishes(EmbeddedDocument):
     user_id = ReferenceField('Users')
     wish_id = ObjectIdField(default=ObjectId)
     title = StringField(required=True)
     creation_date = DateTimeField()
     interested = ListField(ReferenceField('Users'))
+
+    def get_ins(self):
+	return self._instance
 
     def get_ref_date(self):
 	return self.creation_date
@@ -48,7 +51,7 @@ class Address(EmbeddedDocument):
     state = StringField()
     zip_code = StringField()
 
-class Events(Document):
+class Events(EmbeddedDocument):
     user_id = ReferenceField('Users')
     event_id = ObjectIdField(default=ObjectId)
     name = StringField(required=True)
@@ -171,7 +174,6 @@ class Users(Document):
         """
         wish = Wishes(user_id=self.id, title=_title, creation_date=_creation_date)
         self.wishes.append(wish)
-        wish.save()
         self.save()
         return self
 
@@ -186,7 +188,6 @@ class Users(Document):
         :return: self
         """
         event = Events(user_id=self.id, name=_name, start_date=_start_date, end_date=_end_date)
-        event.save()
         self.events_Owned.append(event)
         self.save()
         return self
