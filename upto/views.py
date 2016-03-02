@@ -51,8 +51,7 @@ def allwishesAndEvent(request):
     for wish in Wishes.objects:
         tmplst.append(wish)
     context = {
-        'eventsList': sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True),
-        'users': Users.objects
+        'eventsList': sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True)
     }
 
     #if request.accepted_renderer.format == 'html':

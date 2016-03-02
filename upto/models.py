@@ -9,7 +9,7 @@ from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocument
 from bson import ObjectId
 
 
-class Wishes(EmbeddedDocument):
+class Wishes(Document):
     user_id = ReferenceField('Users')
     wish_id = ObjectIdField(default=ObjectId)
     title = StringField(required=True)
@@ -17,16 +17,17 @@ class Wishes(EmbeddedDocument):
     interested = ListField(ReferenceField('Users'))
 
     def get_ins(self):
-	return self._instance
+        return self._instance
 
     def get_ref_date(self):
-	return self.creation_date
+        return self.creation_date
 
-def add_interested(self, user):
-    self.interested.append(user)
+    def add_interested(self, user):
+        self.interested.append(user)
 
 
-class Logs(EmbeddedDocument):
+class Logs(Document):
+    user_id = ReferenceField('Users')
     ip_address = StringField(required=True)
     date = DateTimeField(required=True)
     action = StringField(required=True)
@@ -34,12 +35,6 @@ class Logs(EmbeddedDocument):
 
 class Categories(EmbeddedDocument):
     name = StringField(required=True)
-
-
-class Messages(EmbeddedDocument):
-    creation_date = DateTimeField()
-    content = BinaryField()
-    event = EmbeddedDocumentField('Events')
 
 class EventStatus(EmbeddedDocument):
     name = StringField(required=True)
@@ -51,8 +46,9 @@ class Address(EmbeddedDocument):
     state = StringField()
     zip_code = StringField()
 
-class Events(EmbeddedDocument):
+class Events(Document):
     user_id = ReferenceField('Users')
+    interested = ListField(ReferenceField('Users'))
     event_id = ObjectIdField(default=ObjectId)
     name = StringField(required=True)
     start_date = DateTimeField(required=True)
@@ -63,8 +59,16 @@ class Events(EmbeddedDocument):
     categories = ListField(EmbeddedDocumentField('Categories'))
     eventStatus = EmbeddedDocumentField('EventStatus')
 
+
     def get_ref_date(self):
         return self.start_date
+
+class Messages(Document):
+    from_user = ReferenceField('Users')
+    to_user = ReferenceField('Users')
+    creation_date = DateTimeField()
+    content = BinaryField()
+    event = EmbeddedDocumentField('Events')
 
 
 class Album(EmbeddedDocument):
@@ -76,7 +80,7 @@ class Medias(Document):
     event = EmbeddedDocumentField('Events', required=True)
     album = EmbeddedDocumentField('Album')
 
-class UsersRelationships(EmbeddedDocument):
+class UsersRelationships(Document):
     """
     Class used to manage relationships beetwen Users instances.
     """
@@ -115,14 +119,14 @@ class Users(Document):
     """
     user_id = ObjectIdField(default=ObjectId)
     user = EmbeddedDocumentField('User')
-    wishes = ListField(EmbeddedDocumentField('Wishes'))
-    logs = ListField(EmbeddedDocumentField('Logs'))
-    friends = ListField(EmbeddedDocumentField('UsersRelationships'))
-    messages = ListField(EmbeddedDocumentField('Messages'))
-    categories_Selected = ListField(EmbeddedDocumentField('Categories'))
-    medias = ListField(EmbeddedDocumentField('Medias'))
-    events_Owned = ListField(EmbeddedDocumentField('Events'))
-    interested_in = ListField(EmbeddedDocumentField('Wishes'))
+    #wishes = ListField(ReferenceField('Wishes'))
+    #logs = ListField(ReferenceField('Logs'))
+    #friends = ListField(EmbeddedDocumentField('UsersRelationships'))
+    #messages = ListField(EmbeddedDocumentField('Messages'))
+    #categories_Selected = ListField(EmbeddedDocumentField('Categories'))
+    #medias = ListField(ReferenceField('Medias'))
+    #events_Owned = ListField(ReferenceField('Events'))
+    #interested_in = ListField(ReferenceField('Wishes'))
 
     def date_joined(self):
         """
@@ -138,11 +142,14 @@ class Users(Document):
         :return: self
         """
         rel = UsersRelationships(from_user=self, to_user=None, active=False, symetrical=False, blocked=False, status='Follower')
-        user.friends.append(rel)
+        #user.friends.append(rel)
         relself = UsersRelationships(from_user=None, to_user=user, active=False, symetrical=False, blocked=False, status='Followed')
-        self.friends.append(relself)
-        user.save()
-        self.save()
+        #self.friends.append(relself)
+        #user.save()
+        #self.save()
+        #return self
+        rel.save()
+        relself.save()
         return self
 
     def make_symerical_relationship(self, user):
@@ -151,8 +158,9 @@ class Users(Document):
         :param user: instance of Users class
         :return: self
         """
-        Users.objects(friends__from_user=user, friends__to_user=self).update(set__friends__S__active=True, set__friends__S__symetrical=True)
-        self.save()
+        #Users.objects(friends__from_user=user, friends__to_user=self).update(set__friends__S__active=True, set__friends__S__symetrical=True)
+        #self.save()
+        UsersRelationships.objects(from_user=user, to_user=self).update(set__active=True, set__symetrical=True)
         return self
 
     def accept_follower(self, user):
@@ -161,8 +169,9 @@ class Users(Document):
         :param user:
         :return:
         """
-        Users.objects(friends__from_user=user, friends__to_user=self).update(set__friends__S__active=True)
-        self.save()
+        #Users.objects(friends__from_user=user, friends__to_user=self).update(set__friends__S__active=True)
+        UsersRelationships.objects(from_user=user, to_user=self).update(set__active=True)
+        #self.save()
         return self
 
     def create_wish(self, _title, _creation_date):
@@ -173,9 +182,11 @@ class Users(Document):
         :return: self
         """
         wish = Wishes(user_id=self.id, title=_title, creation_date=_creation_date)
-        self.wishes.append(wish)
-        self.save()
-        return self
+        #self.wishes.append(wish)
+        #self.save()
+        #return self
+        wish.save()
+        return wish
 
 
     def create_event(self, _name, _start_date, _end_date):
@@ -188,17 +199,13 @@ class Users(Document):
         :return: self
         """
         event = Events(user_id=self.id, name=_name, start_date=_start_date, end_date=_end_date)
-        self.events_Owned.append(event)
-        self.save()
-        return self
-
+        #self.events_Owned.append(event)
+        #self.save()
+        #return self
+        event.save()
+        return event
+    """
     def interests_to_wish(self, _user, _wish):
-        """
-        Method user to 'wish_back'. i.e signal that tuhe user is interested in the activity.
-        :param _user:
-        :param _wish:
-        :return: self
-        """
         user = Users.objects.get(id=_user.id)
         wish = next((w for w in user.wishes if w.wish_id==_wish.wish_id), None)
         wish.add_interested(self)
@@ -208,11 +215,6 @@ class Users(Document):
         return self
 
     def add_media(self, _binaryMedia, _label, _event):
-        """
-        Method used to add a Media to a users's Media collection
-        :param _binaryMedia:
-        :return: self
-        """
         media = Medias()
         self.medias.append(media)
         self.save()
@@ -220,7 +222,7 @@ class Users(Document):
 
     def my_wishes(self):
         return self.wishes
-
+    """
 
 
 
