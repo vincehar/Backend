@@ -88,7 +88,7 @@ def createWish(request):
 
     #2 - get wish title from form
     _wish_title = request.POST['wish']
-    current_user.create_wish(_wish_title, datetime.datetime.today())
+    current_user.create_wish(_wish_title)
 
     return redirect('../../upto/wishes/')
 

@@ -175,14 +175,14 @@ class Users(Document):
         #self.save()
         return self
 
-    def create_wish(self, _title, _creation_date):
+    def create_wish(self, _title):
         """
         Method used to create a wish
         :param _title:
         :param _creation_date:
         :return: self
         """
-        wish = Wishes(user_id=self.id, title=_title, creation_date=_creation_date)
+        wish = Wishes(user_id=self.id, title=_title, creation_date=datetime.datetime.now())
         #self.wishes.append(wish)
         #self.save()
         #return self
