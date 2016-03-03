@@ -35,6 +35,7 @@
                         <div>Wish : {{ object.title }}</div>
                         <div>Date : {{ object.creation_date }}</div>
                         <div>Fucking user :  {{ object.user_id.user.username }}</div>
+                        <div><a href="../deletewish/{{ object.id }}">DELETE X </a></div>
                     </div>
                     {% endif %}
                     {% if object.name %}
@@ -43,6 +44,7 @@
                         <div>Date : {{ object.start_date}}</div>
                         <div>Fucking user :  {{ object.user_id.user.username }}</div>
                         <a href="../event/{{ object.id }}">{{ object.id }} </a>
+                        <div><a href="../deleteevent/{{ object.id }}">DELETE X </a></div>
                     </div>
                     {% endif %}
                 {% endfor %}
