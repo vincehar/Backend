@@ -65,6 +65,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'upto',
+    'social_auth',
     #'mongo_auth',
     #'mongo_auth.contrib',
     'sekizai',
@@ -93,13 +94,12 @@ MIDDLEWARE_CLASSES = (
 AUTHENTICATION_BACKENDS = (
     'django_mongoengine.mongo_auth.backends.MongoEngineBackend',
     'mongoengine.django.auth.MongoEngineBackend',
-    #'mongo_auth.backends.MongoEngineBackend',
-    #'mongo_auth.backends.FacebookBackend',
-    #'mongo_auth.backends.TwitterBackend',
-    #'mongo_auth.backends.FoursquareBackend',
-    #'mongo_auth.backends.GoogleBackend',
-    #'mongo_auth.backends.BrowserIDBackend',
-    #'mongo_auth.backends.LazyUserBackend',
+    'social_auth.backends.twitter.TwitterBackend',
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleOAuthBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
+    'social_auth.backends.google.GoogleBackend',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 REST_FRAMEWORK = {
@@ -175,4 +175,15 @@ TEMPLATES = [
 ]
 
 STATIC_URL = '/static/'
+
+# Facebook
+FACEBOOK_APP_ID = '222535738090638'
+FACEBOOK_API_SECRET = '09a2f8b2122cd05061e50fa00dcc999a'
+
+LOGIN_URL = '/login-form/'
+LOGIN_REDIRECT_URL = '/logged-in/'
+LOGIN_ERROR_URL = '/login-error/'
+
+SOCIAL_AUTH_COMPLETE_URL_NAME = 'socialauth_complete'
+SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
 

@@ -54,6 +54,7 @@ class Events(Document):
     start_date = DateTimeField(required=True)
     end_date = DateTimeField(required=True)
     address = EmbeddedDocumentField('Address')
+    creation_date = DateTimeField(default=datetime.datetime.now())
     price = FloatField()
     #devise = models
     categories = ListField(EmbeddedDocumentField('Categories'))
@@ -61,7 +62,7 @@ class Events(Document):
 
 
     def get_ref_date(self):
-        return self.start_date
+        return self.creation_date
 
 class Messages(Document):
     from_user = ReferenceField('Users')
@@ -198,7 +199,7 @@ class Users(Document):
         :param _endDate:
         :return: self
         """
-        event = Events(user_id=self.id, name=_name, start_date=_start_date, end_date=_end_date)
+        event = Events(user_id=self.id, name=_name, start_date=_start_date, end_date=_end_date, creation_date=datetime.datetime.now())
         #self.events_Owned.append(event)
         #self.save()
         #return self

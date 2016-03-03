@@ -63,13 +63,14 @@ def allwishesAndEvent(request):
 
 def getEventInfo(request, _event_id):
     event = Events.objects.get(id=_event_id)
+    print _event_id
     context = {
         'currentEvent': event,
     }
 
     return render(request, 'upto/eventDetails.html', context)
 
-def createWish(request, _user_id):
+def createWish(request):
     """
     View used to create a wish for a user
     :rtype: object
@@ -77,7 +78,8 @@ def createWish(request, _user_id):
     :param request:
     """
     #1 - get user with id
-    current_user = _user_id
+    current_user = Users.objects.get(user__username='marc')
+
     #2 - get wish title from form
     _wish_title = request.POST['wish']
     current_user.create_wish(_wish_title, datetime.datetime.today())
