@@ -10,6 +10,15 @@
     <div id="content">
         <div id="siginUpTo">HERE CONNECTION WITH UP2</div>
         <div id="siginFB">HERE CONNECTION WITH FACEBOOK</div>
+        <div id="fakeSignin">
+            <div>Fake sign-in</div>
+            <form action="{% url 'wishes' %}" method="post">
+            {% csrf_token %}
+                <label for="username">Username : </label>
+                <input type="text" name="username" />
+            <input type="submit" value="Sign-in" />
+            </form>
+        </div>
         <div id="siginGoogle">HERE CONNECTION WITH GOOGLE+</div>
         <div id="siginTwitter">HERE CONNECTION WITH TWITTER</div>
         <div id="rightAdvertise">HERE PUB</div>

@@ -4,6 +4,29 @@
        <link rel="stylesheet" type="text/css" href="../../static/upto/wishes.css">
 </head>
 <body>
+    <div id="myAccount">My Account <a href="../userdetails/{{ username }}">--></a></div>
+
+<h1>Create a wish</h1>
+
+
+<form action="{% url 'createwish' %}" method="post">
+{% csrf_token %}
+    <input type="text" name="wish" />
+<input type="submit" value="Create Wish" />
+</form>
+
+<h1>Create an event</h1>
+<form action="{% url 'createevent' %}" method="post">
+{% csrf_token %}
+    <div>Event Name : <input type="text" name="eventName" /></div>
+
+    <div>Je suis Owner : {{ current_user.user_id.user.username }}<input type="text" name="user_id" value="{{ current_user.id }}"/></div>
+
+    <div>Start date : <input type="datetime" name="start_date" /></div>
+    <div>End date : <input type="datetime" name="end_date" /></div>
+
+<input type="submit" value="Create Event" />
+</form>
     <div>
         {% if eventsList %}
                 {% for object in eventsList %}

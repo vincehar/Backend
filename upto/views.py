@@ -6,6 +6,7 @@ from rest_framework.decorators import api_view, renderer_classes, permission_cla
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from django.shortcuts import redirect
 from itertools import chain
 from operator import itemgetter, attrgetter, methodcaller
 from collections import defaultdict
@@ -44,14 +45,17 @@ def userdetails(request, username):
 
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def allwishesAndEvent(request):
+    if request.method == 'POST':
+        request.session['username'] = request.POST['username']
     tmplst = list()
-
+    print(request.session['username'])
     for event in Events.objects:
         tmplst.append(event)
     for wish in Wishes.objects:
         tmplst.append(wish)
     context = {
-        'eventsList': sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True)
+        'eventsList': sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True),
+        'username': request.session['username'],
     }
 
     #if request.accepted_renderer.format == 'html':
@@ -63,12 +67,14 @@ def allwishesAndEvent(request):
 
 def getEventInfo(request, _event_id):
     event = Events.objects.get(id=_event_id)
+    current_user = Users.objects.get(user__username=request.session['username'])
     print _event_id
     context = {
         'currentEvent': event,
+        'current_user': current_user,
     }
 
-    return render(request, 'upto/eventDetails.html', context)
+    return render(request, './upto/eventDetails.html', context)
 
 def createWish(request):
     """
@@ -83,7 +89,8 @@ def createWish(request):
     #2 - get wish title from form
     _wish_title = request.POST['wish']
     current_user.create_wish(_wish_title, datetime.datetime.today())
-    return render(request, 'upto/wishes.html')
+
+    return redirect('../../upto/wishes/')
 
 def createEvent(request):
     """
@@ -95,7 +102,6 @@ def createEvent(request):
     try:
         #1 - get event_id
         #name = 'marc'
-        print request.POST['user_id']
         current_user = Users.objects.get(id=request.POST['user_id'])
         #2 - get wish title from form
         eventName = request.POST['eventName']
@@ -107,4 +113,4 @@ def createEvent(request):
     except Users.DoesNotExist:
         raise Http404('Event id does not exist')
     else:
-        return render(request, 'upto/wishes.html')
+        return redirect('../../upto/wishes/')
