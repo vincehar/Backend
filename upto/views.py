@@ -84,13 +84,27 @@ def createWish(request):
     :param request:
     """
     #1 - get user with id
-    current_user = Users.objects.get(user__username='marc')
+    current_user = Users.objects.get(user__username=request.session['username'])
 
     #2 - get wish title from form
     _wish_title = request.POST['wish']
     current_user.create_wish(_wish_title)
 
     return redirect('../../upto/wishes/')
+
+def deleteWish(request, _wish_id):
+    """
+    Used to delete wish with a wish ID
+    :param request:
+    :param _wish_id:
+    :return:
+    """
+    try:
+        Wishes.delete(Wishes.objects.get(id=_wish_id))
+    except Wishes.DoesNotExist:
+        raise Http404('Wish id does not exist')
+    else:
+        return redirect('../../upto/wishes/')
 
 def createEvent(request):
     """
@@ -111,6 +125,19 @@ def createEvent(request):
 
         current_user.create_event(eventName, start_date, end_date)
     except Users.DoesNotExist:
+        raise Http404('Event id does not exist')
+    else:
+        return redirect('../../upto/wishes/')
+
+def deleteEvent(request, _event_id):
+    """
+    Used to delete an event with an event ID
+    :param _event_id:
+    :return:
+    """
+    try:
+        Events.delete(Events.objects.get(id=_event_id))
+    except Wishes.DoesNotExist:
         raise Http404('Event id does not exist')
     else:
         return redirect('../../upto/wishes/')
