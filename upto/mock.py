@@ -34,18 +34,25 @@ usa=Users.objects.get_or_create(user=User.objects.get(username='alex'))
 alex=Users.objects.get(user=User.objects.get(username='alex'))
 marc=Users.objects.get(user=User.objects.get(username='marc'))
 vincent=Users.objects.get(user=User.objects.get(username='vincent'))
+
+#----------------
+#Make relationship
+#----------------
+#alex.relate_to_user(marc)
+#alex.relate_to_user(vincent)
+
 #----------------
 #Wishes part
 #----------------
-marc.create_wish('cine', datetime.datetime.today())
-marc.create_wish('Je veux voir les etoiles !!!', datetime.datetime.today())
+marc.create_wish('cine')
+marc.create_wish('Je veux voir les etoiles !!!')
 marc.create_event('Sortie Ski a la Clusaz', datetime.datetime.today(), datetime.datetime.today())
-marc.create_wish('Je vais coder en python ce soir', datetime.datetime.today())
+marc.create_wish('Je vais coder en python ce soir')
 marc.save()
-alex.create_wish('Qui pour un sparring en boxe ce soir ?', datetime.datetime.today())
+alex.create_wish('Qui pour un sparring en boxe ce soir ?')
 alex.create_event('Aller au concert des 2b3', datetime.datetime.today(), datetime.datetime.today())
 alex.save()
-vincent.create_wish('Courir au bout du monde !', datetime.datetime.today())
+vincent.create_wish('Courir au bout du monde !')
 vincent.create_event('Particper a la gaypride', datetime.datetime.today(), datetime.datetime.today())
 vincent.save()
 
@@ -64,6 +71,6 @@ vincent.relate_to_user(alex)
 
 #alex.interests_to_wish(marc, marc.wishes[0])
 
-alex.accept_follower(vincent)
+#alex.accept_follower(vincent)
 
-marc.make_symerical_relationship(alex)
+#marc.make_symerical_relationship(alex)

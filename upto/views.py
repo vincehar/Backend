@@ -1,7 +1,9 @@
 from django.shortcuts import render
+from django.core import serializers
 from django.http import Http404, HttpResponse
-from .models import Users, Wishes, Events
-from serializers import UserDetailsSerializer
+from mongoengine.queryset.visitor  import Q
+from .models import Users, Wishes, Events, UsersRelationships
+from serializers import UsersSerializer, UsersRelationShipsSerializer
 from rest_framework.decorators import api_view, renderer_classes, permission_classes
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -31,16 +33,19 @@ def account(request):
 def userdetails(request, username):
 
     user = Users.objects.get(user__username=username)
+    relationShips = UsersRelationships.objects(Q(from_user=user) | Q(to_user=user))
 
-    if request.accepted_renderer.format == 'html':
-        context = {
+    context = {
             'user': user,
-        }
+            'relationShips': relationShips
+    }
+    if request.accepted_renderer.format == 'html':
         return render(request, 'upto/userdetails.html', context)
 
-    #no comment
-    serializer = UserDetailsSerializer(instance=user)
-    return Response(serializer.data)
+    userSerializer = UsersSerializer(instance=user)
+    relationShipsSerializer = UsersRelationShipsSerializer(instance=relationShips, many=True)
+
+    return Response({'user': userSerializer.data, 'relationShips': relationShipsSerializer.data})
 
 
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
@@ -84,7 +89,7 @@ def createWish(request):
     :param request:
     """
     #1 - get user with id
-    current_user = Users.objects.get(user__username='marc')
+    current_user = Users.objects.get(user__username=request.session['username'])
 
     #2 - get wish title from form
     _wish_title = request.POST['wish']

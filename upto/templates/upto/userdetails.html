@@ -21,5 +21,17 @@
         <div id="last_login" title="last_login">Last Login : {{user.user.last_login}}</div>
         <div id="date_joined" title="date_joined">Date Joined : {{user.user.last_joined}}</div>
 </div>
+<div id="contentRelationShips">
+        <h2>Relationships</h2>
+        {% for object in relationShips %}
+                        <div>
+                                <div>Type : {{ object.status }}</div>
+                                <div>From Friend : {{ object.from_user.user.username }}</div>
+                                <div>To Friend : {{ object.to_user.user.username }}</div>
+                                <br/>
+                        </div>
+
+        {% endfor %}
+</div>
 </body>
 </html>

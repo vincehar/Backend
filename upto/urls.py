@@ -10,5 +10,5 @@ urlpatterns = [
     url(r'^createwish/$', views.createWish, name='createwish'),
     url(r'^createevent/$', views.createEvent, name='createevent'),
     url(r'^event/(?P<_event_id>\w+)/$', views.getEventInfo, name='eventDetails'),
-    url(r'^userdetails/(?P<username>[a-z]+)/$', views.userdetails, name='userdetails')
+    url(r'^userdetails/(?P<username>[a-z]+)/$', views.userdetails, name='userdetails'),
 ]
