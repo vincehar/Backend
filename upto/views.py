@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.core import serializers
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from mongoengine.queryset.visitor  import Q
 from .models import Users, Wishes, Events, UsersRelationships
 from serializers import UsersSerializer, UsersRelationShipsSerializer
@@ -13,10 +13,38 @@ from itertools import chain
 from operator import itemgetter, attrgetter, methodcaller
 from collections import defaultdict
 import datetime
-
+from django.contrib.auth import login
+from regme.documents import User
+from upto.forms import UsersLoginForm
 
 def index(request):
     return render(request, 'upto/index.html')
+
+def login(request):
+    from mongoengine.queryset import DoesNotExist
+    if request.method == 'POST':
+        import json
+        username = request.POST['username']
+        password = request.POST['password']
+        try:
+            user = User.objects.get(username=username)
+            if user.check_password(password):
+                user.backend = 'mongoengine.django.auth.MongoEngineBackend'
+                request.session.set_expiry(60 * 60 * 1) # 1 hour timeout
+                #return HttpResponse(json.dumps({'user':'connected'}))
+                #return allwishesAndEvent(request)
+                return HttpResponseRedirect('/upto/wishes')
+            else:
+                return HttpResponse(json.dumps({'user':'not connected'}))
+        except DoesNotExist:
+            return HttpResponseRedirect('/upto/account/register')
+            #return HttpResponse(json.dumps({'user':'not exists'}))
+
+    else:
+        form = UsersLoginForm()
+        return render(request, 'registration/login.html', {'form': form})
+
+
 
 def account(request):
     # test with a user

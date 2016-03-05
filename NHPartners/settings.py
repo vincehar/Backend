@@ -75,6 +75,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework_mongoengine',
     'corsheaders',
+    'regme',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -92,7 +93,7 @@ MIDDLEWARE_CLASSES = (
 
 
 AUTHENTICATION_BACKENDS = (
-    'django_mongoengine.mongo_auth.backends.MongoEngineBackend',
+    #'django_mongoengine.mongo_auth.backends.MongoEngineBackend',
     'mongoengine.django.auth.MongoEngineBackend',
     'social_auth.backends.twitter.TwitterBackend',
     'social_auth.backends.facebook.FacebookBackend',
@@ -130,7 +131,8 @@ WSGI_APPLICATION = 'NHPartners.wsgi.application'
 
 
 AUTH_USER_MODEL = 'mongo_auth.MongoUser'
-MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'
+#MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'
+MONGOENGINE_USER_DOCUMENT = 'regme.documents.User'
 SESSION_ENGINE = 'mongoengine.django.sessions'
 SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
 mongoengine.connect('upto', host='mongodb://localhost/upto')
@@ -180,10 +182,19 @@ STATIC_URL = '/static/'
 FACEBOOK_APP_ID = '222535738090638'
 FACEBOOK_API_SECRET = '09a2f8b2122cd05061e50fa00dcc999a'
 
-LOGIN_URL = '/login-form/'
-LOGIN_REDIRECT_URL = '/logged-in/'
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/upto/wishes/'
 LOGIN_ERROR_URL = '/login-error/'
 
 SOCIAL_AUTH_COMPLETE_URL_NAME = 'socialauth_complete'
 SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
 
+ACCOUNT_ACTIVATION_DAYS = 2
+
+SITE = {'domain': '127.0.0.1:8000', 'name': 'YouWeesh'}
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'alexandre.frigout@gmail.com'
+EMAIL_HOST_PASSWORD = 'njgjxbwgwucqypdf'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
