@@ -81,7 +81,7 @@ def allwishesAndEvent(request):
     if request.method == 'POST':
         request.session['username'] = request.POST['username']
     tmplst = list()
-    print(request.session['username'])
+    request.session['username']
     for event in Events.objects:
         tmplst.append(event)
     for wish in Wishes.objects:

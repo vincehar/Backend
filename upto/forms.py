@@ -27,7 +27,7 @@ class UsersRegistrationForm(UserCreationForm):
 	def save(self):
 		user = super(UsersRegistrationForm, self).save()
 		profile = Users(user=user)
-		user.is_active = False
+		#user.is_active = False
 		user.save()
 		profile.save()
 
