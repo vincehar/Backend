@@ -32,8 +32,8 @@ def login(request):
                 user.backend = 'mongoengine.django.auth.MongoEngineBackend'
                 request.session.set_expiry(60 * 60 * 1) # 1 hour timeout
                 #return HttpResponse(json.dumps({'user':'connected'}))
-                #return allwishesAndEvent(request)
-                return HttpResponseRedirect('/upto/wishes')
+                return allwishesAndEvent(request)
+                #return HttpResponseRedirect('/upto/wishes')
             else:
                 return HttpResponse(json.dumps({'user':'not connected'}))
         except DoesNotExist:
@@ -81,7 +81,7 @@ def allwishesAndEvent(request):
     if request.method == 'POST':
         request.session['username'] = request.POST['username']
     tmplst = list()
-    print(request.session['username'])
+    request.session['username']
     for event in Events.objects:
         tmplst.append(event)
     for wish in Wishes.objects:
