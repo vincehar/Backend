@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.core import serializers
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect, JsonResponse
 from mongoengine.queryset.visitor  import Q
 from .models import Users, Wishes, Events, UsersRelationships
-from serializers import UsersSerializer, UsersRelationShipsSerializer
+from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer
 from rest_framework.decorators import api_view, renderer_classes, permission_classes
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -20,29 +20,68 @@ from upto.forms import UsersLoginForm
 def index(request):
     return render(request, 'upto/index.html')
 
+@api_view(('GET', 'POST'))
+@permission_classes((AllowAny, ))
+@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
 def login(request):
     from mongoengine.queryset import DoesNotExist
+    """
+    si on recupere un POST, on essaie de connecter le user
+    """
     if request.method == 'POST':
-        import json
+        """
+        recuperation des donnees du POST
+        """
         username = request.POST['username']
         password = request.POST['password']
+        """
+        gestion specifique pour les rendering HTML => desktop
+        """
+        if request.accepted_renderer.format == 'html':
+            form = UsersLoginForm(request, data=request.POST)
+            try:
+                if form.is_valid():
+                    user = User.objects.get(username=username)
+                    if user.is_active and user.check_password(password):
+                        user.backend = 'mongoengine.django.auth.MongoEngineBackend'
+                        request.session.set_expiry(60 * 60 * 1)
+                        #return HttpResponse(json.dumps({'user':'connected'}))
+                        return allwishesAndEvent(request)
+                else:
+                    return render(request, 'registration/login.html', {'form': form})
+            except DoesNotExist:
+                #return render(request, 'registration/login.html', {'form': form})
+                return HttpResponseRedirect('/upto/account/register')
+                #return HttpResponse(json.dumps({'user':'not exists'}))
+
+        """
+        gestion specifique pour les rendering json => mobile
+        """
+        import json
+        requser = {'username': request.POST.get('username'), 'password': request.POST.get('password')}
+        serializer = BaseUserSerializer(data=requser)
+        data = {}
         try:
             user = User.objects.get(username=username)
-            if user.check_password(password):
+            if user.is_active and user.check_password(password):
                 user.backend = 'mongoengine.django.auth.MongoEngineBackend'
-                request.session.set_expiry(60 * 60 * 1) # 1 hour timeout
-                #return HttpResponse(json.dumps({'user':'connected'}))
-                return allwishesAndEvent(request)
-                #return HttpResponseRedirect('/upto/wishes')
+                data['result'] = 'success'
+                data['username'] = username
             else:
-                return HttpResponse(json.dumps({'user':'not connected'}))
+                print("no log")
+                data['result'] = 'failed'
+                data['username'] = 'please log in'
         except DoesNotExist:
-            return HttpResponseRedirect('/upto/account/register')
-            #return HttpResponse(json.dumps({'user':'not exists'}))
+            data['result'] = 'does not exist'
+            data['username'] = 'please register'
+        print(json.dumps(data))
+        #return JsonResponse(data)
+        return HttpResponse(json.dumps(data), content_type = "application/json")
 
     else:
         form = UsersLoginForm()
         return render(request, 'registration/login.html', {'form': form})
+
 
 
 

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(l){
+
+        alert('he');
+
+        $("#idForm").submit(function(e) {
+
+
+        var url = "http://192.168.10.14:8000/upto/login/"; // the script where you handle the form input.
+
+        console.log(url);
+
+        $.ajax({
+
+               type: "POST",
+
+               url: url,
+
+               dataType: 'json',
+
+               data: $("#idForm").serialize(), // serializes the form's elements.
+
+               crossDomain: true,
+
+               success: function(data)
+
+               {
+
+                   $('#res').html("result : ".concat(data.username).concat(", ").concat(data.result));
+
+               }
+
+             });
+
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+
+        });
+
+
+        $("button").click(function(){
+
+            alert('clicked');
+
+        });
+
+    });
+
+    </script>
+
+
+</head>
+<body>
+
+    <form id="idForm" method="post">
+        username :
+        <input type="text" name='username' />
+        password :
+        <input type="text" name='password' />
+        <input type='submit' />
+    </form>
+
+    <div id="res">
+        result :
+    </div>
+
+    <button>click</button>
+</body>
+</html>
+
