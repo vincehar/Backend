@@ -2,7 +2,8 @@ from django.core.mail.backends.console import EmailBackend
 from django.db import models as orimodels
 #from mongo_auth.contrib.models import User
 from djangotoolbox.fields import ListField, EmbeddedModelField
-from mongoengine.django.auth import User
+#from mongoengine.django.auth import User
+from regme.documents import User
 import datetime
 from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocumentField, \
     ReferenceField, StringField, ListField, DateTimeField, BinaryField, BooleanField, ObjectIdField
