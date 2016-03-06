@@ -6,50 +6,66 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script>
     $(document).ready(function(l){
+        var username = '';
+        var csrftoken = '';
 
-        alert('he');
+        function readCookie(name) {
+    var nameEQ = encodeURIComponent(name) + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
+    }
+    return null;
+}
 
+
+        //login
         $("#idForm").submit(function(e) {
-
-
-        var url = "http://192.168.10.14:8000/upto/login/"; // the script where you handle the form input.
-
-        console.log(url);
-
+        var url = "http://127.0.0.1:8000/upto/login/"; // the script where you handle the form input.
         $.ajax({
-
                type: "POST",
-
                url: url,
-
                dataType: 'json',
-
                data: $("#idForm").serialize(), // serializes the form's elements.
-
                crossDomain: true,
-
                success: function(data)
-
                {
-
+                   username = data.username;
+                   csrftoken = readCookie('csrftoken');
+                   console.log(csrftoken);
                    $('#res').html("result : ".concat(data.username).concat(", ").concat(data.result));
-
+                   $("#youwish").show();
                }
-
              });
-
-
         e.preventDefault(); // avoid to execute the actual submit of the form.
-
         });
 
+        //creation de wish
+        $("#createwish").submit(function(e) {
 
-        $("button").click(function(){
-
-            alert('clicked');
-
+        console.log(username)
+        var url = "http://127.0.0.1:8000/upto/createwish/"+username+"/"; // the script where you handle the form input.
+        $.ajax({
+               type: "POST",
+               url: url,
+               data: $("#createwish").serialize(), // serializes the form's elements.
+               crossDomain: true,
+               dataType: "json",
+               success: function(d)
+               {
+                        alert("hey");
+                        console.log(d.username);
+                        $("#wish").html(d.username.concat(" ").concat(d.result).concat(" ").concat(d.title));
+               },
+               error(jqXHR, textStatus, errorThrown)
+                {
+                        alert('not ok');
+                }
+             });
+        e.preventDefault(); // avoid to execute the actual submit of the form.
         });
-
     });
 
     </script>
@@ -59,6 +75,7 @@
 <body>
 
     <form id="idForm" method="post">
+        <div>Connection</div>
         username :
         <input type="text" name='username' />
         password :
@@ -70,7 +87,19 @@
         result :
     </div>
 
-    <button>click</button>
+
+    <div id="youwish" style="display: none">
+    <form id="createwish" method="post">
+        <div>Create a wish</div>
+        title :
+        <input type="text" name='wish' />
+        <input type='submit' />
+    </form>
+    <div id="wish">
+        result :
+    </div>
+    </div>
+
 </body>
 </html>
 

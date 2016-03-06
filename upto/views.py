@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.core import serializers
-from django.http import Http404, HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from mongoengine.queryset.visitor  import Q
 from .models import Users, Wishes, Events, UsersRelationships
-from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer
+from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer, WishSerializer
 from rest_framework.decorators import api_view, renderer_classes, permission_classes
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -46,7 +46,8 @@ def login(request):
                         user.backend = 'mongoengine.django.auth.MongoEngineBackend'
                         request.session.set_expiry(60 * 60 * 1)
                         #return HttpResponse(json.dumps({'user':'connected'}))
-                        return allwishesAndEvent(request)
+                        #return allwishesAndEvent(request)
+                        return HttpResponseRedirect('/upto/wishes')
                 else:
                     return render(request, 'registration/login.html', {'form': form})
             except DoesNotExist:
@@ -64,6 +65,7 @@ def login(request):
         try:
             user = User.objects.get(username=username)
             if user.is_active and user.check_password(password):
+                request.session['UserName'] = user.username
                 user.backend = 'mongoengine.django.auth.MongoEngineBackend'
                 data['result'] = 'success'
                 data['username'] = username
@@ -74,8 +76,6 @@ def login(request):
         except DoesNotExist:
             data['result'] = 'does not exist'
             data['username'] = 'please register'
-        print(json.dumps(data))
-        #return JsonResponse(data)
         return HttpResponse(json.dumps(data), content_type = "application/json")
 
     else:
@@ -95,7 +95,7 @@ def account(request):
     return render(request, 'upto/myaccount.html', context)
 
 @api_view(('GET',))
-@permission_classes((AllowAny, ))
+@permission_classes((AllowAny, IsAuthenticated))
 @renderer_classes((JSONRenderer, TemplateHTMLRenderer))
 def userdetails(request, username):
 
@@ -114,28 +114,29 @@ def userdetails(request, username):
 
     return Response({'user': userSerializer.data, 'relationShips': relationShipsSerializer.data})
 
-
+@api_view(('GET',))
+@permission_classes((AllowAny, ))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def allwishesAndEvent(request):
-    if request.method == 'POST':
-        request.session['username'] = request.POST['username']
+    #if request.method == 'POST':
+    request.session['username'] = request.user
     tmplst = list()
-    request.session['username']
+    #request.session['username']
     for event in Events.objects:
         tmplst.append(event)
     for wish in Wishes.objects:
         tmplst.append(wish)
     context = {
         'eventsList': sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True),
-        'username': request.session['username'],
+        'username': request.user,
     }
 
-    #if request.accepted_renderer.format == 'html':
-    return render(request, 'upto/wishes.html', context)
-    #else:
-    #    serializer = MySerializer(instance=context)
-     #   data = serializer.data
-      #  return Response(data)
+    if request.accepted_renderer.format == 'html':
+        return render(request, 'upto/wishes.html', context)
+    else:
+        serializer = WishSerializer(instance=context)
+        data = serializer.data
+        return Response(data)
 
 def getEventInfo(request, _event_id):
     event = Events.objects.get(id=_event_id)
@@ -148,7 +149,10 @@ def getEventInfo(request, _event_id):
 
     return render(request, './upto/eventDetails.html', context)
 
-def createWish(request):
+@api_view(('POST',))
+@permission_classes((AllowAny, ))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def createWish(request, username):
     """
     View used to create a wish for a user
     :rtype: object
@@ -156,13 +160,22 @@ def createWish(request):
     :param request:
     """
     #1 - get user with id
-    current_user = Users.objects.get(user__username=request.session['username'])
-
-    #2 - get wish title from form
-    _wish_title = request.POST['wish']
-    current_user.create_wish(_wish_title)
-
-    return redirect('../../upto/wishes/')
+    request.session['UserName'] = username
+    print(request.session['UserName'])
+    current_user = Users.objects.get(user__username=username)
+    if request.method == 'POST':
+        _wish_title = request.POST['wish']
+        current_user.create_wish(_wish_title)
+    if request.accepted_renderer.format == 'html':
+        return redirect('/upto/wishes/')
+    else:
+        import json
+        data = {}
+        data['title'] = request.POST['wish']
+        data['username'] = username
+        data['result'] = 'success'
+        #wish = WishSerializer()
+        return HttpResponse(json.dumps(data), content_type = "application/json")
 
 def deleteWish(request, _wish_id):
     """

@@ -17,8 +17,8 @@ class Wishes(Document):
     creation_date = DateTimeField()
     interested = ListField(ReferenceField('Users'))
 
-    def get_ins(self):
-        return self._instance
+    def user_name(self):
+        return self.user_id.username
 
     def get_ref_date(self):
         return self.creation_date
