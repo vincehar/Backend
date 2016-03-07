@@ -114,12 +114,12 @@ def userdetails(request, username):
 
     return Response({'user': userSerializer.data, 'relationShips': relationShipsSerializer.data})
 
-@api_view(('GET',))
+@api_view(('POST', 'GET'))
 @permission_classes((AllowAny, ))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def allwishesAndEvent(request):
     #if request.method == 'POST':
-    request.session['username'] = request.user
+    #    request.session['username'] = request.user
     tmplst = list()
     #request.session['username']
     for event in Events.objects:
@@ -149,7 +149,7 @@ def getEventInfo(request, _event_id):
 
     return render(request, './upto/eventDetails.html', context)
 
-@api_view(('POST',))
+@api_view(('POST', 'GET'))
 @permission_classes((AllowAny, ))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def createWish(request, username):

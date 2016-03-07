@@ -144,3 +144,32 @@ sudo python setup.py install
 # Installations du package django rest framework mongoengine
 #-------------------------------------------------------------
  sudo pip install django-rest-framework-mongoengine
+
+#-------------------------------------------------------------
+# Installation account register
+#-------------------------------------------------------------
+sudo pip install regme
+
+> python
+> import regme
+> regme
+
+sudo vi /usr/local/lib/python2.7/dist-packages/regme/forms.py
+
+remplacer
+if self.cleaned_data.keys() == {'username', 'activation_key'}:
+par
+if self.cleaned_data.keys() == ['username', 'activation_key']:
+
+sudo pip install mongodbforms
+
+sudo vi /usr/local/lib/python2.7/dist-packages/mongodbforms/documentoptions.py
+
+comment line #7:
+#from django.db.models.options import get_verbose_name
+and insert line
+from django.utils.text import camel_case_to_spaces as get_verbose_name
+
+sudo pip install django-registration
+
+
