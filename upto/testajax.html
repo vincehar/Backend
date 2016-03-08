@@ -7,7 +7,9 @@
     <script>
     $(document).ready(function(l){
         var username = '';
+        var password = '';
         var csrftoken = '';
+        var auth_token = '';
 
         function readCookie(name) {
     var nameEQ = encodeURIComponent(name) + "=";
@@ -33,9 +35,11 @@
                success: function(data)
                {
                    username = data.username;
+                   password = data.password;
+                   auth_token =
                    csrftoken = readCookie('csrftoken');
                    console.log(csrftoken);
-                   $('#res').html("result : ".concat(data.username).concat(", ").concat(data.result));
+                   $('#res').html("result : ".concat(data.username).concat(", ").concat(data.result).concat(", ").concat(data.token));
                    $("#youwish").show();
                }
              });
@@ -53,6 +57,14 @@
                data: $("#createwish").serialize(), // serializes the form's elements.
                crossDomain: true,
                dataType: "json",
+               xhrFields: {
+                   withCredentials: true
+               },
+               beforeSend: function (xhr) {
+                   //xhr.setRequestHeader ("Access-Control-Allow-Credentials: true");
+                   //xhr.setRequestHeader ("Authorization", "Basic " + window.btoa(unescape(encodeURIComponent(username + ":" + password))));
+                     xhr.setRequestHeader ("X-CSRFToken", csrftoken);
+               },
                success: function(d)
                {
                         alert("hey");

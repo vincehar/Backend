@@ -79,10 +79,10 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     #'mongo_auth.middleware.LazyUserMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
@@ -123,6 +123,8 @@ REST_FRAMEWORK = {
 ROOT_URLCONF = 'NHPartners.urls'
 
 WSGI_APPLICATION = 'NHPartners.wsgi.application'
+
+CORS_ALLOW_CREDENTIALS = True
 
 #USER_CLASS = 'mongo_auth.contrib.models.User'
 
