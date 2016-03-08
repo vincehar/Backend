@@ -7,8 +7,6 @@
     <div id="myAccount">My Account <a href="{% url 'userdetails' username %}">--></a></div>
 
 <h1>Create a wish</h1>
-
-
 <form action="{% url 'createwish' username %}" method="post">
 {% csrf_token %}
     <input type="text" name="wish" />

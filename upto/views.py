@@ -3,7 +3,7 @@ from django.core import serializers
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from mongoengine.queryset.visitor  import Q
 from .models import Users, Wishes, Events, UsersRelationships
-from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer
+from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer, WishSerializer
 from rest_framework.decorators import api_view, renderer_classes, permission_classes
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -13,9 +13,8 @@ from itertools import chain
 from operator import itemgetter, attrgetter, methodcaller
 from collections import defaultdict
 import datetime
-from django.contrib.auth import login as log, authenticate
-#from regme.documents import User
-from mongoengine.django.auth import User
+from django.contrib.auth import login
+from regme.documents import User
 from upto.forms import UsersLoginForm
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect, csrf_exempt
 
@@ -69,6 +68,7 @@ def login(request):
             user = User.objects.get(username=username)
             user = authenticate(username=username, password=password)
             if user.is_active and user.check_password(password):
+                request.session['UserName'] = user.username
                 user.backend = 'mongoengine.django.auth.MongoEngineBackend'
                 data['result'] = 'success'
                 data['username'] = username
@@ -132,12 +132,12 @@ def allwishesAndEvent(request):
         'username': request.session['username'],
     }
 
-    #if request.accepted_renderer.format == 'html':
-    return render(request, 'upto/wishes.html', context)
-    #else:
-    #    serializer = MySerializer(instance=context)
-     #   data = serializer.data
-      #  return Response(data)
+    if request.accepted_renderer.format == 'html':
+        return render(request, 'upto/wishes.html', context)
+    else:
+        serializer = WishSerializer(instance=context)
+        data = serializer.data
+        return Response(data)
 
 def getEventInfo(request, _event_id):
     event = Events.objects.get(id=_event_id)
@@ -159,7 +159,6 @@ def createWish(request, username):
     :param _id_user:
     :param request:
     """
-    print(request.user)
     #1 - get user with id
     current_user = Users.objects.get(user__username=request.session['username'])
 
