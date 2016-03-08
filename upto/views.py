@@ -3,7 +3,7 @@ from django.core import serializers
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from mongoengine.queryset.visitor  import Q
 from .models import Users, Wishes, Events, UsersRelationships
-from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer, WishSerializer
+from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer
 from rest_framework.decorators import api_view, renderer_classes, permission_classes
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -13,8 +13,9 @@ from itertools import chain
 from operator import itemgetter, attrgetter, methodcaller
 from collections import defaultdict
 import datetime
-from django.contrib.auth import login
-from regme.documents import User
+from django.contrib.auth import login as log, authenticate
+#from regme.documents import User
+from mongoengine.django.auth import User
 from upto.forms import UsersLoginForm
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect, csrf_exempt
 

@@ -21,3 +21,9 @@ class UsersRelationShipsSerializer(DocumentSerializer):
     class Meta:
         model = UsersRelationships
         depth = 1
+
+class WishSerializer(DocumentSerializer):
+    user = serializers.CharField(source='user_name', read_only=True)
+    class Meta:
+        model = Wishes
+        fields = ('title', 'user')
