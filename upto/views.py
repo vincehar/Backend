@@ -3,7 +3,7 @@ from django.core import serializers
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from mongoengine.queryset.visitor  import Q
 from .models import Users, Wishes, Events, UsersRelationships
-from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer
+from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer, WishSerializer
 from rest_framework.decorators import api_view, renderer_classes, permission_classes
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -123,7 +123,7 @@ def allwishesAndEvent(request):
     if request.method == 'POST':
         request.session['username'] = request.POST['username']
     tmplst = list()
-    request.session['username']
+    request.session['username'] = 'ceika'
     for event in Events.objects:
         tmplst.append(event)
     for wish in Wishes.objects:
@@ -133,7 +133,8 @@ def allwishesAndEvent(request):
         'username': request.session['username'],
     }
 
-    if request.accepted_renderer.format == 'html':
+    #if request.accepted_renderer.format == 'html':
+    if 1==1:
         return render(request, 'upto/wishes.html', context)
     else:
         serializer = WishSerializer(instance=context)

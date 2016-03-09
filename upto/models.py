@@ -52,6 +52,7 @@ class Events(Document):
     interested = ListField(ReferenceField('Users'))
     event_id = ObjectIdField(default=ObjectId)
     name = StringField(required=True)
+    thumbnail = ReferenceField('Medias')
     start_date = DateTimeField(required=True)
     end_date = DateTimeField(required=True)
     address = EmbeddedDocumentField('Address')
