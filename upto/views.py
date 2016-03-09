@@ -120,6 +120,7 @@ def userdetails(request, username):
 @permission_classes((IsAuthenticated, ))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def allwishesAndEvent(request):
+
     if request.method == 'POST':
         request.session['username'] = request.POST['username']
     tmplst = list()

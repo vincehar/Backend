@@ -14,17 +14,18 @@ print "         clearing Users Collection"
 print "------------------------------------------"
 users.remove()
 
+
 for use in ['alex', 'vincent', 'marc']:
     print('create user : ' + use)
     try:
-        user = User.objects.get(username=use)
+        user = User.objects.get(username=use, email='test@bb.com')
     except User.DoesNotExist:
-        u=User.objects.create(username=use)
-        u.save()
+      u=User.objects.create(username=use, email='test2@bb.com')
+      u.save()
 
-Users.objects
+#Users.objects
 
-#
+
 us=Users.objects.get_or_create(user=User.objects.get(username='marc'))
 v=Users.objects.get_or_create(user=User.objects.get(username='vincent'))
 usa=Users.objects.get_or_create(user=User.objects.get(username='alex'))
@@ -62,15 +63,12 @@ vincent.save()
 #create_event(self, _name, _startDate, _endDate):
 
 
+#alex.relate_to_user(marc)
 
-
-
-alex.relate_to_user(marc)
-
-vincent.relate_to_user(alex)
 
 #alex.interests_to_wish(marc, marc.wishes[0])
 
 #alex.accept_follower(vincent)
+
 
 #marc.make_symerical_relationship(alex)
