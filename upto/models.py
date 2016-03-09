@@ -2,7 +2,7 @@ from django.core.mail.backends.console import EmailBackend
 from django.db import models as orimodels
 #from mongo_auth.contrib.models import User
 from djangotoolbox.fields import ListField, EmbeddedModelField
-#from mongoengine.django.auth import User
+from mongoengine.django.auth import User
 from regme.documents import User
 import datetime
 from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocumentField, \
@@ -86,32 +86,22 @@ class UsersRelationships(Document):
     """
     Class used to manage relationships beetwen Users instances.
     """
-    RELATIONSHIPS_TYPES = (
-        ('Follower', 'Follower'),
-        ('Followed', 'Followed'),
-    )
 
     rel_id = ObjectIdField(default=ObjectId)
     from_user = ReferenceField('Users')
     to_user = ReferenceField('Users')
-    active = BooleanField()
-    symetrical = BooleanField()
+    accepted = BooleanField()
     blocked = BooleanField()
-    status = StringField(choices=RELATIONSHIPS_TYPES)
     date_created = DateTimeField(default=datetime.datetime.now())
 
-    def make_symetrical(self):
+    def accept(self):
         """
         Method used to make a relationship symetrical, i.e user a follows back user b.
         :return: self
         """
-        self.active=True
-        self.symetrical=True
+        self.accepted=True
         return self
 
-    def activate(self):
-        self.active=True
-        return self
 
 
 class Users(Document):
@@ -143,26 +133,13 @@ class Users(Document):
         :param user: instance of Users class
         :return: self
         """
-        rel = UsersRelationships(from_user=self, to_user=user, active=False, symetrical=False, blocked=False, status='Follower')
+        rel = UsersRelationships(from_user=self, to_user=user, accepted=False, blocked=False)
         #user.friends.append(rel)
-        relself = UsersRelationships(from_user=user, to_user=self, active=False, symetrical=False, blocked=False, status='Followed')
         #self.friends.append(relself)
         #user.save()
         #self.save()
         #return self
         rel.save()
-        relself.save()
-        return self
-
-    def make_symerical_relationship(self, user):
-        """
-        Method used to follow a user that already follows you, i.e follow back a user.
-        :param user: instance of Users class
-        :return: self
-        """
-        #Users.objects(friends__from_user=user, friends__to_user=self).update(set__friends__S__active=True, set__friends__S__symetrical=True)
-        #self.save()
-        UsersRelationships.objects(from_user=user, to_user=self).update(set__active=True, set__symetrical=True)
         return self
 
     def accept_follower(self, user):
@@ -172,7 +149,7 @@ class Users(Document):
         :return:
         """
         #Users.objects(friends__from_user=user, friends__to_user=self).update(set__friends__S__active=True)
-        UsersRelationships.objects(from_user=user, to_user=self).update(set__active=True)
+        UsersRelationships.objects(from_user=user, to_user=self).update(set__accepted=True)
         #self.save()
         return self
 
