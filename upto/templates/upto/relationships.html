@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Relationships</title>
+    <h1>User Relationships</h1>
+</head>
+<body>
+<div id="contentRelationShips">
+        <h2>Relationships</h2>
+        {% for object in relationShips %}
+                        <div>
+                                <div>From Friend : {{ object.from_user.user.username }}</div>
+                                <div>To Friend : {{ object.to_user.user.username }}</div>
+                                <div>Accepted : {{ object.accepted }}</div>
+                                <br/>
+                        </div>
+
+        {% endfor %}
+</div>
+</body>
+</html>

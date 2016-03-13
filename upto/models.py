@@ -2,11 +2,12 @@ from django.core.mail.backends.console import EmailBackend
 from django.db import models as orimodels
 #from mongo_auth.contrib.models import User
 from djangotoolbox.fields import ListField, EmbeddedModelField
-from mongoengine.django.auth import User
+#from mongoengine.django.auth import User
 from regme.documents import User
 import datetime
+import base64
 from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocumentField, \
-    ReferenceField, StringField, ListField, DateTimeField, BinaryField, BooleanField, ObjectIdField
+    ReferenceField, StringField, ListField, DateTimeField, BinaryField, BooleanField, ObjectIdField, ImageField
 from bson import ObjectId
 
 
@@ -112,6 +113,7 @@ class Users(Document):
     """
     user_id = ObjectIdField(default=ObjectId)
     user = EmbeddedDocumentField('User')
+    picture = ImageField()
     #wishes = ListField(ReferenceField('Wishes'))
     #logs = ListField(ReferenceField('Logs'))
     #friends = ListField(EmbeddedDocumentField('UsersRelationships'))
@@ -203,6 +205,10 @@ class Users(Document):
     def my_wishes(self):
         return self.wishes
     """
+
+    def get_picture(self):
+        picture = base64.b64encode(self.picture.read())
+        return picture
 
 
 

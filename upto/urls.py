@@ -14,8 +14,10 @@ urlpatterns = [
     url(r'^createwish/(?P<username>[a-z0-9]+)/$', views.createWish, name='createwish'),
     url(r'^deletewish/(?P<_wish_id>\w+)$', views.deleteWish, name='deletewish'),
     url(r'^createevent/$', views.createEvent, name='createevent'),
+    url(r'^uploadpictureuser/$', views.uploadPictureUser, name='uploadpictureuser'),
     url(r'^deleteevent/(?P<_event_id>\w+)$', views.deleteEvent, name='deleteevent'),
     url(r'^event/(?P<_event_id>\w+)/$', views.getEventInfo, name='eventDetails'),
     url(r'^userdetails/(?P<username>[a-z0-9]+)/$', views.userdetails, name='userdetails'),
+    url(r'^relationships/(?P<username>[a-z0-9]+)/$', views.relationships, name='relationships'),
     url(r'^login/', views.login, name='login'),
 ]

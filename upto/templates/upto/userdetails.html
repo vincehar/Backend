@@ -6,9 +6,24 @@
     <h1>User Details</h1>
 </head>
 <body>
-<div id="content">
+<div id="contentUserDetails">
         <h2>Hello {{user.user.username}}</h2>
-        <div id="username" title="username">Login : {{user.user.username}}</div>
+
+        <div title="picture">
+            {% if user.picture%}
+                <img src='data:image/jpeg;base64,{{ user.get_picture }}' height="225">
+            {% else %}
+                <input value="No picture profile" readonly="readonly">
+            {% endif%}
+            {% block content %}
+                <form action="{% url 'uploadpictureuser' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="username" id="username" value="{{user.user.username}}">
+                        <p><input type="file" name="picture" id="picture"/></p>
+                        <p><input type="submit" name="submit" id="submit" value="Submit"/></p>
+                </form>
+            {% endblock %}
+        </div>
         <br/>
         <div id="first_name" title="first_name">First name : {{user.user.first_name}}</div>
         <div id="last_name" title="last_name">Last name : {{user.user.last_name}}</div>
@@ -20,18 +35,6 @@
         <br />
         <div id="last_login" title="last_login">Last Login : {{user.user.last_login}}</div>
         <div id="date_joined" title="date_joined">Date Joined : {{user.user.last_joined}}</div>
-</div>
-<div id="contentRelationShips">
-        <h2>Relationships</h2>
-        {% for object in relationShips %}
-                        <div>
-                                <div>Type : {{ object.status }}</div>
-                                <div>From Friend : {{ object.from_user.user.username }}</div>
-                                <div>To Friend : {{ object.to_user.user.username }}</div>
-                                <br/>
-                        </div>
-
-        {% endfor %}
 </div>
 </body>
 </html>

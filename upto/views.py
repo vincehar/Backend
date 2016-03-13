@@ -97,6 +97,9 @@ def account(request):
     }
     return render(request, 'upto/myaccount.html', context)
 
+'''
+--------- A GARDER ------
+
 @api_view(('GET',))
 @permission_classes((AllowAny, ))
 @renderer_classes((JSONRenderer, TemplateHTMLRenderer))
@@ -116,6 +119,64 @@ def userdetails(request, username):
     relationShipsSerializer = UsersRelationShipsSerializer(instance=relationShips, many=True)
 
     return Response({'user': userSerializer.data, 'relationShips': relationShipsSerializer.data})
+'''
+
+
+@api_view(('GET',))
+@permission_classes((AllowAny, ))
+@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
+def userdetails(request, username):
+
+    user = Users.objects.get(user__username=username)
+
+    context = {
+            'user': user,
+    }
+    if request.accepted_renderer.format == 'html':
+        return render(request, 'upto/userdetails.html', context)
+
+    userSerializer = UsersSerializer(instance=user)
+
+    return Response(userSerializer.data)
+
+
+def uploadPictureUser(request):
+    """
+    View used to upload picture for a user
+    :rtype: object
+    :param _id_user:
+    :param request:
+    """
+    try:
+        picture = request.FILES['picture']
+        user = Users.objects.get(user__username=request.POST['username'])
+        user.picture.replace(picture)
+        user.save()
+
+    except Users.DoesNotExist:
+        raise Http404('Event id does not exist')
+    else:
+        return redirect('/upto/userdetails/'+user.user.username)
+
+
+@api_view(('GET',))
+@permission_classes((AllowAny, ))
+@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
+def relationships(request, username):
+
+    user = Users.objects.get(user__username=username)
+    relationShips = UsersRelationships.objects(Q(from_user=user) | Q(to_user=user))
+
+    context = {
+            'relationShips': relationShips
+    }
+    if request.accepted_renderer.format == 'html':
+        return render(request, 'upto/relationships.html', context)
+
+    relationShipsSerializer = UsersRelationShipsSerializer(instance=relationShips, many=True)
+
+    return Response(relationShipsSerializer.data)
+
 
 @permission_classes((IsAuthenticated, ))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))

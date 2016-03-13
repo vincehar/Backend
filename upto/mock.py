@@ -63,7 +63,7 @@ vincent.save()
 #create_event(self, _name, _startDate, _endDate):
 
 
-#alex.relate_to_user(marc)
+alex.relate_to_user(marc)
 
 
 #alex.interests_to_wish(marc, marc.wishes[0])
