@@ -1,70 +1,197 @@
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Wishes</title>
-       <link rel="stylesheet" type="text/css" href="../../static/upto/wishes.css">
+    <link rel="stylesheet" type="text/css" href="../../static/upto/wishes.css">
+    <link rel="stylesheet" type="text/css" href="/static/js/datetimepicker/jquery.datetimepicker.css"/>
+      <link rel="stylesheet" href="/static/css/bootstrap.css">
+<style type="text/css">
+
+.custom-date-style {
+	background-color: red !important;
+}
+
+.input{
+}
+.input-wide{
+	width: 500px;
+}
+
+</style>
 </head>
 <body>
-  <script type="text/javascript" src="/static/js/autoCompleteAddress.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcRm_4W48Hu4OdwAHSaIfmWerF475RQA0&libraries=places&callback=initAutocomplete" async defer></script>
-    <div id="myAccount">My Account <a href="{% url 'userdetails' username %}">--></a></div>
+<script src="/static/js/datetimepicker/jquery.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="/static/js/imagepreview.js"></script>
+<script src="/static/js/datetimepicker/build/jquery.datetimepicker.full.js"></script>
+<script type="text/javascript" src="/static/js/autoCompleteAddress.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcRm_4W48Hu4OdwAHSaIfmWerF475RQA0&libraries=places&callback=initAutocomplete" async defer></script>
+<div class="container-fluid">
+    <div class="row">
+            <div id="col-sm-12">
+                <div id="header-container">
+                     <div class="row">
+                        <div class="col-sm-1">
+                            <div><img class="img-responsive" src="/static/medias/logo_fake.png" width="50" height="50"/></div>
+                        </div>
+                         <div class="col-sm-1">
+                            <div><img class="img-responsive" src="/static/medias/event_notif_fake.png" width="50" height="50"/></div>
+                        </div>
+                         <div class="col-sm-2"></div>
+                        <div class="col-sm-4">
+                            <section>
+                                <form id="create_weesh" onsubmit="/test.html" method="POST">{% csrf_token %}
+                                    <div class="input-list style-1 clearfix"><input type="text" name="wish" placeholder="Make a weesh..."></div>
+                                    <input type='submit'>
+                                </form>
+                            </section>
+                        </div>
+                     </div>
 
-<h1>Create a wish</h1>
-    <div>{{ user }}</div>
-
-<h1>Create an event</h1>
-<form action="{% url 'createevent' %}" method="post">
-{% csrf_token %}
-    <div>Event Name : <input type="text" name="eventName" /></div>
-    <div>Je suis Owner : {{ current_user.user_id.user.username }}<input type="text" name="user_id" value="{{ current_user.id }}"/></div>
-    <div>Start date : <input type="datetime" name="start_date" /></div>
-    <div>End date : <input type="datetime" name="end_date" /></div>
-    <div><input type="file" name="thumbnail">Image de prez event...</div>
-   <div id="address">
-    <div id="locationField">
-      <input id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" type="text"></input>
-    </div>
-        <div class="label">Street address</div>
-        <div class="slimField"><input class="field" id="street_number" disabled="true"></input></div>
-        <div class="wideField" colspan="2"><input class="field" id="route" disabled="true"></input></div>
-        <div>
-        <div class="label">City</div>
-        <div class="wideField" colspan="3"><input class="field" id="locality" disabled="true"></input></div>
+                </div>
+            </div>
         </div>
-      <div>
-        <div class="label">State</div>
-        <div class="slimField"><input class="field" id="administrative_area_level_1" disabled="true"></input></div>
-        <div class="label">Zip code</div>
-        <div class="wideField"><input class="field" id="postal_code" disabled="true"></input></div>
-      </div>
-      <div>
-        <div class="label">Country</div>
-        <div class="wideField" colspan="3"><input class="field" id="country" disabled="true"></input></div>
-      </div>
-    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div id="left-profile-container">
+                <div id="myAccount">
+                    <img src='data:image/jpeg;base64,{{ current_user.get_picture }}' height="50">
+                    <a href="{% url 'userdetails' current_user.user.username %}">{{ current_user.user.username }}</a></div>
+                <div>Your weeshes :</div>
+                <div>
+                    <ul>
+                        <li>Jouer au tennis</li>
+                        <li>Boire un coup</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="left-filter-container">
+                <div>Filtered by :</div><br />
+                <div>
+                    <form>
+                        <div><input type="checkbox"  />Events</div>
+                        <div><input type="checkbox"  />Weeshes</div>
+                        <br />
+                        <div>
+                            <label>
+                                <input type="radio" name="radio1" value="radio1">Friends(3/34)
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="radio" name="radio1" value="radio2">public
+                            </label>
+                        </div>
+                        <div>
+                            <label>Distance
+                                <input type="range" min="0" max="50" value="25" /> 5 km
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="left-event-container">
+                <h1>Create an event</h1>
+                {% block content %}
+                <form action="{% url 'createevent' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                    <div>Event picture : <div id="preview1"> Import your picture </div>
+                        <div><input type="file" name="thumbnail" id="thumbnail"></div>
+                    </div>
+                    <div>Event Name : <input type="text" name="eventName" /></div>
+                    <div>Je suis Owner : {{ current_user.user_id.user.username }}<input type="text" name="user_id" value="{{ current_user.id }}"/></div>
 
-<input type="submit" value="Create Event" />
-</form>
-    <div>
-        {% if eventsList %}
-                {% for object in eventsList %}
-                    {% if object.title %}
-                    <div class="wishes">
-                        <div>Wish : {{ object.title }}</div>
-                        <div>Date : {{ object.creation_date }}</div>
-                        <div>Fucking user :  {{ object.user_id.user.username }}</div>
-                        <div><a href="../deletewish/{{ object.id }}">DELETE X </a></div>
+                    <div>Start date : <input type="text" name="start_date" id="default_datetimepicker1" readonly/></div>
+                    <div>End date : <input type="text" name="end_date" id="default_datetimepicker2" readonly/></div>
+                   <div id="address">
+                    <div id="locationField">
+                      <input id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" type="text"></input>
                     </div>
-                    {% endif %}
-                    {% if object.name %}
-                    <div class="events">
-                        <div>Event : {{ object.name }}</div>
-                        <div>Date : {{ object.start_date}}</div>
-                        <div>Fucking user :  {{ object.user_id.user.username }}</div>
-                        <a href="../event/{{ object.id }}">{{ object.id }} </a>
-                        <div><a href="../deleteevent/{{ object.id }}">DELETE X </a></div>
+                        <div class="label">Street address</div>
+                        <div class="slimField"><input class="field" id="street_number" disabled="true"></input></div>
+                        <div class="wideField" colspan="2"><input class="field" id="route" disabled="true"></input></div>
+                        <div>
+                        <div class="label">City</div>
+                        <div class="wideField" colspan="3"><input class="field" id="locality" disabled="true"></input></div>
+                        </div>
+                      <div>
+                        <div class="label">State</div>
+                        <div class="slimField"><input class="field" id="administrative_area_level_1" disabled="true"></input></div>
+                        <div class="label">Zip code</div>
+                        <div class="wideField"><input class="field" id="postal_code" disabled="true"></input></div>
+                      </div>
+                      <div>
+                        <div class="label">Country</div>
+                        <div class="wideField" colspan="3"><input class="field" id="country" disabled="true"></input></div>
+                      </div>
                     </div>
-                    {% endif %}
-                {% endfor %}
-        {% endif %}
+
+                <input type="submit" value="Create Event" />
+                </form>
+                {% endblock %}
+            </div>
+        </div>
+        <div class="col-sm-6" id="weeshes-list">
+            <div>
+                <ul>
+                {% if eventsList %}
+                        {% for object in eventsList %}
+                            {% if object.title %}
+                            <li>
+                                <div>Wish : {{ object.title }}</div>
+                                <div>Date : {{ object.creation_date }}</div>
+                                <div>Weesher :  {{ object.user_id.user.username }}</div>
+                                <div><a href="../deletewish/{{ object.id }}">DELETE X </a></div>
+                            </li>
+                            {% endif %}
+                            {% if object.name %}
+                            <li>
+                                <img class="thumbnail" src='data:image/jpeg;base64,{{ object.get_picture }}' height="100">
+                                <div>Event : {{ object.name }}</div>
+                                <div>Date : {{ object.start_date}}</div>
+                                <div>Creator :  {{ object.user_id.user.username }}</div>
+                                <a href="../event/{{ object.id }}">Details >> </a>
+                                <div><a href="../deleteevent/{{ object.id }}">DELETE X </a></div>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+                {% endif %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div id="right-suggestions-container">
+                Suggestions
+                <div> Star wars Watching</div>
+                <div>Tennis 5km</div>
+            </div>
+        </div>
     </div>
+</div>
 </body>
+<script src="/static/js/datetimepicker/selecterDatetimepicker.js"></script>
+<script>/*$(function() {
+    $('#preview1').imagepreview({
+        input: '[name="thumbnail"]',
+        reset: '#reset1',
+        preview: '#preview1'
+     });
+ });*/
+
+ $('#create_weesh').submit(function(event){
+  $.ajax({
+    url: '../createwish',
+    type: 'post',
+    dataType:'html',   //expect return data as html from server
+    data: $('#create_weesh').serialize(),
+    success: function(response, textStatus, jqXHR){
+      $('#weeshes-list').html(response);   //select the id and put the response in the html
+    },
+   error: function(jqXHR, textStatus, errorThrown){
+      console.log('error(s):'+textStatus, errorThrown);
+   }
+ });
+ });
+ </script>
+
+

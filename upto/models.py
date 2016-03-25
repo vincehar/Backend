@@ -53,7 +53,7 @@ class Events(Document):
     interested = ListField(ReferenceField('Users'))
     event_id = ObjectIdField(default=ObjectId)
     name = StringField(required=True)
-    thumbnail = ReferenceField('Medias')
+    thumbnail = ImageField()
     start_date = DateTimeField(required=True)
     end_date = DateTimeField(required=True)
     address = EmbeddedDocumentField('Address')
@@ -66,6 +66,10 @@ class Events(Document):
 
     def get_ref_date(self):
         return self.creation_date
+
+    def get_picture(self):
+        thumbnail = base64.b64encode(self.thumbnail.read())
+        return thumbnail
 
 class Messages(Document):
     from_user = ReferenceField('Users')
@@ -171,7 +175,7 @@ class Users(Document):
         return wish
 
 
-    def create_event(self, _name, _start_date, _end_date):
+    def create_event(self, _name, _start_date, _end_date, _thumbnail):
         """
         Method user to create an event
         :param _user:
@@ -184,6 +188,7 @@ class Users(Document):
         #self.events_Owned.append(event)
         #self.save()
         #return self
+        event.thumbnail.replace(_thumbnail)
         event.save()
         return event
     """

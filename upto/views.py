@@ -182,17 +182,18 @@ def relationships(request, username):
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def allwishesAndEvent(request):
 
+    user = Users.objects.get(user__username='marc')
     if request.method == 'POST':
         request.session['username'] = request.POST['username']
     tmplst = list()
-    request.session['username'] = 'ceika'
+    request.session['username'] = 'marc'
     for event in Events.objects:
         tmplst.append(event)
     for wish in Wishes.objects:
         tmplst.append(wish)
     context = {
         'eventsList': sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True),
-        'username': request.session['username'],
+        'current_user': user,
     }
 
     #if request.accepted_renderer.format == 'html':
@@ -216,7 +217,7 @@ def getEventInfo(request, _event_id):
 
 @csrf_exempt
 @permission_classes((IsAuthenticated, ))
-def createWish(request, username):
+def createWish(request):
     """
     View used to create a wish for a user
     :rtype: object
@@ -224,7 +225,8 @@ def createWish(request, username):
     :param request:
     """
     #1 - get user with id
-    current_user = Users.objects.get(user__username=request.session['username'])
+    print request.POST['wish']
+    current_user = Users.objects.get(user__username='marc')
 
     #2 - get wish title from form
     _wish_title = request.POST['wish']
@@ -255,15 +257,14 @@ def createEvent(request):
     """
     try:
         #1 - get event_id
-        #name = 'marc'
         current_user = Users.objects.get(id=request.POST['user_id'])
         #2 - get wish title from form
         eventName = request.POST['eventName']
 
-        start_date = datetime.datetime.strptime(request.POST['start_date'], "%Y-%m-%d %H:%M")
-        end_date = datetime.datetime.strptime(request.POST['end_date'], "%Y-%m-%d %H:%M")
-
-        current_user.create_event(eventName, start_date, end_date)
+        start_date = datetime.datetime.strptime(request.POST['start_date'], "%Y/%m/%d %H:%M")
+        end_date = datetime.datetime.strptime(request.POST['end_date'], "%Y/%m/%d %H:%M")
+        thumbnail = request.FILES['thumbnail']
+        current_user.create_event(eventName, start_date, end_date, thumbnail)
     except Users.DoesNotExist:
         raise Http404('Event id does not exist')
     else:

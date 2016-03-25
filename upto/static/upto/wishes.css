@@ -16,6 +16,9 @@
     background-color:yellow;
 }
 
+body{
+    margin:20px;
+}
 
 .test{
    background-color:yellow;
@@ -23,4 +26,152 @@
 
 .mainList{
 
+}
+
+* {margin: 0; padding: 0;}
+
+div {
+  margin: 0px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+h3 {
+  font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+}
+
+li img {
+  float: left;
+  margin: 0 15px 0 0;
+}
+
+li p {
+  font: 200 12px/1.5 Georgia, Times New Roman, serif;
+}
+
+li {
+  padding: 10px;
+  overflow: auto;
+  border-with:1px;
+  border-style:groove;
+  border-color:grey;
+  margin:1%;
+  border-radius: 10px;
+}
+
+li:hover {
+  background: #eee;
+  cursor: pointer;
+}
+
+#header-container{
+    width:100%;
+    background-color:lightskyblue;
+    border-with:1px;
+    border-style:solid;
+    border-color:lightskyblue;
+    padding:1%;
+    border-radius: 10px;
+}
+
+#logo-img{
+    float:left;
+    margin-top : 0.8%;
+    margin-left : 3%;
+   /* background-image:url("../medias/logo_fake.png");
+    height:50px;
+    width:50px;*/
+}
+
+#weesh-create-container{
+    border-with:1px;
+    border-style:solid;
+    border-color:lightskyblue;
+    border-radius: 10px;
+    margin-top : 1%;
+}
+
+.style-1 input[type="text"] {
+  padding: 5px;
+  border: solid 1px #dcdcdc;
+  transition: box-shadow 0.3s, border 0.3s;
+  width:100%;
+}
+.style-1 input[type="text"]:focus,
+.style-1 input[type="text"].focus {
+  border: solid 1px #707070;
+  box-shadow: 0 0 5px 1px #969696;
+}
+
+.left-container{
+    float:left;
+    height:100%;
+    width:21%;
+    margin-top:1%;
+}
+
+#left-profile-container{
+    border-with:1px;
+    border-style:solid;
+    border-color:black;
+    width:100%;
+    margin-top:1%;
+    padding:1%;
+     border-radius: 10px;
+}
+
+#left-filter-container{
+    border-with:1px;
+    border-style:solid;
+    border-color:black;
+    width:100%;
+    margin-top:4%;
+    padding-left:2%;
+    padding-top:2%;
+     border-radius: 10px;
+}
+
+#left-event-container{
+    border-with:1px;
+    border-style:solid;
+    border-color:black;
+    border-radius: 10px;
+    width:100%;
+    margin-top:4%;
+}
+
+.center-container{
+    margin-left:23%;
+    margin-right:15%;
+    border-with:1px;
+    border-style:solid;
+    border-color:black;
+    border-radius: 10px;
+    margin-top:1%;
+    padding:1%;
+    width:50%;
+    overflow: hidden;
+}
+
+#right-suggestions-container{
+    border-with:1px;
+    border-style:solid;
+    border-color:black;
+    border-radius: 10px;
+    height:100%;
+    width:100%;
+    margin-top:1%;
+}
+
+.right-container{
+    float:right;
+    height:100%;
+    width:23%;
+    margin-top:1%;
+    border-with:1px;
+    border-style:solid;
+    border-color:black;
+    border-radius: 10px;
 }
