@@ -6,7 +6,7 @@ from . import views
 
 app_name = 'upto'
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
+    url(r'^$', views.login, name='index'),
     url(r'^register/', include('regme.urls')),
     url(r'^account/register/', UsersBackend.as_view(form_class=UsersRegistrationForm), name='register'),
     url(r'^account/$', views.account, name='account'),
@@ -19,5 +19,5 @@ urlpatterns = [
     url(r'^event/(?P<_event_id>\w+)/$', views.getEventInfo, name='eventDetails'),
     url(r'^userdetails/(?P<username>[a-z0-9]+)/$', views.userdetails, name='userdetails'),
     url(r'^relationships/(?P<username>[a-z0-9]+)/$', views.relationships, name='relationships'),
-    url(r'^login/', views.login, name='login'),
+    #url(r'^login/', views.login, name='login'),
 ]

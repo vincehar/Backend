@@ -4,7 +4,7 @@
     <title>Wishes</title>
     <link rel="stylesheet" type="text/css" href="../../static/upto/wishes.css">
     <link rel="stylesheet" type="text/css" href="/static/js/datetimepicker/jquery.datetimepicker.css"/>
-      <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
 <style type="text/css">
 
 .custom-date-style {
@@ -40,7 +40,8 @@
                          <div class="col-sm-2"></div>
                         <div class="col-sm-4">
                             <section>
-                                <form id="create_weesh" onsubmit="/test.html" method="POST">{% csrf_token %}
+                                <form id="create_weesh" method="POST">
+                                    {% csrf_token %}
                                     <div class="input-list style-1 clearfix"><input type="text" name="wish" placeholder="Make a weesh..."></div>
                                     <input type='submit'>
                                 </form>
@@ -178,20 +179,21 @@
      });
  });*/
 
- $('#create_weesh').submit(function(event){
+$('#create_weesh').submit(function(event){
   $.ajax({
     url: '../createwish',
-    type: 'post',
+    type: 'POST',
     dataType:'html',   //expect return data as html from server
     data: $('#create_weesh').serialize(),
+
     success: function(response, textStatus, jqXHR){
       $('#weeshes-list').html(response);   //select the id and put the response in the html
     },
-   error: function(jqXHR, textStatus, errorThrown){
-      console.log('error(s):'+textStatus, errorThrown);
-   }
- });
- });
+    error: function(response, textStatus, errorThrown){
+        $('#weeshes-list').html('error '+textStatus + ' ' + response, errorThrown);
+    }
+  });
+});
  </script>
 
 

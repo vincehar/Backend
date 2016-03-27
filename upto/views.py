@@ -53,7 +53,7 @@ def login(request):
                         #return allwishesAndEvent(request)
                         return HttpResponseRedirect('/upto/wishes/')
                 else:
-                    return render(request, 'registration/login.html', {'form': form})
+                    return render(request, 'upto/index.html', {'form': form})
             except DoesNotExist:
                 return HttpResponseRedirect('/upto/account/register/')
                 #return HttpResponse(json.dumps({'user':'not exists'}))
@@ -84,7 +84,7 @@ def login(request):
 
     else:
         form = UsersLoginForm()
-        return render(request, 'registration/login.html', {'form': form})
+        return render(request, 'upto/index.html', {'form': form})
 
 
 @permission_classes((IsAuthenticated, ))
@@ -184,7 +184,7 @@ def allwishesAndEvent(request):
 
     user = Users.objects.get(user__username='marc')
     if request.method == 'POST':
-        request.session['username'] = request.POST['username']
+        request.session['username'] = 'marc'#request.POST['username']
     tmplst = list()
     request.session['username'] = 'marc'
     for event in Events.objects:
