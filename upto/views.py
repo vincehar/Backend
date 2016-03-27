@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.core import serializers
 from django.http import Http404, HttpResponse, HttpResponseRedirect
-from mongoengine.queryset.visitor  import Q
+from mongoengine.queryset.visitor import Q
 from .models import Users, Wishes, Events, UsersRelationships
 from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer, WishSerializer
 from rest_framework.decorators import api_view, renderer_classes, permission_classes
@@ -183,6 +183,8 @@ def relationships(request, username):
 def allwishesAndEvent(request):
 
     user = Users.objects.get(user__username='marc')
+    print user.id
+    wishes_user = Wishes.objects.get(user_id=user.id)
     if request.method == 'POST':
         request.session['username'] = 'marc'#request.POST['username']
     tmplst = list()
