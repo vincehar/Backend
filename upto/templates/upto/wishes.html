@@ -40,7 +40,7 @@
                          <div class="col-sm-2"></div>
                         <div class="col-sm-4">
                             <section>
-                                <form id="create_weesh" method="POST">
+                                <form id="create_weesh" method="POST" action="{% url 'createwish' %}" >
                                     {% csrf_token %}
                                     <div class="input-list style-1 clearfix"><input type="text" name="wish" placeholder="Make a weesh..."></div>
                                     <input type='submit'>
@@ -61,33 +61,21 @@
                 <div>Your weeshes :</div>
                 <div>
                     <ul>
-                        <li>Jouer au tennis</li>
-                        <li>Boire un coup</li>
+                        {% if wishes_user %}
+                            {% for wish in wishes_user %}
+                                <li>{{ wish.title }}</li>
+                            {% endfor %}
+                        {% endif %}
                     </ul>
                 </div>
             </div>
             <div id="left-filter-container">
                 <div>Filtered by :</div><br />
                 <div>
-                    <form>
-                        <div><input type="checkbox"  />Events</div>
-                        <div><input type="checkbox"  />Weeshes</div>
-                        <br />
-                        <div>
-                            <label>
-                                <input type="radio" name="radio1" value="radio1">Friends(3/34)
-                            </label>
-                        </div>
-                        <div>
-                            <label>
-                                <input type="radio" name="radio1" value="radio2">public
-                            </label>
-                        </div>
-                        <div>
-                            <label>Distance
-                                <input type="range" min="0" max="50" value="25" /> 5 km
-                            </label>
-                        </div>
+                    <form action="{% url 'filter' %}" method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" />
                     </form>
                 </div>
             </div>
