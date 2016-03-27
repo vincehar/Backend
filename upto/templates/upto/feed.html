@@ -1,0 +1,28 @@
+<div>
+    <ul>
+        {% if eventsList %}
+            {% for object in eventsList %}
+                {% if object.title %}
+                    <li>
+                                    <div>Wish : {{ object.title }}</div>
+                                    <div>Date : {{ object.creation_date }}</div>
+                                    <div>Weesher :  {{ object.user_id.user.username }}</div>
+                                    <div><a href="../deletewish/{{ object.id }}">DELETE X </a></div>
+                    </li>
+                {% endif %}
+                {% if object.name %}
+                    <li>
+                                    {% if object.get_picture|length > 0 %}
+                                        <img class="thumbnail" src='data:image/jpeg;base64,{{ object.get_picture }}' height="100">
+                                    {% endif%}
+                                    <div>Event : {{ object.name }}</div>
+                                    <div>Date : {{ object.start_date}}</div>
+                                    <div>Creator :  {{ object.user_id.user.username }}</div>
+                                    <a href="../event/{{ object.id }}">Details >> </a>
+                                    <div><a href="../deleteevent/{{ object.id }}">DELETE X </a></div>
+                     </li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </ul>
+</div>

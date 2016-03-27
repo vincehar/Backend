@@ -37,15 +37,12 @@
                          <div class="col-sm-1">
                             <div><img class="img-responsive" src="/static/medias/event_notif_fake.png" width="50" height="50"/></div>
                         </div>
-                         <div class="col-sm-2"></div>
+                        <div class="col-sm-2"></div>
                         <div class="col-sm-4">
-                            <section>
-                                <form id="create_weesh" method="POST">
-                                    {% csrf_token %}
-                                    <div class="input-list style-1 clearfix"><input type="text" name="wish" placeholder="Make a weesh..."></div>
-                                    <input type='submit'>
-                                </form>
-                            </section>
+                            <form  name="addweesh" id="addweesh" action="../createwish/" method="POST">
+                                <div class="input-list style-1 clearfix"><input type="text" name="weeshtitle" id="weeshtitle" placeholder="Make a weesh..."></div>
+                                <input id="create_weesh" value="Yes I do" type='submit'>
+                            </form>
                         </div>
                      </div>
 
@@ -133,32 +130,7 @@
             </div>
         </div>
         <div class="col-sm-6" id="weeshes-list">
-            <div>
-                <ul>
-                {% if eventsList %}
-                        {% for object in eventsList %}
-                            {% if object.title %}
-                            <li>
-                                <div>Wish : {{ object.title }}</div>
-                                <div>Date : {{ object.creation_date }}</div>
-                                <div>Weesher :  {{ object.user_id.user.username }}</div>
-                                <div><a href="../deletewish/{{ object.id }}">DELETE X </a></div>
-                            </li>
-                            {% endif %}
-                            {% if object.name %}
-                            <li>
-                                <img class="thumbnail" src='data:image/jpeg;base64,{{ object.get_picture }}' height="100">
-                                <div>Event : {{ object.name }}</div>
-                                <div>Date : {{ object.start_date}}</div>
-                                <div>Creator :  {{ object.user_id.user.username }}</div>
-                                <a href="../event/{{ object.id }}">Details >> </a>
-                                <div><a href="../deleteevent/{{ object.id }}">DELETE X </a></div>
-                            </li>
-                            {% endif %}
-                        {% endfor %}
-                {% endif %}
-                </ul>
-            </div>
+           {% include 'upto/feed.html' %}
         </div>
         <div class="col-sm-3">
             <div id="right-suggestions-container">
@@ -179,21 +151,42 @@
      });
  });*/
 
-$('#create_weesh').submit(function(event){
-  $.ajax({
-    url: '../createwish',
-    type: 'POST',
-    dataType:'html',   //expect return data as html from server
-    data: $('#create_weesh').serialize(),
-
-    success: function(response, textStatus, jqXHR){
-      $('#weeshes-list').html(response);   //select the id and put the response in the html
-    },
-    error: function(response, textStatus, errorThrown){
-        $('#weeshes-list').html('error '+textStatus + ' ' + response, errorThrown);
-    }
-  });
+$("#addweesh").submit(function(e)
+{
+    var postData = $(this).serializeArray();
+    var formURL = $(this).attr("action");
+    $.ajax(
+    {
+        url : formURL,
+        type: "POST",
+        data : postData,
+        success:function(data, textStatus, jqXHR)
+        {
+            //data: return data from server
+            refreshFeed()
+        },
+        error: function(jqXHR, textStatus, errorThrown)
+        {
+            //if fails
+        }
+    });
+    e.preventDefault(); //STOP default action
+    e.unbind(); //unbind. to stop multiple form submit.
 });
+
+$( document ).ready(function() {
+    refreshFeed()
+});
+
+function refreshFeed() {
+     $.ajax({
+             url: '{% url 'feed' %}',
+             success: function(data) {
+                    $('#weeshes-list').html(data);
+             }
+     });
+}
+
  </script>
 
 

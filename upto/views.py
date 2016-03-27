@@ -189,12 +189,7 @@ def allwishesAndEvent(request):
         request.session['username'] = 'marc'#request.POST['username']
     tmplst = list()
     request.session['username'] = 'marc'
-    for event in Events.objects:
-        tmplst.append(event)
-    for wish in Wishes.objects:
-        tmplst.append(wish)
     context = {
-        'eventsList': sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True),
         'current_user': user,
     }
 
@@ -205,6 +200,23 @@ def allwishesAndEvent(request):
         serializer = WishSerializer(instance=context)
         data = serializer.data
         return Response(data)
+
+@api_view(('GET',))
+@permission_classes((AllowAny, ))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def feed(request):
+
+    tmplst = list()
+    for event in Events.objects:
+        tmplst.append(event)
+    for wish in Wishes.objects:
+        tmplst.append(wish)
+    context = {
+        'eventsList': sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True)
+    }
+
+    return render(request, 'upto/feed.html', context)
+
 
 def getEventInfo(request, _event_id):
     event = Events.objects.get(id=_event_id)
@@ -217,8 +229,9 @@ def getEventInfo(request, _event_id):
 
     return render(request, 'upto/eventDetails.html', context)
 
-@csrf_exempt
-@permission_classes((IsAuthenticated, ))
+@api_view(('POST',))
+@permission_classes((AllowAny, ))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def createWish(request):
     """
     View used to create a wish for a user
@@ -227,11 +240,10 @@ def createWish(request):
     :param request:
     """
     #1 - get user with id
-    print request.POST['wish']
     current_user = Users.objects.get(user__username='marc')
 
     #2 - get wish title from form
-    _wish_title = request.POST['wish']
+    _wish_title = request.POST['weeshtitle']
     current_user.create_wish(_wish_title)
 
     return redirect('/upto/wishes/')

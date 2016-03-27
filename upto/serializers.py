@@ -27,3 +27,4 @@ class WishSerializer(DocumentSerializer):
     class Meta:
         model = Wishes
         fields = ('title', 'user')
+
