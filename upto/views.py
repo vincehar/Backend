@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.core import serializers
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from mongoengine.queryset.visitor import Q
@@ -16,7 +16,7 @@ import datetime
 from django.contrib.auth import login as log, authenticate
 #from regme.documents import User
 from mongoengine.django.auth import User
-from upto.forms import UsersLoginForm
+from upto.forms import UsersLoginForm, FilterForm
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect, csrf_exempt
 
 def index(request):
@@ -182,15 +182,18 @@ def relationships(request, username):
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def allwishesAndEvent(request):
 
+    filter_form = FilterForm()
+
     user = Users.objects.get(user__username='marc')
-    print user.id
-    #wishes_user = Wishes.objects.get(user_id=user.id)
+    wishes_user = Wishes.objects[:5](user_id=user.id).order_by('-creation_date')
     if request.method == 'POST':
         request.session['username'] = 'marc'#request.POST['username']
     tmplst = list()
     request.session['username'] = 'marc'
     context = {
         'current_user': user,
+        'wishes_user': wishes_user,
+        'form': filter_form,
     }
 
     #if request.accepted_renderer.format == 'html':
@@ -296,3 +299,21 @@ def deleteEvent(request, _event_id):
         raise Http404('Event id does not exist')
     else:
         return redirect('/upto/wishes/')
+
+def filter_list(request):
+    '''
+
+    :param request:
+    :return:
+    '''
+    if request.method == "POST":
+        try:
+            #if form.is_valid():
+            value = request.POST["chk_events"]
+            valueweehses = request.POST["chk_weeshes"]
+            print valueweehses
+            print value
+        except Wishes.DoesNotExist:
+            raise Http404('Wish id does not exist')
+        else:
+            return redirect('/upto/wishes/')
