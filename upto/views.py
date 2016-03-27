@@ -184,7 +184,7 @@ def allwishesAndEvent(request):
 
     user = Users.objects.get(user__username='marc')
     print user.id
-    wishes_user = Wishes.objects.get(user_id=user.id)
+    #wishes_user = Wishes.objects.get(user_id=user.id)
     if request.method == 'POST':
         request.session['username'] = 'marc'#request.POST['username']
     tmplst = list()
