@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^account/register/', UsersBackend.as_view(form_class=UsersRegistrationForm), name='register'),
     url(r'^account/$', views.account, name='account'),
     url(r'^wishes/$', views.allwishesAndEvent, name='wishes'),
-    url(r'^feed/$', views.feed, name='feed'),
+    url(r'^weeshesevents/$', views.weeshesevents, name='weeshesevents'),
     url(r'^createwish/$', views.createWish, name='createwish'),
     url(r'^filter/$', views.filter_list, name='filter'),
     url(r'^deletewish/(?P<_wish_id>\w+)$', views.deleteWish, name='deletewish'),

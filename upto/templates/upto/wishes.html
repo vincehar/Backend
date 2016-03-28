@@ -118,7 +118,6 @@
             </div>
         </div>
         <div class="col-sm-6" id="weeshes-list">
-           {% include 'upto/feed.html' %}
         </div>
         <div class="col-sm-3">
             <div id="right-suggestions-container">
@@ -151,7 +150,7 @@ $("#addweesh").submit(function(e)
         success:function(data, textStatus, jqXHR)
         {
             //data: return data from server
-            refreshFeed()
+            refreshWeeshesEvents()
         },
         error: function(jqXHR, textStatus, errorThrown)
         {
@@ -163,12 +162,12 @@ $("#addweesh").submit(function(e)
 });
 
 $( document ).ready(function() {
-    refreshFeed()
+    refreshWeeshesEvents()
 });
 
-function refreshFeed() {
+function refreshWeeshesEvents() {
      $.ajax({
-             url: '{% url 'feed' %}',
+             url: '{% url 'weeshesevents' %}',
              success: function(data) {
                     $('#weeshes-list').html(data);
              }

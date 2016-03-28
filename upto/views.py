@@ -207,7 +207,7 @@ def allwishesAndEvent(request):
 @api_view(('GET',))
 @permission_classes((AllowAny, ))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
-def feed(request):
+def weeshesevents(request):
 
     tmplst = list()
     for event in Events.objects:
@@ -218,7 +218,7 @@ def feed(request):
         'eventsList': sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True)
     }
 
-    return render(request, 'upto/feed.html', context)
+    return render(request, 'upto/weeshesevents.html', context)
 
 
 def getEventInfo(request, _event_id):

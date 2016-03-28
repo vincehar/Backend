@@ -12,7 +12,7 @@
                 {% endif %}
                 {% if object.name %}
                     <li>
-                                    {% if object.get_picture|length > 0 %}
+                                    {% if object.thumbnail %}
                                         <img class="thumbnail" src='data:image/jpeg;base64,{{ object.get_picture }}' height="100">
                                     {% endif%}
                                     <div>Event : {{ object.name }}</div>
