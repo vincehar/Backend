@@ -1,23 +1,22 @@
-from django.shortcuts import render, render_to_response
-from django.core import serializers
-from django.http import Http404, HttpResponse, HttpResponseRedirect
-from mongoengine.queryset.visitor import Q
-from .models import Users, Wishes, Events, UsersRelationships
-from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer, WishSerializer
-from rest_framework.decorators import api_view, renderer_classes, permission_classes
-from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.response import Response
-from django.shortcuts import redirect
-from itertools import chain
-from operator import itemgetter, attrgetter, methodcaller
-from collections import defaultdict
 import datetime
-from django.contrib.auth import login as log, authenticate
-#from regme.documents import User
+import pickle
+from operator import methodcaller
+import django.core.exceptions
+from django.contrib.auth import authenticate, logout
+from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect
+from django.shortcuts import render
+from mongoengine.queryset.visitor import Q
+from rest_framework.decorators import api_view, renderer_classes, permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
+from rest_framework.response import Response
+from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer, WishSerializer
+from .models import Users, Wishes, Events, UsersRelationships
 from mongoengine.django.auth import User
 from upto.forms import UsersLoginForm, FilterForm
-from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect, csrf_exempt
+from django.views.decorators.csrf import ensure_csrf_cookie
+
 
 def index(request):
     return render(request, 'upto/index.html')
@@ -32,25 +31,19 @@ def login(request):
     si on recupere un POST, on essaie de connecter le user
     """
     if request.method == 'POST':
-        """
-        recuperation des donnees du POST
-        """
         username = request.POST['username']
         password = request.POST['password']
-        """
-        gestion specifique pour les rendering HTML => desktop
-        """
+
         if request.accepted_renderer.format == 'html':
             form = UsersLoginForm(request, data=request.POST)
             try:
                 if form.is_valid():
-                    user = User.objects.get(username=username)
+                    #user = User.objects.get(username=username)
                     user = authenticate(username=username, password=password)
                     if user.is_active and user.check_password(password):
                         user.backend = 'mongoengine.django.auth.MongoEngineBackend'
                         request.session.set_expiry(60 * 60 * 1)
-                        #return HttpResponse(json.dumps({'user':'connected'}))
-                        #return allwishesAndEvent(request)
+                        request.session['username'] = user.username
                         return HttpResponseRedirect('/upto/wishes/')
                 else:
                     return render(request, 'upto/index.html', {'form': form})
@@ -87,10 +80,15 @@ def login(request):
         return render(request, 'upto/index.html', {'form': form})
 
 
+def logout_view(request):
+    logout(request)
+    form = UsersLoginForm()
+    return render(request, 'upto/index.html', {'form': form})
+
 @permission_classes((IsAuthenticated, ))
 def account(request):
     # test with a user
-    user_id = Users.objects.get(user__username='marc').id
+    user_id = Users.objects.get(user__username=request.session['username']).id
     user = Users.objects.get(id=user_id)
     context = {
         'one_user': user,
@@ -126,16 +124,14 @@ def userdetails(request, username):
 @permission_classes((AllowAny, ))
 @renderer_classes((JSONRenderer, TemplateHTMLRenderer))
 def userdetails(request, username):
-
-    user = Users.objects.get(user__username=username)
-
+    connected_user = getConnectedUser(request)
     context = {
-            'user': user,
+            'user': connected_user,
     }
     if request.accepted_renderer.format == 'html':
         return render(request, 'upto/userdetails.html', context)
 
-    userSerializer = UsersSerializer(instance=user)
+    userSerializer = UsersSerializer(instance=connected_user)
 
     return Response(userSerializer.data)
 
@@ -148,15 +144,15 @@ def uploadPictureUser(request):
     :param request:
     """
     try:
+        connected_user = getConnectedUser(request)
         picture = request.FILES['picture']
-        user = Users.objects.get(user__username=request.POST['username'])
-        user.picture.replace(picture)
-        user.save()
+        connected_user.picture.replace(picture)
+        connected_user.save()
 
     except Users.DoesNotExist:
         raise Http404('Event id does not exist')
     else:
-        return redirect('/upto/userdetails/'+user.user.username)
+        return redirect('/upto/userdetails/'+connected_user.user.username)
 
 
 @api_view(('GET',))
@@ -177,35 +173,35 @@ def relationships(request, username):
 
     return Response(relationShipsSerializer.data)
 
-
+@api_view(('GET',))
 @permission_classes((IsAuthenticated, ))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def allwishesAndEvent(request):
 
-    filter_form = FilterForm()
-
-    user = Users.objects.get(user__username='marc')
-    wishes_user = Wishes.objects[:5](user_id=user.id).order_by('-creation_date')
-    if request.method == 'POST':
-        request.session['username'] = 'marc'#request.POST['username']
-    tmplst = list()
-    request.session['username'] = 'marc'
-    context = {
-        'current_user': user,
-        'wishes_user': wishes_user,
-        'form': filter_form,
-    }
-
-    #if request.accepted_renderer.format == 'html':
-    if 1==1:
-        return render(request, 'upto/wishes.html', context)
+    try:
+        if 'username' in request.session:
+            user = Users.objects.get(user__username=request.session['username'])
+            wishes_user = Wishes.objects[:5](user_id=user.id).order_by('-creation_date')
+            context = {
+                'current_user': user,
+                'wishes_user': wishes_user,
+                'form': FilterForm(),
+            }
+        else:
+            form = UsersLoginForm(request)
+            return render(request, 'upto/index.html', {'form': form})
+    except Users.DoesNotExist:
+        raise Http404('Not logged')
     else:
-        serializer = WishSerializer(instance=context)
-        data = serializer.data
-        return Response(data)
+        if request.accepted_renderer.format == 'html':
+            return render(request, 'upto/wishes.html', context)
+        else:
+            serializer = WishSerializer(instance=context)
+            data = serializer.data
+            return Response(data)
 
 @api_view(('GET',))
-@permission_classes((AllowAny, ))
+@permission_classes((IsAuthenticated, ))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def weeshesevents(request):
 
@@ -220,14 +216,15 @@ def weeshesevents(request):
 
     return render(request, 'upto/weeshesevents.html', context)
 
+def getConnectedUser(request):
+    return Users.objects.get(user__username=request.session['username'])
 
 def getEventInfo(request, _event_id):
     event = Events.objects.get(id=_event_id)
-    current_user = Users.objects.get(user__username=request.session['username'])
     print _event_id
     context = {
         'currentEvent': event,
-        'current_user': current_user,
+        'current_user': getConnectedUser(request),
     }
 
     return render(request, 'upto/eventDetails.html', context)
@@ -242,13 +239,10 @@ def createWish(request):
     :param _id_user:
     :param request:
     """
-    #1 - get user with id
-    current_user = Users.objects.get(user__username='marc')
-
     #2 - get wish title from form
     _wish_title = request.POST['weeshtitle']
-    current_user.create_wish(_wish_title)
-
+    getConnectedUser(request).create_wish(_wish_title)
+    print getConnectedUser(request).user.username
     return redirect('/upto/wishes/')
 
 def deleteWish(request, _wish_id):
@@ -273,15 +267,14 @@ def createEvent(request):
     :param request:
     """
     try:
-        #1 - get event_id
-        current_user = Users.objects.get(id=request.POST['user_id'])
         #2 - get wish title from form
         eventName = request.POST['eventName']
 
         start_date = datetime.datetime.strptime(request.POST['start_date'], "%Y/%m/%d %H:%M")
         end_date = datetime.datetime.strptime(request.POST['end_date'], "%Y/%m/%d %H:%M")
         thumbnail = request.FILES['thumbnail']
-        current_user.create_event(eventName, start_date, end_date, thumbnail)
+
+        getConnectedUser(request).create_event(eventName, start_date, end_date, thumbnail)
     except Users.DoesNotExist:
         raise Http404('Event id does not exist')
     else:

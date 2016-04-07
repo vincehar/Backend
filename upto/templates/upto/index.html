@@ -2,35 +2,122 @@
 
 {% block body %}
 <div>
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-        <div class="col-sm-offset-2 col-sm-10 page-header">
-            <h2>Bienvenue sur YouWeesh</h2>
+    <script>
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    if (response.status === 'connected') {
+      testAPI();
+      var accessToken = response.authResponse.accessToken;
+      //alert(accessToken);
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
+    }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '222535738090638',
+    cookie     : true,  // enable cookies to allow the server to access
+                        // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.5' // use graph api version 2.5
+  });
+
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+
+  };
+
+  function testAPI() {
+    FB.api('/me?fields=email, picture, first_name, last_name, gender', function(response) {
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+        //- test properties -
+        var props=""
+        for (prop in response)
+        { props+= prop +  " => " +response[prop] + "\n"; }
+        alert (props)
+    });
+
+     FB.login(function(response) {
+    }, {scope: 'public_profile,email'});
+  }
+</script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.5&appId=222535738090638";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+    <div class="row">
+        <div class="col-md-4">
         </div>
-        <form method="post" action="/upto/" class="form-horizontal">
-            {% csrf_token %}
-                {{ form.non_field_errors }}
-            <div class="form-group">
-                {{ form.username.errors }}
-                <label for="id_username" class="col-sm-4 control-label">Pseudo</label>
-                <div class="col-sm-8">
-                    {{ form.username }}
-                </div>
+        <div class="col-md-4">
+            <div class="col-sm-offset-2 col-sm-10 page-header">
+                <h2>Bienvenue sur YouWeesh</h2>
             </div>
-            <div class="form-group">
-                {{ form.password.errors }}
-                <label for="id_password" class="col-sm-4 control-label">Mot de passe</label>
-                <div class="col-sm-8">
-                    {{ form.password }}
-                </div>
-            </div>
-            <div class="form-group">
-                    <div class="col-sm-offset-4 col-sm-4">
-                            <input type="submit" class="btn btn-primary btn-block" value="Valider" />
+            <form method="post" action="/upto/" class="form-horizontal">
+                {% csrf_token %}
+                    {{ form.non_field_errors }}
+                <div class="form-group">
+                    {{ form.username.errors }}
+                    <label for="id_username" class="col-sm-4 control-label">Pseudo</label>
+                    <div class="col-sm-8">
+                        {{ form.username }}
                     </div>
-            </div>
-        </form>
+                </div>
+                <div class="form-group">
+                    {{ form.password.errors }}
+                    <label for="id_password" class="col-sm-4 control-label">Mot de passe</label>
+                    <div class="col-sm-8">
+                        {{ form.password }}
+                    </div>
+                </div>
+                <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-4">
+                                <input type="submit" class="btn btn-primary btn-block" value="Valider" />
+                        </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4">
+
+        </div>
     </div>
-    <div class="col-md-4"></div>
-</div>
+    <div class="row">
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-4">
+            <div class="fb-login-button" data-max-rows="3" data-size="xlarge" data-show-faces="true" data-auto-logout-link="true" onlogin="checkLoginState();"></div>
+            <div id="status"></div>
+            <div class="fb-like" data-share="true" data-width="450" data-show-faces="true">
+        </div>
+        <div class="col-md-4">
+
+        </div>
+    </div>
 {% endblock %}

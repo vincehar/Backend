@@ -172,4 +172,10 @@ from django.utils.text import camel_case_to_spaces as get_verbose_name
 
 sudo pip install django-registration
 
+#-------------------------------------------------------------
+# Installation Facebook register
+#-------------------------------------------------------------
+modify /etc/hosts
+update line first line to : 127.0.0.1	youweesh.local.com
+
 

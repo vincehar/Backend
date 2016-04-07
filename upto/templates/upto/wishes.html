@@ -53,8 +53,9 @@
         <div class="col-sm-3">
             <div id="left-profile-container">
                 <div id="myAccount">
-                    <img src='data:image/jpeg;base64,{{ current_user.get_picture }}' height="50">
+                        <img src='data:image/jpeg;base64,{{ current_user.get_picture }}' height="50">
                     <a href="{% url 'userdetails' current_user.user.username %}">{{ current_user.user.username }}</a></div>
+                <div><a href="{% url 'logout' %}">Logout</a></div>
                 <div>Your weeshes :</div>
                 <div>
                     <ul>
@@ -173,7 +174,6 @@ function refreshWeeshesEvents() {
              }
      });
 }
-
  </script>
 
 

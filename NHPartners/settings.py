@@ -10,10 +10,9 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
+import django
 import mongoengine
-
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +24,7 @@ SECRET_KEY = '1fqjjpf=2y_qo0cmehc1_f_5--z&g58&&jm=wsmx!6j3uusc(3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-#TEMPLATE_DEBUG = True
+# TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = [
     'http://127.0.0.1:8000',
@@ -40,10 +39,10 @@ ADMINS = (
 MANAGERS = ADMINS
 
 # MongoDB settings
-#MONGODB_DATABASES = {
+# MONGODB_DATABASES = {
 #    'default': {'name': 'django_mongoengine'}
-#}
-#DJANGO_MONGOENGINE_OVERRIDE_ADMIN = True
+# }
+# DJANGO_MONGOENGINE_OVERRIDE_ADMIN = True
 #
 #
 DATABASES = {
@@ -66,8 +65,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'upto',
     'social_auth',
-    #'mongo_auth',
-    #'mongo_auth.contrib',
+    # 'mongo_auth',
+    # 'mongo_auth.contrib',
     'sekizai',
     'mongoengine',
     'django_browserid',
@@ -84,16 +83,14 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    #'mongo_auth.middleware.LazyUserMiddleware',
+    # 'mongo_auth.middleware.LazyUserMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-
-
 AUTHENTICATION_BACKENDS = (
-    #'django_mongoengine.mongo_auth.backends.MongoEngineBackend',
+    # 'django_mongoengine.mongo_auth.backends.MongoEngineBackend',
     'mongoengine.django.auth.MongoEngineBackend',
     'social_auth.backends.twitter.TwitterBackend',
     'social_auth.backends.facebook.FacebookBackend',
@@ -108,13 +105,13 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
         'rest_framework.permissions.IsAuthenticated',
         'rest_framework.permissions.IsAdminUser',
-        ),
+    ),
     'PAGE_SIZE': 10,
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.TemplateHTMLRenderer',
-        ),
-         'DEFAULT_AUTHENTICATION_CLASSES': (
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     )
@@ -126,18 +123,20 @@ WSGI_APPLICATION = 'NHPartners.wsgi.application'
 
 CORS_ALLOW_CREDENTIALS = True
 
-#USER_CLASS = 'mongo_auth.contrib.models.User'
+# USER_CLASS = 'mongo_auth.contrib.models.User'
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-
+AUTHENTICATION_BACKENDS = (
+           'mongoengine.django.auth.MongoEngineBackend',
+ )
 AUTH_USER_MODEL = 'mongo_auth.MongoUser'
-#MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'
-MONGOENGINE_USER_DOCUMENT = 'regme.documents.User'
+MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'
+#MONGOENGINE_USER_DOCUMENT = 'regme.documents.User'
 SESSION_ENGINE = 'mongoengine.django.sessions'
 SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
-mongoengine.connect('upto', host='mongodb://localhost/upto')
+mongoengine.connect('upto', host='mongodb://127.0.0.1/upto')
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -152,11 +151,10 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        #'DIRS_DIRS': True,
+        # 'DIRS_DIRS': True,
         'DIRS': [
             os.path.join(os.path.realpath(os.path.dirname(__file__)), '../upto/templates')
         ],
@@ -170,10 +168,10 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
-                #'mongo_auth.contrib.context_processors.mongo_auth',
-                #'sekizai.context_processors.sekizai',
+                # 'mongo_auth.contrib.context_processors.mongo_auth',
+                # 'sekizai.context_processors.sekizai',
             ],
-            'debug' : [True]
+            'debug': [True]
         },
     },
 ]
@@ -183,6 +181,10 @@ STATIC_URL = '/static/'
 # Facebook
 FACEBOOK_APP_ID = '222535738090638'
 FACEBOOK_API_SECRET = '09a2f8b2122cd05061e50fa00dcc999a'
+FACEBOOK_EXTENDED_PERMISSIONS = ['email']
+django.setup()
+SOCIAL_AUTH_MODELS = 'social_auth.db.mongoengine_models'
+SOCIAL_AUTH_USER_MODEL = 'mongoengine.django.auth.User'
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/upto/wishes/'
