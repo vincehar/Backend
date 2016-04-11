@@ -5,7 +5,7 @@ from mongoengine.django.auth import User
 import datetime
 import base64
 from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocumentField, \
-    ReferenceField, StringField, ListField, DateTimeField, BinaryField, BooleanField, ObjectIdField, ImageField
+    ReferenceField, StringField, ListField, DateTimeField, BinaryField, BooleanField, ObjectIdField, ImageField, IntField
 from bson import ObjectId
 
 
@@ -106,7 +106,11 @@ class UsersRelationships(Document):
         self.accepted=True
         return self
 
-
+class Preferences(EmbeddedDocument):
+    display_weeshes = BooleanField(default=True)
+    display_events = BooleanField(default=True)
+    search_distance = IntField(default=50)
+    selected_network = StringField(default='PUBLIC')
 
 class Users(Document):
     """
@@ -116,6 +120,8 @@ class Users(Document):
     user_id = ObjectIdField(default=ObjectId)
     user = EmbeddedDocumentField('User')
     picture = ImageField()
+    preferences = EmbeddedDocumentField('Preferences')
+    date_created = DateTimeField(default=datetime.datetime.now())
     #wishes = ListField(ReferenceField('Wishes'))
     #logs = ListField(ReferenceField('Logs'))
     #friends = ListField(EmbeddedDocumentField('UsersRelationships'))
@@ -190,6 +196,7 @@ class Users(Document):
         event.save()
         return event
     """
+
     def interests_to_wish(self, _user, _wish):
         user = Users.objects.get(id=_user.id)
         wish = next((w for w in user.wishes if w.wish_id==_wish.wish_id), None)
@@ -212,6 +219,13 @@ class Users(Document):
     def get_picture(self):
         picture = base64.b64encode(self.picture.read())
         return picture
+
+
+
+
+
+
+
 
 
 

@@ -1,17 +1,19 @@
-from upto.models import User, Users, Wishes, UsersRelationships, Events
+from upto.models import User, Users, Wishes, UsersRelationships, Events, Preferences
 from pymongo import Connection
 import datetime
 
 # Clean users
 databaseName = "upto"
-connection = Connection()
+connection = Connection(host='127.0.0.1')
 collection = connection[databaseName]
 users = collection['users']
+user = collection['user']
 events = collection['events_Owned']
 
 print "------------------------------------------"
 print "         clearing Users Collection"
 print "------------------------------------------"
+user.remove()
 users.remove()
 
 
@@ -26,16 +28,15 @@ for use in ['alex', 'vincent', 'marc']:
 #Users.objects
 
 
-us=Users.objects.get_or_create(user=User.objects.get(username='marc'))
-v=Users.objects.get_or_create(user=User.objects.get(username='vincent'))
-usa=Users.objects.get_or_create(user=User.objects.get(username='alex'))
+marc=Users.objects.get_or_create(user=User.objects.get(username='marc'))
+vincent=Users.objects.get_or_create(user=User.objects.get(username='vincent'))
+alex=Users.objects.get_or_create(user=User.objects.get(username='alex'))
+
+marc.save()
+vincent.save()
+alex.save()
 #us[0].save()
 #usa[0].save()
-
-alex=Users.objects.get(user=User.objects.get(username='alex'))
-marc=Users.objects.get(user=User.objects.get(username='marc'))
-vincent=Users.objects.get(user=User.objects.get(username='vincent'))
-
 #----------------
 #Make relationship
 #----------------

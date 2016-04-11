@@ -12,7 +12,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.response import Response
 from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer, WishSerializer
-from .models import Users, Wishes, Events, UsersRelationships
+from .models import Users, Wishes, Events, UsersRelationships, Preferences
 from mongoengine.django.auth import User
 from upto.forms import UsersLoginForm, FilterForm
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -21,9 +21,10 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 def index(request):
     return render(request, 'upto/index.html')
 
+
 @ensure_csrf_cookie
 @api_view(('GET', 'POST'))
-@permission_classes((AllowAny, ))
+@permission_classes((AllowAny,))
 @renderer_classes((JSONRenderer, TemplateHTMLRenderer))
 def login(request):
     from mongoengine.queryset import DoesNotExist
@@ -38,7 +39,7 @@ def login(request):
             form = UsersLoginForm(request, data=request.POST)
             try:
                 if form.is_valid():
-                    #user = User.objects.get(username=username)
+                    # user = User.objects.get(username=username)
                     user = authenticate(username=username, password=password)
                     if user.is_active and user.check_password(password):
                         user.backend = 'mongoengine.django.auth.MongoEngineBackend'
@@ -49,7 +50,7 @@ def login(request):
                     return render(request, 'upto/index.html', {'form': form})
             except DoesNotExist:
                 return HttpResponseRedirect('/upto/account/register/')
-                #return HttpResponse(json.dumps({'user':'not exists'}))
+                # return HttpResponse(json.dumps({'user':'not exists'}))
 
         """
         gestion specifique pour les rendering json => mobile
@@ -73,7 +74,7 @@ def login(request):
         except DoesNotExist:
             data['result'] = 'does not exist'
             data['username'] = 'please register'
-        return HttpResponse(json.dumps(data), content_type = "application/json")
+        return HttpResponse(json.dumps(data), content_type="application/json")
 
     else:
         form = UsersLoginForm()
@@ -85,7 +86,8 @@ def logout_view(request):
     form = UsersLoginForm()
     return render(request, 'upto/index.html', {'form': form})
 
-@permission_classes((IsAuthenticated, ))
+
+@permission_classes((IsAuthenticated,))
 def account(request):
     # test with a user
     user_id = Users.objects.get(user__username=request.session['username']).id
@@ -94,6 +96,7 @@ def account(request):
         'one_user': user,
     }
     return render(request, 'upto/myaccount.html', context)
+
 
 '''
 --------- A GARDER ------
@@ -121,12 +124,12 @@ def userdetails(request, username):
 
 
 @api_view(('GET',))
-@permission_classes((AllowAny, ))
+@permission_classes((AllowAny,))
 @renderer_classes((JSONRenderer, TemplateHTMLRenderer))
 def userdetails(request, username):
     connected_user = getConnectedUser(request)
     context = {
-            'user': connected_user,
+        'user': connected_user,
     }
     if request.accepted_renderer.format == 'html':
         return render(request, 'upto/userdetails.html', context)
@@ -152,19 +155,18 @@ def uploadPictureUser(request):
     except Users.DoesNotExist:
         raise Http404('Event id does not exist')
     else:
-        return redirect('/upto/userdetails/'+connected_user.user.username)
+        return redirect('/upto/userdetails/' + connected_user.user.username)
 
 
 @api_view(('GET',))
-@permission_classes((AllowAny, ))
+@permission_classes((AllowAny,))
 @renderer_classes((JSONRenderer, TemplateHTMLRenderer))
 def relationships(request, username):
-
     user = Users.objects.get(user__username=username)
     relationShips = UsersRelationships.objects(Q(from_user=user) | Q(to_user=user))
 
     context = {
-            'relationShips': relationShips
+        'relationShips': relationShips
     }
     if request.accepted_renderer.format == 'html':
         return render(request, 'upto/relationships.html', context)
@@ -173,19 +175,28 @@ def relationships(request, username):
 
     return Response(relationShipsSerializer.data)
 
+
 @api_view(('GET',))
-@permission_classes((IsAuthenticated, ))
+@permission_classes((IsAuthenticated,))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def allwishesAndEvent(request):
-
     try:
         if 'username' in request.session:
+            displayEventsChecked = ''
+            displayWeeshesChecked = ''
             user = Users.objects.get(user__username=request.session['username'])
+            if user.preferences.display_events:
+                displayEventsChecked = 'checked'
+            if user.preferences.display_weeshes:
+                displayWeeshesChecked = 'checked'
+
+            frmFilter = FilterForm(initial={'display_events': displayEventsChecked, 'display_weeshes': displayWeeshesChecked})
+            print frmFilter
             wishes_user = Wishes.objects[:5](user_id=user.id).order_by('-creation_date')
             context = {
                 'current_user': user,
                 'wishes_user': wishes_user,
-                'form': FilterForm(),
+                'form': frmFilter,
             }
         else:
             form = UsersLoginForm(request)
@@ -200,24 +211,31 @@ def allwishesAndEvent(request):
             data = serializer.data
             return Response(data)
 
+
 @api_view(('GET',))
-@permission_classes((IsAuthenticated, ))
+@permission_classes((AllowAny,))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def weeshesevents(request):
-
+    connected_user = getConnectedUser(request)
     tmplst = list()
-    for event in Events.objects:
-        tmplst.append(event)
-    for wish in Wishes.objects:
-        tmplst.append(wish)
+    print connected_user.preferences.display_events
+    if connected_user.preferences.display_events:
+        print 'Selected Events'
+        for event in Events.objects:
+            tmplst.append(event)
+    if connected_user.preferences.display_weeshes:
+        for wish in Wishes.objects:
+            tmplst.append(wish)
     context = {
         'eventsList': sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True)
     }
 
     return render(request, 'upto/weeshesevents.html', context)
 
+
 def getConnectedUser(request):
     return Users.objects.get(user__username=request.session['username'])
+
 
 def getEventInfo(request, _event_id):
     event = Events.objects.get(id=_event_id)
@@ -229,8 +247,9 @@ def getEventInfo(request, _event_id):
 
     return render(request, 'upto/eventDetails.html', context)
 
+
 @api_view(('POST',))
-@permission_classes((AllowAny, ))
+@permission_classes((AllowAny,))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def createWish(request):
     """
@@ -239,11 +258,12 @@ def createWish(request):
     :param _id_user:
     :param request:
     """
-    #2 - get wish title from form
+    # 2 - get wish title from form
     _wish_title = request.POST['weeshtitle']
     getConnectedUser(request).create_wish(_wish_title)
     print getConnectedUser(request).user.username
     return redirect('/upto/wishes/')
+
 
 def deleteWish(request, _wish_id):
     """
@@ -259,6 +279,7 @@ def deleteWish(request, _wish_id):
     else:
         return redirect('/upto/wishes/')
 
+
 def createEvent(request):
     """
     View used to create a wish for a user
@@ -267,7 +288,7 @@ def createEvent(request):
     :param request:
     """
     try:
-        #2 - get wish title from form
+        # 2 - get wish title from form
         eventName = request.POST['eventName']
 
         start_date = datetime.datetime.strptime(request.POST['start_date'], "%Y/%m/%d %H:%M")
@@ -279,6 +300,7 @@ def createEvent(request):
         raise Http404('Event id does not exist')
     else:
         return redirect('/upto/wishes/')
+
 
 def deleteEvent(request, _event_id):
     """
@@ -293,19 +315,27 @@ def deleteEvent(request, _event_id):
     else:
         return redirect('/upto/wishes/')
 
+
 def filter_list(request):
-    '''
+    """
 
     :param request:
     :return:
-    '''
+    """
+    # 1 - record new conf into user preferences
+    connected_user = getConnectedUser(request)
     if request.method == "POST":
         try:
-            #if form.is_valid():
-            value = request.POST["chk_events"]
-            valueweehses = request.POST["chk_weeshes"]
-            print valueweehses
-            print value
+            if "display_events" in request.POST:
+                connected_user.preferences.display_events = True
+            else:
+                connected_user.preferences.display_events = False
+            if "display_weeshes" in request.POST:
+                connected_user.preferences.display_weeshes = True
+            else:
+                connected_user.preferences.display_weeshes = False
+            # 2 - call view weeshesAndEvents with filter
+            connected_user.save()
         except Wishes.DoesNotExist:
             raise Http404('Wish id does not exist')
         else:
