@@ -1,10 +1,8 @@
-from mongodbforms import DocumentForm
 from django import forms
-from registration.forms import RegistrationForm
+from mongodbforms import DocumentForm, EmbeddedDocumentForm
 from django.contrib.auth.forms import AuthenticationForm
-# from mongoengine.django.auth import User
 from regme.documents import User
-from upto.models import Users
+from upto.models import Users, Preferences
 from regme.forms import UserCreationForm
 from django.forms.widgets import Input
 from rabbitmq import rabbitmq
@@ -29,7 +27,7 @@ class UsersRegistrationForm(UserCreationForm):
 
     def save(self):
         user = super(UsersRegistrationForm, self).save()
-        profile = Users(user=user)
+        profile = Users(user=user, preferences=Preferences())
         # user.is_active = False
         user.save()
         profile.save()
@@ -50,11 +48,13 @@ class UsersLoginForm(AuthenticationForm):
 
 
 class FilterForm(forms.Form):
-    chk_events = forms.CharField(label='Events', max_length=100, widget=forms.CheckboxInput)
-    chk_weeshes = forms.CharField(label='Weeshes', max_length=100, widget=forms.CheckboxInput)
-    CHOICES = [('public', 'Public'),
-               ('friends', 'Friends')]
-    network = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
-    field_name = forms.CharField(widget=RangeInput())
-
+    #class Meta:
+        #model = Preferences
+        #fields = ['display_events', 'display_weeshes', 'selected_network', 'search_distance']
+        display_events = forms.CharField(label='Events', max_length=100, widget=forms.CheckboxInput)
+        display_weeshes = forms.CharField(label='Weeshes', max_length=100, widget=forms.CheckboxInput)
+        CHOICES = [('public', 'Public'),
+                   ('friends', 'Friends')]
+        selected_network = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+        search_distance = forms.CharField(widget=RangeInput())
 #class CreateEventForm(forms.Form):
