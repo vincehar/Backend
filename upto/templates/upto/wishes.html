@@ -26,6 +26,9 @@
 <script src="/static/js/datetimepicker/build/jquery.datetimepicker.full.js"></script>
 <script type="text/javascript" src="/static/js/autoCompleteAddress.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcRm_4W48Hu4OdwAHSaIfmWerF475RQA0&libraries=places&callback=initAutocomplete" async defer></script>
+<script src="/static/js/sockjs-1.0.0.min.js"></script>
+<script src="/static/js/stomp.js"></script>
+<script src="/static/js/listener-app.js"></script>
 <div class="container-fluid">
     <div class="row">
             <div id="col-sm-12">
@@ -53,7 +56,9 @@
         <div class="col-sm-3">
             <div id="left-profile-container">
                 <div id="myAccount">
+                    {%if current_user.picture %}
                         <img src='data:image/jpeg;base64,{{ current_user.get_picture }}' height="50">
+                    {% endif %}
                     <a href="{% url 'userdetails' current_user.user.username %}">{{ current_user.user.username }}</a></div>
                 <div><a href="{% url 'logout' %}">Logout</a></div>
                 <div>Your weeshes :</div>
@@ -118,6 +123,9 @@
                 {% endblock %}
             </div>
         </div>
+        <div id="output">
+            <!-- incoming messages will be printed here -->
+        </div>
         <div class="col-sm-6" id="weeshes-list">
         </div>
         <div class="col-sm-3">
@@ -163,7 +171,19 @@ $("#addweesh").submit(function(e)
 });
 
 $( document ).ready(function() {
+
     refreshWeeshesEvents()
+
+    output = document.getElementById("output");
+
+    // Connect to user queue
+    client.connect(
+        mq_username,
+        mq_password,
+        on_connect,
+        on_connect_error,
+        mq_vhost
+    );
 });
 
 function refreshWeeshesEvents() {
@@ -174,6 +194,43 @@ function refreshWeeshesEvents() {
              }
      });
 }
+
+// Use SockJS
+Stomp.WebSocketClass = SockJS;
+
+// Connection parameters
+var mq_username = "guest",
+    mq_password = "guest",
+    mq_vhost    = "/",
+    mq_url      = 'http://' + window.location.hostname + ':15674/stomp',
+    mq_queue = "/queue/{{ current_user.user.username }}";
+
+
+// This is where we print incomoing messages
+var output;
+
+// This will be called upon successful connection
+function on_connect() {
+  output.innerHTML += 'Connected to RabbitMQ-Web-Stomp<br />';
+  console.log(client);
+  client.subscribe(mq_queue, on_message);
+}
+
+// This will be called upon a connection error
+function on_connect_error() {
+  output.innerHTML += 'Connection failed!<br />';
+}
+
+// This will be called upon arrival of a message
+function on_message(m) {
+  console.log('message received');
+  console.log(m);
+  output.innerHTML += m.body + '<br />';
+}
+
+// Create a client
+var client = Stomp.client(mq_url);
+
  </script>
 
 

@@ -178,4 +178,26 @@ sudo pip install django-registration
 modify /etc/hosts
 update line first line to : 127.0.0.1	youweesh.local.com
 
+#-------------------------------------------------------------
+# Installation RabbitMq
+#-------------------------------------------------------------
+Download the deb file on http://www.rabbitmq.com/install-debian.html
+Install the package : sudo dpkg -i [deb filename]
+
+After installing the package, enable the management plugin :
+sudo rabbitmq-plugins enable rabbitmq_management
+
+And Restart :
+sudo /etc/init.d/rabbitmq-server restart
+
+The management plugin provides a web interface for configuring the server. By default it runs at port 15762
+
+The default username is “guest” and the password is “guest”.
+
+Messaging in a Web Browser using RabbitMQ-Web-Stomp (The RabbitMQ-Web-Stomp plugin allows web browsers to do messaging using SockJS.)
+
+Install the Web Stomp plugin :
+sudo rabbitmq-plugins enable rabbitmq_web_stomp
+
+Restart RabbitMq. You should now get a hello page in port 15674 (http://localhost:15674/stomp)
 

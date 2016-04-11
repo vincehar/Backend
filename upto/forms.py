@@ -7,7 +7,7 @@ from regme.documents import User
 from upto.models import Users
 from regme.forms import UserCreationForm
 from django.forms.widgets import Input
-
+from rabbitmq import rabbitmq
 
 class RangeInput(Input):
     """HTML5 Range Input."""
@@ -33,6 +33,15 @@ class UsersRegistrationForm(UserCreationForm):
         # user.is_active = False
         user.save()
         profile.save()
+
+        print('Salut')
+
+        #Connect and create the queue for the user
+        mqueue = rabbitmq()
+        connection = mqueue.create_connection()
+        channel = mqueue.get_channel(connection)
+        mqueue.create_queue(profile, channel)
+        mqueue.close(connection)
 
 
 class UsersLoginForm(AuthenticationForm):

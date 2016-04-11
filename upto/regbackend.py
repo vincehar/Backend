@@ -1,5 +1,6 @@
 from regme.views import RegisterView
 
+
 class UsersBackend(RegisterView):
 
     def register(self, request, **kwargs):
@@ -8,6 +9,7 @@ class UsersBackend(RegisterView):
         user.save()
         profile = Users.objects.create(user=user)
         profile.save()
+
 
     def get_form_class(self):
         from upto.forms import UsersRegistrationForm
