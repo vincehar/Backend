@@ -159,7 +159,7 @@ $("#addweesh").submit(function(e)
         success:function(data, textStatus, jqXHR)
         {
             //data: return data from server
-            refreshWeeshesEvents()
+            //refreshWeeshesEvents()
         },
         error: function(jqXHR, textStatus, errorThrown)
         {
@@ -195,6 +195,16 @@ function refreshWeeshesEvents() {
      });
 }
 
+function refreshWeeshesEventsFilterByDate() {
+     $.ajax({
+             url: '{% url 'weeshesevents_filterbydate' %}',
+             success: function(data) {
+                   // $('#weeshes-list').html(data);
+                   alert('ca marche');
+             }
+     });
+}
+
 // Use SockJS
 Stomp.WebSocketClass = SockJS;
 
@@ -226,6 +236,8 @@ function on_message(m) {
   console.log('message received');
   console.log(m);
   output.innerHTML += m.body + '<br />';
+  refreshWeeshesEventsFilterByDate();
+
 }
 
 // Create a client

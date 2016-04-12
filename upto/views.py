@@ -233,6 +233,28 @@ def weeshesevents(request):
     return render(request, 'upto/weeshesevents.html', context)
 
 
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+@renderer_classes(JSONRenderer)
+def weeshesEventsFilterByDate(request):
+    connected_user = getConnectedUser(request)
+    tmplst = list()
+    print connected_user.preferences.display_events
+    print 'genial'
+    if connected_user.preferences.display_events:
+        print 'Selected Events'
+        for event in Events.objects(creation_date__gte=request.GET['date']):
+            tmplst.append(event)
+    if connected_user.preferences.display_weeshes:
+        for wish in Wishes.objects(creation_date__gte=request.GET['date']):
+            tmplst.append(wish)
+    context = {
+        'eventsList': sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True)
+    }
+
+    return Response(context)
+
+
 def getConnectedUser(request):
     return Users.objects.get(user__username=request.session['username'])
 

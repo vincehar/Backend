@@ -1,39 +1,3 @@
-// Use SockJS
-Stomp.WebSocketClass = SockJS;
-
-// Connection parameters
-var mq_username = "guest",
-    mq_password = "guest",
-    mq_vhost    = "/",
-    mq_url      = 'http://' + window.location.hostname + ':15674/stomp',
-
-
-// This is where we print incomoing messages
-var output;
-
-// This will be called upon successful connection
-function on_connect() {
-  output.innerHTML += 'Connected to RabbitMQ-Web-Stomp<br />';
-  console.log(client);
-  client.subscribe(mq_queue, on_message);
-}
-
-// This will be called upon a connection error
-function on_connect_error() {
-  output.innerHTML += 'Connection failed!<br />';
-}
-
-// This will be called upon arrival of a message
-function on_message(m) {
-  console.log('message received');
-  console.log(m);
-  output.innerHTML += m.body + '<br />';
-}
-
-// Create a client
-var client = Stomp.client(mq_url);
-
-
 
 /*CONNECTION A UN TOPIC
 

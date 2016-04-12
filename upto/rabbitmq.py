@@ -35,10 +35,13 @@ class rabbitmq:
         #Create the queue
         _channel.queue_declare(queue=_users.user.username,durable=True)
         _channel.queue_bind(exchange='amq.direct', queue=_users.user.username, routing_key=_users.user.username)
-        _channel.queue_bind(exchange='amq.direct', queue=_users.user.username, routing_key='general')
+        _channel.queue_bind(exchange='amq.fanout', queue=_users.user.username)
 
         #_channel.basic_publish(exchange='', routing_key='test', body='Good morning vietnam')
 
+
+    def publish_message(self, _routingKey, _message, _channel):
+        _channel.basic_publish(exchange='amq.direct', routing_key=_routingKey, body=_message)
 
     def close(self, _conn):
         _conn.close()
