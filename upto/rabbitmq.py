@@ -40,8 +40,8 @@ class rabbitmq:
         #_channel.basic_publish(exchange='', routing_key='test', body='Good morning vietnam')
 
 
-    def publish_message(self, _routingKey, _message, _channel):
-        _channel.basic_publish(exchange='amq.direct', routing_key=_routingKey, body=_message)
+    def publish_message(self, _routingKey, _message, _channel, _exchange):
+        _channel.basic_publish(exchange=_exchange, routing_key=_routingKey, body=_message)
 
     def close(self, _conn):
         _conn.close()

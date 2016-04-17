@@ -2,6 +2,7 @@ from django.core.mail.backends.console import EmailBackend
 from djangotoolbox.fields import ListField, EmbeddedModelField
 from mongoengine.django.auth import User
 #from regme.documents import User
+import rabbitmq
 import datetime
 import base64
 from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocumentField, \
@@ -176,6 +177,15 @@ class Users(Document):
         #self.save()
         #return self
         wish.save()
+
+        #Connect and send message to the queue
+        mqueue = rabbitmq()
+        connection = mqueue.create_connection()
+        channel = mqueue.get_channel(connection)
+        mqueue.publish_message('', 'New weesh created', channel, 'amq_fanout')
+        mqueue.close(connection)
+
+
         return wish
 
 
