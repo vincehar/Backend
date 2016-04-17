@@ -1,4 +1,4 @@
-from .models import Users
+
 from pika import BlockingConnection
 import pika
 

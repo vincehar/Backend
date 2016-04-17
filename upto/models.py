@@ -2,7 +2,7 @@ from django.core.mail.backends.console import EmailBackend
 from djangotoolbox.fields import ListField, EmbeddedModelField
 from mongoengine.django.auth import User
 #from regme.documents import User
-import rabbitmq
+from rabbitmq import rabbitmq
 import datetime
 import base64
 from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocumentField, \
