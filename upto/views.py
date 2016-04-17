@@ -11,7 +11,7 @@ from rest_framework.decorators import api_view, renderer_classes, permission_cla
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.response import Response
-from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer, WishSerializer
+from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer, WishSerializer, WishSerializer2
 from .models import Users, Wishes, Events, UsersRelationships, Preferences
 from mongoengine.django.auth import User
 from upto.forms import UsersLoginForm, FilterForm
@@ -235,24 +235,15 @@ def weeshesevents(request):
 
 @api_view(('GET',))
 @permission_classes((AllowAny,))
-@renderer_classes(JSONRenderer)
-def weeshesEventsFilterByDate(request):
-    connected_user = getConnectedUser(request)
-    tmplst = list()
-    print connected_user.preferences.display_events
-    print 'genial'
-    if connected_user.preferences.display_events:
-        print 'Selected Events'
-        for event in Events.objects(creation_date__gte=request.GET['date']):
-            tmplst.append(event)
-    if connected_user.preferences.display_weeshes:
-        for wish in Wishes.objects(creation_date__gte=request.GET['date']):
-            tmplst.append(wish)
-    context = {
-        'eventsList': sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True)
-    }
+@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
+def getWeeshById(request):
 
-    return Response(context)
+    wish = Wishes.objects(wish_id=request.GET['id'])
+    username = wish[0].user_id.user.username
+    wishSerializer = WishSerializer2(instance=wish,many=True)
+
+    return Response({'wish': wishSerializer.data, 'username': username})
+
 
 
 def getConnectedUser(request):

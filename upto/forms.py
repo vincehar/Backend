@@ -35,12 +35,10 @@ class UsersRegistrationForm(UserCreationForm):
         print('Salut')
 
         #Connect and create the queue for the user
-        mqueue = rabbitmq()
-        connection = mqueue.create_connection()
-        channel = mqueue.get_channel(connection)
-        mqueue.create_queue(profile, channel)
-        mqueue.close(connection)
-
+        myrabbit = rabbitmq()
+        myrabbit.create_connection()
+        myrabbit.create_queue(profile)
+        myrabbit.close()
 
 class UsersLoginForm(AuthenticationForm):
     username = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': 'form-control'}))

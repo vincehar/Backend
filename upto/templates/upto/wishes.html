@@ -195,15 +195,21 @@ function refreshWeeshesEvents() {
      });
 }
 
-function refreshWeeshesEventsFilterByDate() {
+function getWeeshById(idWeesh) {
      $.ajax({
-             url: '{% url 'weeshesevents_filterbydate' %}',
+             dataType: "json",
+             url: '{% url 'getweeshbyid' %}',
+             data: { id : idWeesh},
              success: function(data) {
                    // $('#weeshes-list').html(data);
-                   alert('ca marche');
+                   $('#weeshesevents').prepend("<li><div>Wish : " + data.wish[0].title + "</div></li>");
+             },
+             error: function(jqXHR, textStatus, errorThrown) {
+                alert(errorThrown);
              }
      });
 }
+
 
 // Use SockJS
 Stomp.WebSocketClass = SockJS;
@@ -233,10 +239,7 @@ function on_connect_error() {
 
 // This will be called upon arrival of a message
 function on_message(m) {
-  console.log('message received');
-  console.log(m);
-  output.innerHTML += m.body + '<br />';
-  refreshWeeshesEventsFilterByDate();
+   getWeeshById(m.headers['id']);
 
 }
 

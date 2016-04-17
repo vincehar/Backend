@@ -3,6 +3,7 @@ from djangotoolbox.fields import ListField, EmbeddedModelField
 from mongoengine.django.auth import User
 #from regme.documents import User
 from rabbitmq import rabbitmq
+import pika
 import datetime
 import base64
 from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocumentField, \
@@ -14,7 +15,7 @@ class Wishes(Document):
     user_id = ReferenceField('Users')
     wish_id = ObjectIdField(default=ObjectId)
     title = StringField(required=True)
-    creation_date = DateTimeField()
+    creation_date = DateTimeField(default=datetime.datetime.now())
     interested = ListField(ReferenceField('Users'))
 
     def user_name(self):
@@ -179,11 +180,14 @@ class Users(Document):
         wish.save()
 
         #Connect and send message to the queue
-        mqueue = rabbitmq()
-        connection = mqueue.create_connection()
-        channel = mqueue.get_channel(connection)
-        mqueue.publish_message('', 'New weesh created', channel, 'amq_fanout')
-        mqueue.close(connection)
+        # Use plain credentials for authentication
+        myrabbit = rabbitmq()
+        myrabbit.create_connection()
+        myrabbit.publish_newweesh(wish.wish_id)
+
+        myrabbit.close()
+        #mqueue.publish_message('coco', 'New weesh created', channel, 'amq_fanout')
+        #mqueue.close(connection)
 
 
         return wish

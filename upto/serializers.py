@@ -26,5 +26,11 @@ class WishSerializer(DocumentSerializer):
     user = serializers.CharField(source='user_name', read_only=True)
     class Meta:
         model = Wishes
-        fields = ('title', 'user')
+        fields = ('title', 'user', 'creation_date')
 
+
+class WishSerializer2(DocumentSerializer):
+   user_id = UsersSerializer()
+   class Meta:
+        model = Wishes
+        depth = 1
