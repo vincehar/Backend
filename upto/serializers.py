@@ -23,14 +23,12 @@ class UsersRelationShipsSerializer(DocumentSerializer):
         depth = 1
 
 class WishSerializer(DocumentSerializer):
-    user = serializers.CharField(source='user_name', read_only=True)
-    class Meta:
-        model = Wishes
-        fields = ('title', 'user', 'creation_date')
-
-
-class WishSerializer2(DocumentSerializer):
    user_id = UsersSerializer()
    class Meta:
         model = Wishes
+        depth = 1
+
+class EventSerializer(DocumentSerializer):
+   class Meta:
+        model = Events
         depth = 1

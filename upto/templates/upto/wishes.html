@@ -29,6 +29,7 @@
 <script src="/static/js/sockjs-1.0.0.min.js"></script>
 <script src="/static/js/stomp.js"></script>
 <script src="/static/js/listener-app.js"></script>
+<script src="/static/js/moment.min.js"></script>
 <div class="container-fluid">
     <div class="row">
             <div id="col-sm-12">
@@ -59,11 +60,11 @@
                         {% if current_user.picture %}
                             <img src='data:image/jpeg;base64,{{ current_user.get_picture }}' height="50">
                         {% endif %}
-                    <a href="{% url 'userdetails' current_user.user.username %}">{{ current_user.user.username }}</a></div>
+                    <a id='username' href="{% url 'userdetails' current_user.user.username %}">{{ current_user.user.username }}</a></div>
                 <div><a href="{% url 'logout' %}">Logout</a></div>
                 <div>Your weeshes :</div>
                 <div>
-                    <ul>
+                    <ul id="myWeeshes">
                         {% if wishes_user %}
                             {% for wish in wishes_user %}
                                 <li>{{ wish.title }}</li>
@@ -85,7 +86,7 @@
             <div id="left-event-container">
                 <h1>Create an event</h1>
                 {% block content %}
-                <form action="{% url 'createevent' %}" method="post" enctype="multipart/form-data">
+                <form action="{% url 'createevent' %}" id="addevent" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                     <div>Event picture : <div id="preview1"> Import your picture </div>
                         <div><input type="file" name="thumbnail" id="thumbnail"></div>
@@ -149,6 +150,9 @@
 
 $("#addweesh").submit(function(e)
 {
+    //Stop form from submitting normally
+    e.preventDefault(); //STOP default action
+
     var postData = $(this).serializeArray();
     var formURL = $(this).attr("action");
     $.ajax(
@@ -166,9 +170,39 @@ $("#addweesh").submit(function(e)
             //if fails
         }
     });
-    e.preventDefault(); //STOP default action
+
+
     e.unbind(); //unbind. to stop multiple form submit.
 });
+
+$("#addevent").submit(function(e)
+{
+    //Stop form from submitting normally
+    e.preventDefault(); //STOP default action
+
+    //var postData = $(this).serializeArray();
+    var formURL = $(this).attr("action");
+    $.ajax(
+    {
+        url : formURL,
+        type: "POST",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        success:function(data, textStatus, jqXHR)
+        {
+            //data: return data from server
+            //refreshWeeshesEvents()
+
+        },
+        error: function(jqXHR, textStatus, errorThrown)
+        {
+            //if fails
+        }
+    });
+    e.unbind(); //unbind. to stop multiple form submit.
+});
+
 
 $( document ).ready(function() {
 
@@ -202,7 +236,40 @@ function getWeeshById(idWeesh) {
              data: { id : idWeesh},
              success: function(data) {
                    // $('#weeshes-list').html(data);
-                   $('#weeshesevents').prepend("<li><div>Wish : " + data.wish[0].title + "</div></li>");
+                   firstDiv = "<li><div>Wish : " + data.wish[0].title + "</div>"
+                   secondDiv = "<div>Date : " + moment(data.wish[0].creation_date).format('MMMM Do YYYY, h:mm:ss a') + "</div>"
+                   thirdDiv = "<div>Weesher : " + data.username + "</div>"
+                   fourDiv =  "<div><a href=\"../deletewish/" + data.wish[0].id + "\">DELETE X </a></div></li>"
+                   $('#weeshesevents').prepend(firstDiv+secondDiv+thirdDiv+fourDiv);
+
+                   if(data.username == $('#username').text())
+                   {
+                        li = "<li>" + data.wish[0].title + "</li>";
+                        $('#myWeeshes').prepend(li);
+                   }
+
+             },
+             error: function(jqXHR, textStatus, errorThrown) {
+                alert(errorThrown);
+             }
+     });
+}
+
+function getEventById(idEvent) {
+     $.ajax({
+             dataType: "json",
+             url: '{% url 'geteventbyid' %}',
+             data: { id : idEvent},
+             success: function(data) {
+                   // $('#weeshes-list').html(data);
+                   firstDiv = "<li><img class=\"thumbnail\" src=\'data:image/jpeg;base64," + data.event_picture + "\' height=\"100\">"
+                   secondDiv = "<div>Event :" + data.event[0].name + "</div>"
+                   thirdDiv = "<div>Date :" + moment(data.event[0].creation_date).format('MMMM Do YYYY, h:mm:ss a') + "</div>"
+                   fourDiv = "<div>Creator :" + data.username + "</div>"
+                   sixDiv = "<div><a href=\"../event/" + data.event[0].id + "\">Details >> </a></div>"
+                   sevenDiv = "<div><a href=\"../deleteevent/" + data.event[0].id + "\">DELETE X </a></div></li>"
+
+                   $('#weeshesevents').prepend(firstDiv+secondDiv+thirdDiv+fourDiv+sixDiv+sevenDiv);
              },
              error: function(jqXHR, textStatus, errorThrown) {
                 alert(errorThrown);
@@ -211,12 +278,13 @@ function getWeeshById(idWeesh) {
 }
 
 
+
 // Use SockJS
 Stomp.WebSocketClass = SockJS;
 
 // Connection parameters
-var mq_username = "guest",
-    mq_password = "guest",
+var mq_username = "youweesh",
+    mq_password = "upto2016",
     mq_vhost    = "/",
     mq_url      = 'http://' + window.location.hostname + ':15674/stomp',
     mq_queue = "/queue/{{ current_user.user.username }}";
@@ -239,7 +307,16 @@ function on_connect_error() {
 
 // This will be called upon arrival of a message
 function on_message(m) {
-   getWeeshById(m.headers['id']);
+
+    if(m.headers['type'] == "weesh")
+    {
+        getWeeshById(m.headers['id']);
+    }
+    else if(m.headers['type'] == "event")
+    {
+        getEventById(m.headers['id']);
+    }
+
 
 }
 

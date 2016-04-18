@@ -17,6 +17,7 @@ class Wishes(Document):
     title = StringField(required=True)
     creation_date = DateTimeField(default=datetime.datetime.now())
     interested = ListField(ReferenceField('Users'))
+    tags = ListField(ReferenceField('Tags'))
 
     def user_name(self):
         return self.user_id.username
@@ -26,6 +27,10 @@ class Wishes(Document):
 
     def add_interested(self, user):
         self.interested.append(user)
+
+
+class Tags(Document):
+    title = StringField(required=True)
 
 
 class Logs(Document):
@@ -182,8 +187,7 @@ class Users(Document):
         # Use plain credentials for authentication
         myrabbit = rabbitmq()
         myrabbit.create_connection()
-        myrabbit.publish_newweesh(wish.wish_id)
-
+        myrabbit.publish_newweesh(wish.wish_id,wish.user_id.user.username)
         myrabbit.close()
         return wish
 
@@ -191,6 +195,16 @@ class Users(Document):
 
         event = Events(user_id=self.id, name=kwargs.get('_name'), start_date=kwargs.get('_start_date'), end_date=kwargs.get('_end_date'), creation_date=datetime.datetime.now())
         event.save()
+
+        #Connect and send message to the queue
+        # Use plain credentials for authentication
+        myrabbit = rabbitmq()
+        myrabbit.create_connection()
+        myrabbit.publish_newevent(event.event_id, event.user_id.user.username)
+        myrabbit.close()
+        #mqueue.publish_message('coco', 'New weesh created', channel, 'amq_fanout')
+        #mqueue.close(connection)
+
         return event
 
     def interests_to_wish(self, _user, _wish):

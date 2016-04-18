@@ -11,7 +11,7 @@ from rest_framework.decorators import api_view, renderer_classes, permission_cla
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.response import Response
-from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer, WishSerializer, WishSerializer2
+from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer, WishSerializer, EventSerializer
 from .models import Users, Wishes, Events, UsersRelationships, Preferences
 from mongoengine.django.auth import User
 from upto.forms import UsersLoginForm, FilterForm
@@ -251,10 +251,21 @@ def getWeeshById(request):
 
     wish = Wishes.objects(wish_id=request.GET['id'])
     username = wish[0].user_id.user.username
-    wishSerializer = WishSerializer2(instance=wish,many=True)
+    wishSerializer = WishSerializer(instance=wish,many=True)
 
     return Response({'wish': wishSerializer.data, 'username': username})
 
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
+def getEventById(request):
+
+    event = Events.objects(event_id=request.GET['id'])
+    username = event[0].user_id.user.username
+    picture = event[0].get_picture()
+    eventSerializer = EventSerializer(instance=event,many=True)
+
+    return Response({'event': eventSerializer.data, 'event_picture': picture, 'username': username})
 
 
 def getConnectedUser(request):

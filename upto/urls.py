@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^wishes/$', views.allwishesAndEvent, name='wishes'),
     url(r'^weeshesevents/$', views.weeshesevents, name='weeshesevents'),
     url(r'^getweeshbyid/$', views.getWeeshById, name='getweeshbyid'),
+    url(r'^geteventbyid/$', views.getEventById, name='geteventbyid'),
     url(r'^createwish/$', views.createWish, name='createwish'),
     url(r'^filter/$', views.filter_list, name='filter'),
     url(r'^deletewish/(?P<_wish_id>\w+)$', views.deleteWish, name='deletewish'),
