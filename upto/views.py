@@ -127,16 +127,28 @@ def userdetails(request, username):
 @permission_classes((AllowAny,))
 @renderer_classes((JSONRenderer, TemplateHTMLRenderer))
 def userdetails(request, username):
-    connected_user = getConnectedUser(request)
-    context = {
-        'user': connected_user,
-    }
-    if request.accepted_renderer.format == 'html':
+    try:
+        connected_user = getConnectedUser(request)
+        user = Users.objects.get(user__username=username)
+        context = {
+                'user': user,
+                'is_a_friend':False,
+                'current_user': connected_user,
+            }
+        relations = UsersRelationships.objects.get(from_user=connected_user.id, to_user=user.id)
+        if isinstance(relations, UsersRelationships):
+            context = {
+                'user': user,
+                'is_a_friend':True,
+                'current_user': connected_user,
+                'relations': relations,
+            }
+        if request.accepted_renderer.format == 'html':
+            return render(request, 'upto/userdetails.html', context)
+        userSerializer = UsersSerializer(instance=user)
+        return Response(userSerializer.data)
+    except UsersRelationships.DoesNotExist:
         return render(request, 'upto/userdetails.html', context)
-
-    userSerializer = UsersSerializer(instance=connected_user)
-
-    return Response(userSerializer.data)
 
 
 def uploadPictureUser(request):
@@ -220,7 +232,6 @@ def weeshesevents(request):
     tmplst = list()
     print connected_user.preferences.display_events
     if connected_user.preferences.display_events:
-        print 'Selected Events'
         for event in Events.objects:
             tmplst.append(event)
     if connected_user.preferences.display_weeshes:
@@ -249,6 +260,8 @@ def getWeeshById(request):
 def getConnectedUser(request):
     return Users.objects.get(user__username=request.session['username'])
 
+def getUserWithUsername(_username):
+    return Users.objects.get(user__username=_username)
 
 def getEventInfo(request, _event_id):
     event = Events.objects.get(id=_event_id)
@@ -274,9 +287,27 @@ def createWish(request):
     # 2 - get wish title from form
     _wish_title = request.POST['weeshtitle']
     getConnectedUser(request).create_wish(_wish_title)
-    print getConnectedUser(request).user.username
     return redirect('/upto/wishes/')
 
+def addfriend(request, username):
+    try:
+        connected_user = getConnectedUser(request)
+        friend_user = getUserWithUsername(username)
+        connected_user.add_friend(friend_user)
+    except connected_user.DoesNotExist:
+        raise Http404('Wish id does not exist')
+    else:
+        return redirect('/upto/wishes/')
+
+def unfriend(request, _user_id):
+    try:
+        connected_user = getConnectedUser(request)
+        relation = UsersRelationships.objects.get(from_user=connected_user.id, to_user=_user_id)
+        relation.delete()
+    except connected_user.DoesNotExist:
+        raise Http404('Wish id does not exist')
+    else:
+        return redirect('/upto/wishes/')
 
 def deleteWish(request, _wish_id):
     """

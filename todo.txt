@@ -181,6 +181,7 @@ update line first line to : 127.0.0.1	youweesh.local.com
 #-------------------------------------------------------------
 # Installation RabbitMq
 #-------------------------------------------------------------
+sudo pip installer pika
 Download the deb file on http://www.rabbitmq.com/install-debian.html
 Install the package : sudo dpkg -i [deb filename]
 
@@ -201,3 +202,28 @@ sudo rabbitmq-plugins enable rabbitmq_web_stomp
 
 Restart RabbitMq. You should now get a hello page in port 15674 (http://localhost:15674/stomp)
 
+'''
+    def relation_exists(self, _from_user_id, _to_user_id):
+        relation_exists = False
+        if self.from_user == _from_user_id and self.to_user == _to_user_id:
+            relation_exists = True
+        return relation_exists
+'''
+
+
+    '''
+    def create_event(self, _name, _start_date, _end_date, _thumbnail):
+        """
+        Method user to create an event
+        :param _user:
+        :param _name:
+        :param _startDate:
+        :param _endDate:
+        :return: self
+        """
+        event = Events(user_id=self.id, name=_name, start_date=_start_date, end_date=_end_date, creation_date=datetime.datetime.now())
+        event.thumbnail.replace(_thumbnail)
+        event.save()
+        return event
+    """
+    '''

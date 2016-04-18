@@ -92,12 +92,11 @@ class UsersRelationships(Document):
     """
     Class used to manage relationships beetwen Users instances.
     """
-
     rel_id = ObjectIdField(default=ObjectId)
     from_user = ReferenceField('Users')
     to_user = ReferenceField('Users')
     accepted = BooleanField()
-    blocked = BooleanField()
+    blocked = BooleanField(default=False)
     date_created = DateTimeField(default=datetime.datetime.now())
 
     def accept(self):
@@ -124,9 +123,9 @@ class Users(Document):
     picture = ImageField()
     preferences = EmbeddedDocumentField('Preferences')
     date_created = DateTimeField(default=datetime.datetime.now())
+    #friends = ListField(ReferenceField('UsersRelationships'))
     #wishes = ListField(ReferenceField('Wishes'))
     #logs = ListField(ReferenceField('Logs'))
-    #friends = ListField(EmbeddedDocumentField('UsersRelationships'))
     #messages = ListField(EmbeddedDocumentField('Messages'))
     #categories_Selected = ListField(EmbeddedDocumentField('Categories'))
     #medias = ListField(ReferenceField('Medias'))
@@ -147,23 +146,26 @@ class Users(Document):
         :return: self
         """
         rel = UsersRelationships(from_user=self, to_user=user, accepted=False, blocked=False)
-        #user.friends.append(rel)
-        #self.friends.append(relself)
-        #user.save()
-        #self.save()
-        #return self
         rel.save()
         return self
 
-    def accept_follower(self, user):
+    def accept_follower(self, _users):
         """
         Method used to activate a relationship, i.e accept a follower
         :param user:
         :return:
         """
-        #Users.objects(friends__from_user=user, friends__to_user=self).update(set__friends__S__active=True)
-        UsersRelationships.objects(from_user=user, to_user=self).update(set__accepted=True)
-        #self.save()
+
+        self.save()
+        return self
+
+    def add_friend(self, _users):
+        """
+
+        :return:
+        """
+        relation = UsersRelationships(from_user=self, to_user=_users, accepted=False)
+        relation.save()
         return self
 
     def create_wish(self, _title):
@@ -174,9 +176,6 @@ class Users(Document):
         :return: self
         """
         wish = Wishes(user_id=self.id, title=_title, creation_date=datetime.datetime.now())
-        #self.wishes.append(wish)
-        #self.save()
-        #return self
         wish.save()
 
         #Connect and send message to the queue
@@ -186,30 +185,13 @@ class Users(Document):
         myrabbit.publish_newweesh(wish.wish_id)
 
         myrabbit.close()
-        #mqueue.publish_message('coco', 'New weesh created', channel, 'amq_fanout')
-        #mqueue.close(connection)
-
-
         return wish
 
+    def create_event(self, **kwargs):
 
-    def create_event(self, _name, _start_date, _end_date, _thumbnail):
-        """
-        Method user to create an event
-        :param _user:
-        :param _name:
-        :param _startDate:
-        :param _endDate:
-        :return: self
-        """
-        event = Events(user_id=self.id, name=_name, start_date=_start_date, end_date=_end_date, creation_date=datetime.datetime.now())
-        #self.events_Owned.append(event)
-        #self.save()
-        #return self
-        event.thumbnail.replace(_thumbnail)
+        event = Events(user_id=self.id, name=kwargs.get('_name'), start_date=kwargs.get('_start_date'), end_date=kwargs.get('_end_date'), creation_date=datetime.datetime.now())
         event.save()
         return event
-    """
 
     def interests_to_wish(self, _user, _wish):
         user = Users.objects.get(id=_user.id)
@@ -228,7 +210,6 @@ class Users(Document):
 
     def my_wishes(self):
         return self.wishes
-    """
 
     def get_picture(self):
         picture = base64.b64encode(self.picture.read())
