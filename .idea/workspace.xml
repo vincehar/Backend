@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4c7768cd-8dbf-478d-8597-fd5e37556de9" name="Default" comment="[18.04.2016] - Vincent -&gt; Refresh List Wish and Events">
+    <list default="true" id="4c7768cd-8dbf-478d-8597-fd5e37556de9" name="Default" comment="[20.04.2016] - Vincent -&gt; When you create an event, it's possible now to not put a picture&#10;-&gt; Fix of the create event method">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/upto/models.py" afterPath="$PROJECT_DIR$/upto/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/upto/templates/upto/wishes.html" afterPath="$PROJECT_DIR$/upto/templates/upto/wishes.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/upto/views.py" afterPath="$PROJECT_DIR$/upto/views.py" />
     </list>
     <ignored path="NHPartners.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -756,7 +753,13 @@
       <option name="project" value="LOCAL" />
       <updated>1460995923073</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="[20.04.2016] - Vincent -&gt; When you create an event, it's possible now to not put a picture&#10;-&gt; Fix of the create event method">
+      <created>1461186843494</created>
+      <option name="number" value="00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1461186843494</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -820,7 +823,8 @@
     <MESSAGE value="[27.03.2016] - Marc&#10;+ Login page" />
     <MESSAGE value="[12.04.2016] - Vincent -&gt; Refresh List Wish and Events (en chantier)" />
     <MESSAGE value="[18.04.2016] - Vincent -&gt; Refresh List Wish and Events" />
-    <option name="LAST_COMMIT_MESSAGE" value="[18.04.2016] - Vincent -&gt; Refresh List Wish and Events" />
+    <MESSAGE value="[20.04.2016] - Vincent -&gt; When you create an event, it's possible now to not put a picture&#10;-&gt; Fix of the create event method" />
+    <option name="LAST_COMMIT_MESSAGE" value="[20.04.2016] - Vincent -&gt; When you create an event, it's possible now to not put a picture&#10;-&gt; Fix of the create event method" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
