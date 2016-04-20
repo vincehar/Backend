@@ -262,10 +262,16 @@ def getEventById(request):
 
     event = Events.objects(event_id=request.GET['id'])
     username = event[0].user_id.user.username
-    picture = event[0].get_picture()
     eventSerializer = EventSerializer(instance=event,many=True)
 
+    if event[0].thumbnail:
+        picture = event[0].get_picture()
+    else:
+        picture = ''
+
     return Response({'event': eventSerializer.data, 'event_picture': picture, 'username': username})
+
+
 
 
 def getConnectedUser(request):
@@ -348,9 +354,13 @@ def createEvent(request):
 
         start_date = datetime.datetime.strptime(request.POST['start_date'], "%Y/%m/%d %H:%M")
         end_date = datetime.datetime.strptime(request.POST['end_date'], "%Y/%m/%d %H:%M")
-        thumbnail = request.FILES['thumbnail']
 
-        getConnectedUser(request).create_event(eventName, start_date, end_date, thumbnail)
+        if request.FILES:
+            thumbnail = request.FILES['thumbnail']
+            getConnectedUser(request).create_event(eventName=eventName, start_date=start_date, end_date=end_date, thumbnail=thumbnail)
+        else:
+            getConnectedUser(request).create_event(eventName=eventName, start_date=start_date, end_date=end_date)
+
     except Users.DoesNotExist:
         raise Http404('Event id does not exist')
     else:

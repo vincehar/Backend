@@ -193,7 +193,10 @@ class Users(Document):
 
     def create_event(self, **kwargs):
 
-        event = Events(user_id=self.id, name=kwargs.get('_name'), start_date=kwargs.get('_start_date'), end_date=kwargs.get('_end_date'), creation_date=datetime.datetime.now())
+        if 'thumbnail' in kwargs:
+            event = Events(user_id=self.id, name=kwargs['eventName'], start_date=kwargs['start_date'], end_date=kwargs['end_date'], thumbnail=kwargs['thumbnail'], creation_date=datetime.datetime.now())
+        else:
+            event = Events(user_id=self.id, name=kwargs['eventName'], start_date=kwargs['start_date'], end_date=kwargs['end_date'], creation_date=datetime.datetime.now())
         event.save()
 
         #Connect and send message to the queue

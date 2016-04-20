@@ -262,10 +262,17 @@ function getEventById(idEvent) {
              data: { id : idEvent},
              success: function(data) {
                    // $('#weeshes-list').html(data);
-                   firstDiv = "<li><img class=\"thumbnail\" src=\'data:image/jpeg;base64," + data.event_picture + "\' height=\"100\">"
-                   secondDiv = "<div>Event :" + data.event[0].name + "</div>"
-                   thirdDiv = "<div>Date :" + moment(data.event[0].creation_date).format('MMMM Do YYYY, h:mm:ss a') + "</div>"
-                   fourDiv = "<div>Creator :" + data.username + "</div>"
+                   if(data.event_picture == "")
+                   {
+                        firstDiv = "<li>"
+                   }
+                   else
+                   {
+                        firstDiv = "<li><img class=\"thumbnail\" src=\'data:image/jpeg;base64," + data.event_picture + "\' height=\"100\">"
+                   }
+                   secondDiv = "<div>Event : " + data.event[0].name + "</div>"
+                   thirdDiv = "<div>Date : " + moment(data.event[0].creation_date).format('MMMM Do YYYY, h:mm:ss a') + "</div>"
+                   fourDiv = "<div>Creator : " + data.username + "</div>"
                    sixDiv = "<div><a href=\"../event/" + data.event[0].id + "\">Details >> </a></div>"
                    sevenDiv = "<div><a href=\"../deleteevent/" + data.event[0].id + "\">DELETE X </a></div></li>"
 
