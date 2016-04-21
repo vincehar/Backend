@@ -1,5 +1,6 @@
 from upto.models import User, Users, Wishes, UsersRelationships, Events, Preferences
 from pymongo import Connection
+from rabbitmq import rabbitmq
 from django.contrib import auth
 import datetime
 
@@ -26,6 +27,12 @@ for use in ['alex', 'vincent', 'marc']:
     except User.DoesNotExist:
         u=User.objects.create(username=use, email='test2@bb.com', password='pbkdf2_sha256$20000$XEl4EhJOYf1y$iTsb3lMssG+pqj4U7rpFXamt2b5QcHAGNsZ85GJ3/jk=')
         u.save()
+
+        #Creation des queues
+        myrabbit = rabbitmq()
+        myrabbit.create_connection()
+        myrabbit.create_queue(u)
+        myrabbit.close()
 
 #Users.objects
 
