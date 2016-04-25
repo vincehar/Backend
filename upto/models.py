@@ -180,7 +180,15 @@ class Users(Document):
         :param _creation_date:
         :return: self
         """
+
         wish = Wishes(user_id=self.id, title=_title, creation_date=datetime.datetime.now())
+
+        splitTitle = _title.split(' ')
+        for word in splitTitle:
+            if word.startswith('#'):
+                tag = Tags.objects.get(title=word)
+                wish.tags.append(tag)
+
         wish.save()
 
         #Connect and send message to the queue

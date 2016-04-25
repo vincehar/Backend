@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^account/$', views.account, name='account'),
     url(r'^wishes/$', views.allwishesAndEvent, name='wishes'),
     url(r'^weeshesevents/$', views.weeshesevents, name='weeshesevents'),
+    url(r'^getautocompletetags/$', views.getAutoCompleteTags, name='getautocompletetags'),
     url(r'^getweeshbyid/$', views.getWeeshById, name='getweeshbyid'),
     url(r'^geteventbyid/$', views.getEventById, name='geteventbyid'),
     url(r'^createwish/$', views.createWish, name='createwish'),
