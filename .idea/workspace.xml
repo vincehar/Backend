@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4c7768cd-8dbf-478d-8597-fd5e37556de9" name="Default" comment="[25.04.2016] - Vincent -&gt; Add tags to the weeshes">
+    <list default="true" id="4c7768cd-8dbf-478d-8597-fd5e37556de9" name="Default" comment="[26.04.2016] - Vincent -&gt; Correction du mock">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/upto/mock.py" afterPath="$PROJECT_DIR$/upto/mock.py" />
     </list>
@@ -83,8 +83,8 @@
       <file leaf-file-name="mock.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/upto/mock.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.42631578">
-              <caret line="51" column="13" selection-start-line="51" selection-start-column="11" selection-end-line="51" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.99473685">
+              <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
               <folding>
                 <element signature="e#0#34#0" expanded="true" />
               </folding>
@@ -816,7 +816,13 @@
       <option name="project" value="LOCAL" />
       <updated>1461607861311</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="[26.04.2016] - Vincent -&gt; Correction du mock">
+      <created>1461691172522</created>
+      <option name="number" value="00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1461691172522</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -882,7 +888,8 @@
     <MESSAGE value="[18.04.2016] - Vincent -&gt; Refresh List Wish and Events" />
     <MESSAGE value="[20.04.2016] - Vincent -&gt; When you create an event, it's possible now to not put a picture&#10;-&gt; Fix of the create event method" />
     <MESSAGE value="[25.04.2016] - Vincent -&gt; Add tags to the weeshes" />
-    <option name="LAST_COMMIT_MESSAGE" value="[25.04.2016] - Vincent -&gt; Add tags to the weeshes" />
+    <MESSAGE value="[26.04.2016] - Vincent -&gt; Correction du mock" />
+    <option name="LAST_COMMIT_MESSAGE" value="[26.04.2016] - Vincent -&gt; Correction du mock" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1305,8 +1312,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/upto/mock.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42631578">
-          <caret line="51" column="13" selection-start-line="51" selection-start-column="11" selection-end-line="51" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.99473685">
+          <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
           <folding>
             <element signature="e#0#34#0" expanded="true" />
           </folding>
