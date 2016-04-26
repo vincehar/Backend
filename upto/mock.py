@@ -1,3 +1,4 @@
+from upto.rabbitmq import rabbitmq
 from upto.models import User, Users, Wishes, UsersRelationships, Events, Preferences, Tags
 from pymongo import Connection
 from django.contrib import auth
@@ -27,12 +28,6 @@ for use in ['alex', 'vincent', 'marc']:
         u=User.objects.create(username=use, email='test2@bb.com', password='pbkdf2_sha256$20000$XEl4EhJOYf1y$iTsb3lMssG+pqj4U7rpFXamt2b5QcHAGNsZ85GJ3/jk=')
         u.save()
 
-        #Creation des queues
-        #myrabbit = rabbitmq()
-        #myrabbit.create_connection()
-        #myrabbit.create_queue(u)
-        #myrabbit.close()
-
 #Users.objects
 
 
@@ -46,6 +41,13 @@ alex=Users.objects.get(user__username='alex')
 #vincent=Users.objects.get_or_create(user=User.objects.get(username='vincent'), preferences=Preferences())
 #alex=Users.objects.get_or_create(user=User.objects.get(username='alex'), preferences=Preferences())
 
+#Creation des queues
+myrabbit = rabbitmq()
+myrabbit.create_connection()
+myrabbit.create_queue(marc)
+myrabbit.create_queue(vincent)
+myrabbit.create_queue(alex)
+myrabbit.close()
 
 #us[0].save()
 #usa[0].save()
