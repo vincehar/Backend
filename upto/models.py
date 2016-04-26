@@ -186,8 +186,8 @@ class Users(Document):
         splitTitle = _title.split(' ')
         for word in splitTitle:
             if word.startswith('#'):
-                tag = Tags.objects.get(title=word)
-                wish.tags.append(tag)
+                tag = Tags.objects.get_or_create(title=word)
+                wish.tags.append(tag[0])
 
         wish.save()
 
