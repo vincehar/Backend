@@ -86,6 +86,8 @@ def logout_view(request):
     form = UsersLoginForm()
     return render(request, 'upto/index.html', {'form': form})
 
+def getFriends(_user):
+    return UsersRelationships.objects(accepted=True, to_user=_user.id)
 
 @permission_classes((IsAuthenticated,))
 def account(request):
@@ -212,7 +214,6 @@ def allwishesAndEvent(request):
                 displayWeeshesChecked = 'checked'
 
             frmFilter = FilterForm(initial={'display_events': displayEventsChecked, 'display_weeshes': displayWeeshesChecked})
-            print frmFilter
             wishes_user = Wishes.objects[:5](user_id=user.id).order_by('-creation_date')
             context = {
                 'current_user': user,
@@ -238,14 +239,25 @@ def allwishesAndEvent(request):
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def weeshesevents(request):
     connected_user = getConnectedUser(request)
+    if connected_user.preferences.selected_network == "public":
+        AllEvents = Events.objects
+        AllWishes = Wishes.objects
+    if connected_user.preferences.selected_network == "friends":
+        for relationship in getFriends(connected_user):
+            print relationship.from_user.id
+            print Events.objects.get(user_id=relationship.from_user.id)
+            AllEvents.append(Events.objects.get(user_id=relationship.from_user.id))
+            AllWishes.append(Wishes.objects.get(user_id=relationship.from_user.id))
+
+    print AllEvents
     tmplst = list()
-    print connected_user.preferences.display_events
     if connected_user.preferences.display_events:
-        for event in Events.objects:
+        for event in AllEvents:
             tmplst.append(event)
     if connected_user.preferences.display_weeshes:
-        for wish in Wishes.objects:
+        for wish in AllWishes:
             tmplst.append(wish)
+
     context = {
         'eventsList': sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True)
     }
@@ -286,6 +298,11 @@ def getEventById(request):
 @renderer_classes((JSONRenderer, TemplateHTMLRenderer))
 def getAutoCompleteTags(request):
 
+    """
+
+    :param request:
+    :return:
+    """
     tags = Tags.objects(title__istartswith=request.GET['tag'])
     tagSerializer = TagSerializer(instance=tags, many=True)
 
@@ -302,7 +319,6 @@ def getUserWithUsername(_username):
 
 def getEventInfo(request, _event_id):
     event = Events.objects.get(id=_event_id)
-    print _event_id
     context = {
         'currentEvent': event,
         'current_user': getConnectedUser(request),
@@ -417,7 +433,7 @@ def deleteEvent(request, _event_id):
 
 def filter_list(request):
     """
-
+    Define filter for the current user and record it on its preferences
     :param request:
     :return:
     """
@@ -433,7 +449,7 @@ def filter_list(request):
                 connected_user.preferences.display_weeshes = True
             else:
                 connected_user.preferences.display_weeshes = False
-            # 2 - call view weeshesAndEvents with filter
+            connected_user.preferences.selected_network = request.POST['selected_network']
             connected_user.save()
         except Wishes.DoesNotExist:
             raise Http404('Wish id does not exist')
