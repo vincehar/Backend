@@ -213,7 +213,7 @@ def allwishesAndEvent(request):
             if user.preferences.display_weeshes:
                 displayWeeshesChecked = 'checked'
 
-            frmFilter = FilterForm(initial={'display_events': displayEventsChecked, 'display_weeshes': displayWeeshesChecked})
+            frmFilter = FilterForm(initial={'display_events': displayEventsChecked, 'display_weeshes': displayWeeshesChecked, 'selected_network': user.preferences.selected_network})
             wishes_user = Wishes.objects[:5](user_id=user.id).order_by('-creation_date')
             context = {
                 'current_user': user,
@@ -239,17 +239,20 @@ def allwishesAndEvent(request):
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def weeshesevents(request):
     connected_user = getConnectedUser(request)
+
+    ### 1 - manage private and public network ###
+    AllEvents = list()
+    AllWishes = list()
     if connected_user.preferences.selected_network == "public":
         AllEvents = Events.objects
         AllWishes = Wishes.objects
     if connected_user.preferences.selected_network == "friends":
         for relationship in getFriends(connected_user):
-            print relationship.from_user.id
-            print Events.objects.get(user_id=relationship.from_user.id)
-            AllEvents.append(Events.objects.get(user_id=relationship.from_user.id))
-            AllWishes.append(Wishes.objects.get(user_id=relationship.from_user.id))
-
-    print AllEvents
+            for event in Events.objects(user_id=relationship.from_user.id):
+                AllEvents.append(event)
+            for wish in Wishes.objects(user_id=relationship.from_user.id):
+                AllWishes.append(wish)
+    ### 1                                   #######
     tmplst = list()
     if connected_user.preferences.display_events:
         for event in AllEvents:
