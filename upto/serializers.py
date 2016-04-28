@@ -1,4 +1,4 @@
-from .models import Users, Wishes, Events, UsersRelationships
+from .models import Users, Wishes, Events, UsersRelationships, Tags
 from rest_framework import serializers
 from rest_framework_mongoengine import serializers as mongoserializers
 from rest_framework_mongoengine.serializers import DocumentSerializer
@@ -22,8 +22,14 @@ class UsersRelationShipsSerializer(DocumentSerializer):
         model = UsersRelationships
         depth = 1
 
+class TagSerializer(DocumentSerializer):
+   class Meta:
+        model = Tags
+        depth = 1
+
 class WishSerializer(DocumentSerializer):
    user_id = UsersSerializer()
+   tags = TagSerializer(many=True)
    class Meta:
         model = Wishes
         depth = 1

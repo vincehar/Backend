@@ -11,8 +11,8 @@ from rest_framework.decorators import api_view, renderer_classes, permission_cla
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.response import Response
-from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer, WishSerializer, EventSerializer
-from .models import Users, Wishes, Events, UsersRelationships, Preferences
+from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer, WishSerializer, EventSerializer, TagSerializer
+from .models import Users, Wishes, Events, UsersRelationships, Preferences, Tags
 from mongoengine.django.auth import User
 from upto.forms import UsersLoginForm, FilterForm
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -279,6 +279,17 @@ def getEventById(request):
         picture = ''
 
     return Response({'event': eventSerializer.data, 'event_picture': picture, 'username': username})
+
+
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
+def getAutoCompleteTags(request):
+
+    tags = Tags.objects(title__istartswith=request.GET['tag'])
+    tagSerializer = TagSerializer(instance=tags, many=True)
+
+    return Response({'tags': tagSerializer.data})
 
 
 

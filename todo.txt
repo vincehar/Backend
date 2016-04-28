@@ -202,6 +202,9 @@ sudo rabbitmq-plugins enable rabbitmq_web_stomp
 
 Restart RabbitMq. You should now get a hello page in port 15674 (http://localhost:15674/stomp)
 
+You have to creator the user  youweesh with the password upto2016 with the admin access
+
+
 '''
     def relation_exists(self, _from_user_id, _to_user_id):
         relation_exists = False

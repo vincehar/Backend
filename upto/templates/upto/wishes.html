@@ -5,7 +5,8 @@
     <link rel="stylesheet" type="text/css" href="../../static/upto/wishes.css">
     <link rel="stylesheet" type="text/css" href="/static/js/datetimepicker/jquery.datetimepicker.css"/>
     <link rel="stylesheet" href="/static/css/bootstrap.css">
-<style type="text/css">
+    <link rel="stylesheet" href="/static/css/jquery-ui.min.css">
+    <style type="text/css">
 
 .custom-date-style {
 	background-color: red !important;
@@ -22,6 +23,7 @@
 <body>
 <script src="/static/js/datetimepicker/jquery.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/static/js/imagepreview.js"></script>
 <script src="/static/js/datetimepicker/build/jquery.datetimepicker.full.js"></script>
 <script type="text/javascript" src="/static/js/autoCompleteAddress.js"></script>
@@ -218,6 +220,66 @@ $( document ).ready(function() {
         on_connect_error,
         mq_vhost
     );
+
+    // Autocomplete for tags
+
+    function split( val ) {
+       return val.split( / \s*/ );
+    }
+
+    function extractLast( term ) {
+       return split( term ).pop();
+    }
+
+    $( "#weeshtitle" )
+    // don't navigate away from the field on tab when selecting an item
+          .bind( "keydown", function( event ) {
+            if ( event.keyCode === $.ui.keyCode.TAB &&
+                $( this ).autocomplete( "instance" ).menu.active ) {
+              event.preventDefault();
+            }
+          })
+          .autocomplete({
+            minLength: 2,
+            source: function( request, response ) {
+              // delegate back to autocomplete, but extract the last term
+              lastTerm = extractLast( request.term );
+              if(lastTerm.charAt(0) == '#' && lastTerm.length >= 2 )
+              {
+
+                    $.ajax({
+                        url: '{% url 'getautocompletetags' %}',
+                        dataType: "json",
+                        data: {
+                                tag: lastTerm
+                        },
+                        success: function( data ) {
+                            response( data.tags.map(function(tag) {return tag.title;}));
+                        }
+                    });
+
+              //  var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( lastTerm ), "i" );
+              //      response( $.grep( availableTags, function( item ){
+               //         return matcher.test( item );
+               //     }) );
+              }
+            },
+            focus: function() {
+              // prevent value inserted on focus
+              return false;
+            },
+            select: function( event, ui ) {
+              var terms = split( this.value );
+              // remove the current input
+              terms.pop();
+              // add the selected item
+              terms.push( ui.item.value );
+              // add placeholder to get the space at the end
+              terms.push( "" );
+              this.value = terms.join( " " );
+              return false;
+            }
+    });
 });
 
 function refreshWeeshesEvents() {
@@ -238,7 +300,7 @@ function getWeeshById(idWeesh) {
                    // $('#weeshes-list').html(data);
                    firstDiv = "<li><div>Wish : " + data.wish[0].title + "</div>"
                    secondDiv = "<div>Date : " + moment(data.wish[0].creation_date).format('MMMM Do YYYY, h:mm:ss a') + "</div>"
-                   thirdDiv = "<div>Weesher : " + data.username + "</div>"
+                   thirdDiv = "<div>Weesher : <a href=\"../userdetails/" + data.username + "\">" + data.username + "</a></div>"
                    fourDiv =  "<div><a href=\"../deletewish/" + data.wish[0].id + "\">DELETE X </a></div></li>"
                    $('#weeshesevents').prepend(firstDiv+secondDiv+thirdDiv+fourDiv);
 
@@ -329,6 +391,7 @@ function on_message(m) {
 
 // Create a client
 var client = Stomp.client(mq_url);
+
 
  </script>
 
