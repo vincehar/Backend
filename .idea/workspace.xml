@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4c7768cd-8dbf-478d-8597-fd5e37556de9" name="Default" comment="[26.04.2016] - Vincent -&gt; Correction du mock">
+    <list default="true" id="4c7768cd-8dbf-478d-8597-fd5e37556de9" name="Default" comment="[28.04.2016] - Marc&#10;+ Add Public / private network features">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/upto/views.py" afterPath="$PROJECT_DIR$/upto/views.py" />
     </list>
     <ignored path="NHPartners.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -612,7 +611,13 @@
       <option name="project" value="LOCAL" />
       <updated>1461864228046</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="[28.04.2016] - Marc&#10;+ Add Public / private network features">
+      <created>1461867704059</created>
+      <option name="number" value="00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1461867704059</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -679,7 +684,8 @@
     <MESSAGE value="[20.04.2016] - Vincent -&gt; When you create an event, it's possible now to not put a picture&#10;-&gt; Fix of the create event method" />
     <MESSAGE value="[25.04.2016] - Vincent -&gt; Add tags to the weeshes" />
     <MESSAGE value="[26.04.2016] - Vincent -&gt; Correction du mock" />
-    <option name="LAST_COMMIT_MESSAGE" value="[26.04.2016] - Vincent -&gt; Correction du mock" />
+    <MESSAGE value="[28.04.2016] - Marc&#10;+ Add Public / private network features" />
+    <option name="LAST_COMMIT_MESSAGE" value="[28.04.2016] - Marc&#10;+ Add Public / private network features" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
