@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^event/(?P<_event_id>\w+)/$', views.getEventInfo, name='eventDetails'),
     url(r'^userdetails/(?P<username>\w+)/$', views.userdetails, name='userdetails'),
     url(r'^addfriend/(?P<username>[a-z0-9]+)/$', views.addfriend, name='addfriend'),
+    url(r'^acceptfriend/(?P<friend_id>\w+)/$', views.acceptfriend, name='acceptfriend'),
     url(r'^unfriend/(?P<_user_id>\w+)$', views.unfriend, name='unfriend'),
     url(r'^logout/', views.logout_view, name='logout'),
     url(r'^relationships/(?P<username>[a-z0-9]+)/$', views.relationships, name='relationships'),

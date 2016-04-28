@@ -60,7 +60,7 @@
                         {% if current_user.picture %}
                             <img src='data:image/jpeg;base64,{{ current_user.get_picture }}' height="50">
                         {% endif %}
-                    <a id='username' href="{% url 'userdetails' current_user.user.username %}">{{ current_user.user.username }}</a></div>
+                    <a id='username' href="{% url 'account' %}">{{ current_user.user.username }}</a></div>
                 <div><a href="{% url 'logout' %}">Logout</a></div>
                 <div>Your weeshes :</div>
                 <div>

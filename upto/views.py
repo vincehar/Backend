@@ -89,12 +89,21 @@ def logout_view(request):
 
 @permission_classes((IsAuthenticated,))
 def account(request):
-    # test with a user
-    user_id = Users.objects.get(user__username=request.session['username']).id
-    user = Users.objects.get(id=user_id)
+    """
+    Get Account information and friends requests
+    :param request:
+    :return:
+    """
+    connected_user = getConnectedUser(request)
+    friends_requests = UsersRelationships.objects(accepted=False, to_user=connected_user.id) #UsersRelationships.objects.get(to_user=connected_user.id)
+    my_friends = UsersRelationships.objects(accepted=True, to_user=connected_user.id)
+
     context = {
-        'one_user': user,
+        'user': connected_user,
+        'friends_requests': friends_requests,
+        'my_friends': my_friends,
     }
+
     return render(request, 'upto/myaccount.html', context)
 
 
@@ -316,10 +325,24 @@ def addfriend(request, username):
     else:
         return redirect('/upto/wishes/')
 
+def acceptfriend(request, friend_id):
+    try:
+        connected_user = getConnectedUser(request)
+        relation = UsersRelationships.objects.get(from_user=friend_id, to_user=connected_user.id)
+        relation_symetrical = UsersRelationships(from_user=connected_user.id, to_user=friend_id, accepted=True)
+        relation.accepted = True
+        relation_symetrical.save()
+        relation.save()
+    except connected_user.DoesNotExist:
+        raise Http404('Wish id does not exist')
+    else:
+        return redirect('/upto/wishes/')
 def unfriend(request, _user_id):
     try:
         connected_user = getConnectedUser(request)
         relation = UsersRelationships.objects.get(from_user=connected_user.id, to_user=_user_id)
+        relation_symetrical = UsersRelationships.objects.get(to_user=connected_user.id, from_user=_user_id)
+        relation_symetrical.delete()
         relation.delete()
     except connected_user.DoesNotExist:
         raise Http404('Wish id does not exist')
