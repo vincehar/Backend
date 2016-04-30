@@ -100,6 +100,7 @@ def account(request):
     friends_requests = UsersRelationships.objects(accepted=False, to_user=connected_user.id) #UsersRelationships.objects.get(to_user=connected_user.id)
     my_friends = UsersRelationships.objects(accepted=True, to_user=connected_user.id)
 
+
     context = {
         'user': connected_user,
         'friends_requests': friends_requests,
