@@ -105,7 +105,7 @@ def account(request):
         'friends_requests': friends_requests,
         'my_friends': my_friends,
     }
-    print 'test'
+    print 'testmarc'
     return render(request, 'upto/myaccount.html', context)
 
 
