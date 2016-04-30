@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4c7768cd-8dbf-478d-8597-fd5e37556de9" name="Default" comment="[30.04.2016] - Marc&#10;+ Optimisation du code (refresh events/weeshes) + popup">
+    <list default="true" id="4c7768cd-8dbf-478d-8597-fd5e37556de9" name="Default" comment="[30.04.2016] - Vincent&#10;+ Optimisation du code (refresh events/weeshes) + popup">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="NHPartners.iws" />
@@ -46,8 +46,8 @@
       <file leaf-file-name="eventDetails.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/upto/templates/upto/eventDetails.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.40785497">
-              <caret line="15" column="7" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
+            <state vertical-scroll-proportion="0.326284">
+              <caret line="12" column="57" selection-start-line="12" selection-start-column="57" selection-end-line="12" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -677,12 +677,18 @@
       <option name="project" value="LOCAL" />
       <updated>1462024176833</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="[30.04.2016] - Vincent&#10;+ Optimisation du code (refresh events/weeshes) + popup">
+      <created>1462024424587</created>
+      <option name="number" value="00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1462024424587</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1855" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32892057" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903865" sideWeight="0.49811321" order="7" side_tool="false" content_ui="tabs" />
@@ -747,7 +753,8 @@
     <MESSAGE value="[26.04.2016] - Vincent -&gt; Correction du mock" />
     <MESSAGE value="[28.04.2016] - Marc&#10;+ Add Public / private network features" />
     <MESSAGE value="[30.04.2016] - Marc&#10;+ Optimisation du code (refresh events/weeshes) + popup" />
-    <option name="LAST_COMMIT_MESSAGE" value="[30.04.2016] - Marc&#10;+ Optimisation du code (refresh events/weeshes) + popup" />
+    <MESSAGE value="[30.04.2016] - Vincent&#10;+ Optimisation du code (refresh events/weeshes) + popup" />
+    <option name="LAST_COMMIT_MESSAGE" value="[30.04.2016] - Vincent&#10;+ Optimisation du code (refresh events/weeshes) + popup" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1146,8 +1153,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/upto/templates/upto/eventDetails.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40785497">
-          <caret line="15" column="7" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
+        <state vertical-scroll-proportion="0.326284">
+          <caret line="12" column="57" selection-start-line="12" selection-start-column="57" selection-end-line="12" selection-end-column="57" />
           <folding />
         </state>
       </provider>
