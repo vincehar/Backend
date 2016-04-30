@@ -13,7 +13,6 @@ from bson import ObjectId
 
 class Wishes(Document):
     user_id = ReferenceField('Users')
-    wish_id = ObjectIdField(default=ObjectId)
     title = StringField(required=True)
     creation_date = DateTimeField(default=datetime.datetime.now())
     interested = ListField(ReferenceField('Users'))
@@ -56,7 +55,6 @@ class Address(EmbeddedDocument):
 class Events(Document):
     user_id = ReferenceField('Users')
     interested = ListField(ReferenceField('Users'))
-    event_id = ObjectIdField(default=ObjectId)
     name = StringField(required=True)
     thumbnail = ImageField()
     start_date = DateTimeField(required=True)
@@ -195,7 +193,7 @@ class Users(Document):
         # Use plain credentials for authentication
         myrabbit = rabbitmq()
         myrabbit.create_connection()
-        myrabbit.publish_newweesh(wish.wish_id,wish.user_id.user.username)
+        myrabbit.publish_newweesh(wish.id,wish.user_id.user.username)
         myrabbit.close()
         return wish
 
@@ -211,7 +209,7 @@ class Users(Document):
         # Use plain credentials for authentication
         myrabbit = rabbitmq()
         myrabbit.create_connection()
-        myrabbit.publish_newevent(event.event_id, event.user_id.user.username)
+        myrabbit.publish_newevent(event.id, event.user_id.user.username)
         myrabbit.close()
         #mqueue.publish_message('coco', 'New weesh created', channel, 'amq_fanout')
         #mqueue.close(connection)
@@ -220,7 +218,7 @@ class Users(Document):
 
     def interests_to_wish(self, _user, _wish):
         user = Users.objects.get(id=_user.id)
-        wish = next((w for w in user.wishes if w.wish_id==_wish.wish_id), None)
+        wish = next((w for w in user.wishes if w.id==_wish.id), None)
         wish.add_interested(self)
         self.interested_in.append(wish)
         self.save()

@@ -267,30 +267,56 @@ def weeshesevents(request):
 
 @api_view(('GET',))
 @permission_classes((AllowAny,))
-@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def getWeeshById(request):
 
-    wish = Wishes.objects(wish_id=request.GET['id'])
-    username = wish[0].user_id.user.username
-    wishSerializer = WishSerializer(instance=wish,many=True)
+    wish = Wishes.objects.get(id=request.GET['id'])
 
-    return Response({'wish': wishSerializer.data, 'username': username})
+    if request.accepted_renderer.format == 'html':
+        context = {
+            'object': wish
+        }
+        return render(request, 'upto/weesh.html', context)
+
+    wishSerializer = WishSerializer(instance=wish)
+    return Response({'wish': wishSerializer.data})
 
 @api_view(('GET',))
 @permission_classes((AllowAny,))
-@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def getEventById(request):
 
-    event = Events.objects(event_id=request.GET['id'])
-    username = event[0].user_id.user.username
-    eventSerializer = EventSerializer(instance=event,many=True)
+    event = Events.objects.get(id=request.GET['id'])
 
-    if event[0].thumbnail:
-        picture = event[0].get_picture()
+    if request.accepted_renderer.format == 'html':
+        context = {
+            'object': event
+        }
+        return render(request, 'upto/event.html', context)
+
+    if event.thumbnail:
+        picture = event.get_picture()
     else:
         picture = ''
 
-    return Response({'event': eventSerializer.data, 'event_picture': picture, 'username': username})
+    eventSerializer = EventSerializer(instance=event)
+
+    return Response({'event': eventSerializer.data, 'event_picture': picture})
+
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def popUpEvent(request):
+
+    event = Events.objects.get(id=request.GET['id'])
+
+    context = {
+        'object': event
+
+    }
+
+    return render(request, 'upto/popupevent.html', context)
+
 
 
 @api_view(('GET',))

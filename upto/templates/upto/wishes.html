@@ -131,6 +131,7 @@
         </div>
         <div class="col-sm-6" id="weeshes-list">
         </div>
+        <div id="dialog"></div>
         <div class="col-sm-3">
             <div id="right-suggestions-container">
                 Suggestions
@@ -280,6 +281,35 @@ $( document ).ready(function() {
               return false;
             }
     });
+
+
+
+    //Activer les popups
+
+    $('li[id*="weesh"]').click(function(){
+            $(this).dialog({
+                modal: true
+
+            });
+    });
+
+    $('li[id*="event"]').click(function(){
+        var fullidEvent = this.id;
+        var n = fullidEvent.indexOf("_");
+        var idEvent = fullidEvent.substring(n+1, fullidEvent.length);
+
+        $.ajax({
+                url: '{% url 'popupevent' %}',
+                data: { id : idEvent},
+                success: function(data) {
+                    $('#dialog').html(data).dialog({modal: true}).dialog('open');
+                }
+
+
+        });
+    });
+
+
 });
 
 function refreshWeeshesEvents() {
@@ -293,17 +323,10 @@ function refreshWeeshesEvents() {
 
 function getWeeshById(idWeesh) {
      $.ajax({
-             dataType: "json",
              url: '{% url 'getweeshbyid' %}',
              data: { id : idWeesh},
              success: function(data) {
-                   // $('#weeshes-list').html(data);
-                   firstDiv = "<li><div>Wish : " + data.wish[0].title + "</div>"
-                   secondDiv = "<div>Date : " + moment(data.wish[0].creation_date).format('MMMM Do YYYY, h:mm:ss a') + "</div>"
-                   thirdDiv = "<div>Weesher : <a href=\"../userdetails/" + data.username + "\">" + data.username + "</a></div>"
-                   fourDiv =  "<div><a href=\"../deletewish/" + data.wish[0].id + "\">DELETE X </a></div></li>"
-                   $('#weeshesevents').prepend(firstDiv+secondDiv+thirdDiv+fourDiv);
-
+                   $('#weeshesevents').prepend(data);
                    if(data.username == $('#username').text())
                    {
                         li = "<li>" + data.wish[0].title + "</li>";
@@ -319,26 +342,10 @@ function getWeeshById(idWeesh) {
 
 function getEventById(idEvent) {
      $.ajax({
-             dataType: "json",
              url: '{% url 'geteventbyid' %}',
              data: { id : idEvent},
              success: function(data) {
-                   // $('#weeshes-list').html(data);
-                   if(data.event_picture == "")
-                   {
-                        firstDiv = "<li>"
-                   }
-                   else
-                   {
-                        firstDiv = "<li><img class=\"thumbnail\" src=\'data:image/jpeg;base64," + data.event_picture + "\' height=\"100\">"
-                   }
-                   secondDiv = "<div>Event : " + data.event[0].name + "</div>"
-                   thirdDiv = "<div>Date : " + moment(data.event[0].creation_date).format('MMMM Do YYYY, h:mm:ss a') + "</div>"
-                   fourDiv = "<div>Creator : " + data.username + "</div>"
-                   sixDiv = "<div><a href=\"../event/" + data.event[0].id + "\">Details >> </a></div>"
-                   sevenDiv = "<div><a href=\"../deleteevent/" + data.event[0].id + "\">DELETE X </a></div></li>"
-
-                   $('#weeshesevents').prepend(firstDiv+secondDiv+thirdDiv+fourDiv+sixDiv+sevenDiv);
+                   $('#weeshesevents').prepend(data);
              },
              error: function(jqXHR, textStatus, errorThrown) {
                 alert(errorThrown);
