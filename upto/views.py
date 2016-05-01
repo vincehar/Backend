@@ -21,7 +21,6 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 def index(request):
     return render(request, 'upto/index.html')
 
-
 @ensure_csrf_cookie
 @api_view(('GET', 'POST'))
 @permission_classes((AllowAny,))
@@ -105,7 +104,7 @@ def account(request):
         'friends_requests': friends_requests,
         'my_friends': my_friends,
     }
-
+    print 'testmarc'
     return render(request, 'upto/myaccount.html', context)
 
 
@@ -336,9 +335,6 @@ def getAutoCompleteTags(request):
     tagSerializer = TagSerializer(instance=tags, many=True)
 
     return Response({'tags': tagSerializer.data})
-
-
-
 
 def getConnectedUser(request):
     return Users.objects.get(user__username=request.session['username'])
