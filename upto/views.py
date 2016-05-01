@@ -21,7 +21,6 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 def index(request):
     return render(request, 'upto/index.html')
 
-
 @ensure_csrf_cookie
 @api_view(('GET', 'POST'))
 @permission_classes((AllowAny,))
