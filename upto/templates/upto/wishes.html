@@ -297,31 +297,6 @@ function loadWeeshesEvents() {
              success: function(data) {
                     $('#weeshes-list').html(data);
 
-                    //Activer les popups
-                    $('li[id*="weesh"]').click(function(){
-                        var fullidWeesh = this.id;
-                        var n = fullidWeesh.indexOf("_");
-                        var idWeesh = fullidWeesh.substring(n+1, fullidWeesh.length);
-
-                        $.ajax({
-                                url: '{% url 'popupweesh' %}',
-                                data: { id : idWeesh},
-                                success: function(data)
-                                {
-                                                vex.open({content: data,  showCloseButton: true,
-                                                afterOpen: function($vexContent) {
-                                                    return $vexContent.append($el);
-                                                },
-                                                afterClose: function() {
-                                                    return console.log('vexClose');
-                                                }
-                                                });
-                                }
-                        });
-
-
-                    });
-
                     $('li[id*="event"]').click(function(){
                         var fullidEvent = this.id;
                         var n = fullidEvent.indexOf("_");
@@ -332,14 +307,7 @@ function loadWeeshesEvents() {
                                 data: { id : idEvent},
                                 success: function(data)
                                 {
-                                                vex.open({content: data,  showCloseButton: true,
-                                                afterOpen: function($vexContent) {
-                                                    return $vexContent.append($el);
-                                                },
-                                                afterClose: function() {
-                                                    return console.log('vexClose');
-                                                }
-                                                });
+                                    vex.open({content: data,  showCloseButton: true});
                                 }
                         });
                     });
