@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User Details</title>
-    <h1>User Details</h1>
+    <title>{{ user.user.username }}</title>
+    <h1>My Account</h1>
 </head>
 <body>
 <div id="contentUserDetails">
@@ -36,25 +36,21 @@
         <div id="last_login" title="last_login">Last Login : {{user.user.last_login}}</div>
         <div id="date_joined" title="date_joined">Date Joined : {{user.user.last_joined}}</div>
 
-        {% if not user.user.username == current_user.user.username %}
-            {% if not is_a_friend %}
-                <h2><a href="{% url 'addfriend' user.user.username %}">ADD FRIEND +</a></h2>
-            {% else %}
-                {% if relations.accepted = False %}
-                    <h2>>Invite not accepted yet</h2>
-                {% else %}
-                    <h2><a href="{% url 'unfriend' user.id %}"> - Unfriend </a></h2>
-                {% endif %}
-            {% endif %}
-        {% else %}
-            {% for relation in relations %}
-                <div>test</div>
-                {% if not relation.accepted %}
+
+            {% for requests in friends_requests %}
+                {{ requests.id }}
+                {% if not requests.accepted %}
                     <div>Demandes d'amis en attentes :</div>
-                    <div>{{ relation.to_user.user.username }}</div>
+                    <div>{{ requests.from_user.user.username }}<a href="/upto/acceptfriend/{{ requests.from_user.id }}"> >> Accepter</a></div>
                 {% endif %}
             {% endfor %}
-        {% endif %}
+            <div> Mes amis :
+            {% for friend in my_friends %}
+                {% if friend %}
+                    <div><a id='username' href="{% url 'userdetails' friend.from_user.user.username %}">{{ friend.from_user.user.username }}>></a></div>
+                {% endif %}
+            {% endfor %}
+            </div>
 </div>
 </body>
 </html>

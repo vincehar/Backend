@@ -1,4 +1,5 @@
-from upto.models import User, Users, Wishes, UsersRelationships, Events, Preferences
+from upto.rabbitmq import rabbitmq
+from upto.models import User, Users, Wishes, UsersRelationships, Events, Preferences, Tags
 from pymongo import Connection
 from django.contrib import auth
 import datetime
@@ -40,6 +41,13 @@ alex=Users.objects.get(user__username='alex')
 #vincent=Users.objects.get_or_create(user=User.objects.get(username='vincent'), preferences=Preferences())
 #alex=Users.objects.get_or_create(user=User.objects.get(username='alex'), preferences=Preferences())
 
+#Creation des queues
+myrabbit = rabbitmq()
+myrabbit.create_connection()
+myrabbit.create_queue(marc)
+myrabbit.create_queue(vincent)
+myrabbit.create_queue(alex)
+myrabbit.close()
 
 #us[0].save()
 #usa[0].save()
@@ -53,23 +61,40 @@ alex=Users.objects.get(user__username='alex')
 #Wishes part
 #----------------
 
+#Create Tags
+t1=Tags.objects.get_or_create(title='#Cinema')
+t2=Tags.objects.get_or_create(title='#Running')
+t3=Tags.objects.get_or_create(title='#Foot')
+t4=Tags.objects.get_or_create(title='#Museum')
+t5=Tags.objects.get_or_create(title='#Dancing')
+t6=Tags.objects.get_or_create(title='#Cooking')
+t7=Tags.objects.get_or_create(title='#Chess')
+t8=Tags.objects.get_or_create(title='#Cycling')
 
+#t1.save()
+#t2.save()
+#t3.save()
+#t4.save()
+#t5.save()
+#t6.save()
+#t7.save()
+#t8.save()
 
 marc.create_wish('cine')
 marc.create_wish('Je veux voir les etoiles !!!')
-marc.create_event(_name='Concert de Johnny !!!', _start_date=datetime.datetime.today(), _end_date=datetime.datetime.today())
+marc.create_event(eventName='Concert de Johnny !!!',start_date=datetime.datetime.today(), end_date=datetime.datetime.today())
 marc.create_wish('Je vais coder en python ce soir')
 marc.save()
 
-vincent.create_wish('#velo')
-vincent.create_wish('Je veux me #reposer ce soir ')
-vincent.create_event(_name='Sortie Ski a la Clusaz', _start_date=datetime.datetime.today(), _end_date=datetime.datetime.today())
-vincent.create_wish('Je suis chaud pour un #foot')
+vincent.create_wish('#Cycling')
+vincent.create_wish('Je veux me reposer ce soir ')
+vincent.create_event(eventName='Sortie Ski a la Clusaz', start_date=datetime.datetime.today(), end_date=datetime.datetime.today())
+vincent.create_wish('Je suis chaud pour un #Foot')
 vincent.save()
 
-alex.create_wish('#alapeche')
-alex.create_wish('Qui pour une #raclette')
-alex.create_event(_name='Visite du #musee #dimanche', _start_date=datetime.datetime.today(), _end_date=datetime.datetime.today())
+alex.create_wish('alapeche')
+alex.create_wish('Qui pour une raclette')
+alex.create_event(eventName='Visite du #Museum dimanche', start_date=datetime.datetime.today(), end_date=datetime.datetime.today())
 alex.create_wish('Je vais coder en python ce soir')
 alex.save()
 

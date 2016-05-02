@@ -12,8 +12,8 @@ class rabbitmq:
 
         # Use plain credentials for authentication
         mq_creds  = pika.PlainCredentials(
-        username = "guest",
-        password = "guest")
+        username = "youweesh",
+        password = "upto2016")
 
         # Use localhost
         mq_params = pika.ConnectionParameters(
@@ -42,10 +42,13 @@ class rabbitmq:
         else:
             self.channel.basic_publish(exchange='amq_direct', routing_key=_users.user.username, body=_message)
 
-    def publish_newweesh(self, _weeshid):
-        properties = pika.BasicProperties(headers={'type': 'weesh', 'id': str(_weeshid)})
+    def publish_newweesh(self, _weeshid, _owner):
+        properties = pika.BasicProperties(headers={'type': 'weesh', 'id': str(_weeshid), 'owner': _owner})
         self.channel.basic_publish(exchange='amq.fanout', routing_key='General', body='New weesh', properties=properties)
 
+    def publish_newevent(self, _eventid, _owner):
+        properties = pika.BasicProperties(headers={'type': 'event', 'id': str(_eventid), 'owner': _owner})
+        self.channel.basic_publish(exchange='amq.fanout', routing_key='General', body='New event', properties=properties)
 
     def close(self):
         self.connection.close()

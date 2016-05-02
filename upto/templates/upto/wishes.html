@@ -5,7 +5,8 @@
     <link rel="stylesheet" type="text/css" href="../../static/upto/wishes.css">
     <link rel="stylesheet" type="text/css" href="/static/js/datetimepicker/jquery.datetimepicker.css"/>
     <link rel="stylesheet" href="/static/css/bootstrap.css">
-<style type="text/css">
+    <link rel="stylesheet" href="/static/css/jquery-ui.min.css">
+    <style type="text/css">
 
 .custom-date-style {
 	background-color: red !important;
@@ -22,6 +23,7 @@
 <body>
 <script src="/static/js/datetimepicker/jquery.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/static/js/imagepreview.js"></script>
 <script src="/static/js/datetimepicker/build/jquery.datetimepicker.full.js"></script>
 <script type="text/javascript" src="/static/js/autoCompleteAddress.js"></script>
@@ -29,6 +31,7 @@
 <script src="/static/js/sockjs-1.0.0.min.js"></script>
 <script src="/static/js/stomp.js"></script>
 <script src="/static/js/listener-app.js"></script>
+<script src="/static/js/moment.min.js"></script>
 <div class="container-fluid">
     <div class="row">
             <div id="col-sm-12">
@@ -59,11 +62,11 @@
                         {% if current_user.picture %}
                             <img src='data:image/jpeg;base64,{{ current_user.get_picture }}' height="50">
                         {% endif %}
-                    <a href="{% url 'userdetails' current_user.user.username %}">{{ current_user.user.username }}</a></div>
+                    <a id='username' href="{% url 'account' %}">{{ current_user.user.username }}</a></div>
                 <div><a href="{% url 'logout' %}">Logout</a></div>
                 <div>Your weeshes :</div>
                 <div>
-                    <ul>
+                    <ul id="myWeeshes">
                         {% if wishes_user %}
                             {% for wish in wishes_user %}
                                 <li>{{ wish.title }}</li>
@@ -85,7 +88,7 @@
             <div id="left-event-container">
                 <h1>Create an event</h1>
                 {% block content %}
-                <form action="{% url 'createevent' %}" method="post" enctype="multipart/form-data">
+                <form action="{% url 'createevent' %}" id="addevent" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                     <div>Event picture : <div id="preview1"> Import your picture </div>
                         <div><input type="file" name="thumbnail" id="thumbnail"></div>
@@ -149,6 +152,9 @@
 
 $("#addweesh").submit(function(e)
 {
+    //Stop form from submitting normally
+    e.preventDefault(); //STOP default action
+
     var postData = $(this).serializeArray();
     var formURL = $(this).attr("action");
     $.ajax(
@@ -166,9 +172,39 @@ $("#addweesh").submit(function(e)
             //if fails
         }
     });
-    e.preventDefault(); //STOP default action
+
+
     e.unbind(); //unbind. to stop multiple form submit.
 });
+
+$("#addevent").submit(function(e)
+{
+    //Stop form from submitting normally
+    e.preventDefault(); //STOP default action
+
+    //var postData = $(this).serializeArray();
+    var formURL = $(this).attr("action");
+    $.ajax(
+    {
+        url : formURL,
+        type: "POST",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        success:function(data, textStatus, jqXHR)
+        {
+            //data: return data from server
+            //refreshWeeshesEvents()
+
+        },
+        error: function(jqXHR, textStatus, errorThrown)
+        {
+            //if fails
+        }
+    });
+    e.unbind(); //unbind. to stop multiple form submit.
+});
+
 
 $( document ).ready(function() {
 
@@ -184,6 +220,66 @@ $( document ).ready(function() {
         on_connect_error,
         mq_vhost
     );
+
+    // Autocomplete for tags
+
+    function split( val ) {
+       return val.split( / \s*/ );
+    }
+
+    function extractLast( term ) {
+       return split( term ).pop();
+    }
+
+    $( "#weeshtitle" )
+    // don't navigate away from the field on tab when selecting an item
+          .bind( "keydown", function( event ) {
+            if ( event.keyCode === $.ui.keyCode.TAB &&
+                $( this ).autocomplete( "instance" ).menu.active ) {
+              event.preventDefault();
+            }
+          })
+          .autocomplete({
+            minLength: 2,
+            source: function( request, response ) {
+              // delegate back to autocomplete, but extract the last term
+              lastTerm = extractLast( request.term );
+              if(lastTerm.charAt(0) == '#' && lastTerm.length >= 2 )
+              {
+
+                    $.ajax({
+                        url: '{% url 'getautocompletetags' %}',
+                        dataType: "json",
+                        data: {
+                                tag: lastTerm
+                        },
+                        success: function( data ) {
+                            response( data.tags.map(function(tag) {return tag.title;}));
+                        }
+                    });
+
+              //  var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( lastTerm ), "i" );
+              //      response( $.grep( availableTags, function( item ){
+               //         return matcher.test( item );
+               //     }) );
+              }
+            },
+            focus: function() {
+              // prevent value inserted on focus
+              return false;
+            },
+            select: function( event, ui ) {
+              var terms = split( this.value );
+              // remove the current input
+              terms.pop();
+              // add the selected item
+              terms.push( ui.item.value );
+              // add placeholder to get the space at the end
+              terms.push( "" );
+              this.value = terms.join( " " );
+              return false;
+            }
+    });
 });
 
 function refreshWeeshesEvents() {
@@ -202,7 +298,47 @@ function getWeeshById(idWeesh) {
              data: { id : idWeesh},
              success: function(data) {
                    // $('#weeshes-list').html(data);
-                   $('#weeshesevents').prepend("<li><div>Wish : " + data.wish[0].title + "</div></li>");
+                   firstDiv = "<li><div>Wish : " + data.wish[0].title + "</div>"
+                   secondDiv = "<div>Date : " + moment(data.wish[0].creation_date).format('MMMM Do YYYY, h:mm:ss a') + "</div>"
+                   thirdDiv = "<div>Weesher : <a href=\"../userdetails/" + data.username + "\">" + data.username + "</a></div>"
+                   fourDiv =  "<div><a href=\"../deletewish/" + data.wish[0].id + "\">DELETE X </a></div></li>"
+                   $('#weeshesevents').prepend(firstDiv+secondDiv+thirdDiv+fourDiv);
+
+                   if(data.username == $('#username').text())
+                   {
+                        li = "<li>" + data.wish[0].title + "</li>";
+                        $('#myWeeshes').prepend(li);
+                   }
+
+             },
+             error: function(jqXHR, textStatus, errorThrown) {
+                alert(errorThrown);
+             }
+     });
+}
+
+function getEventById(idEvent) {
+     $.ajax({
+             dataType: "json",
+             url: '{% url 'geteventbyid' %}',
+             data: { id : idEvent},
+             success: function(data) {
+                   // $('#weeshes-list').html(data);
+                   if(data.event_picture == "")
+                   {
+                        firstDiv = "<li>"
+                   }
+                   else
+                   {
+                        firstDiv = "<li><img class=\"thumbnail\" src=\'data:image/jpeg;base64," + data.event_picture + "\' height=\"100\">"
+                   }
+                   secondDiv = "<div>Event : " + data.event[0].name + "</div>"
+                   thirdDiv = "<div>Date : " + moment(data.event[0].creation_date).format('MMMM Do YYYY, h:mm:ss a') + "</div>"
+                   fourDiv = "<div>Creator : " + data.username + "</div>"
+                   sixDiv = "<div><a href=\"../event/" + data.event[0].id + "\">Details >> </a></div>"
+                   sevenDiv = "<div><a href=\"../deleteevent/" + data.event[0].id + "\">DELETE X </a></div></li>"
+
+                   $('#weeshesevents').prepend(firstDiv+secondDiv+thirdDiv+fourDiv+sixDiv+sevenDiv);
              },
              error: function(jqXHR, textStatus, errorThrown) {
                 alert(errorThrown);
@@ -211,12 +347,13 @@ function getWeeshById(idWeesh) {
 }
 
 
+
 // Use SockJS
 Stomp.WebSocketClass = SockJS;
 
 // Connection parameters
-var mq_username = "guest",
-    mq_password = "guest",
+var mq_username = "youweesh",
+    mq_password = "upto2016",
     mq_vhost    = "/",
     mq_url      = 'http://' + window.location.hostname + ':15674/stomp',
     mq_queue = "/queue/{{ current_user.user.username }}";
@@ -239,12 +376,22 @@ function on_connect_error() {
 
 // This will be called upon arrival of a message
 function on_message(m) {
-   getWeeshById(m.headers['id']);
+
+    if(m.headers['type'] == "weesh")
+    {
+        getWeeshById(m.headers['id']);
+    }
+    else if(m.headers['type'] == "event")
+    {
+        getEventById(m.headers['id']);
+    }
+
 
 }
 
 // Create a client
 var client = Stomp.client(mq_url);
+
 
  </script>
 

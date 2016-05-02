@@ -11,8 +11,8 @@ from rest_framework.decorators import api_view, renderer_classes, permission_cla
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.response import Response
-from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer, WishSerializer, WishSerializer2
-from .models import Users, Wishes, Events, UsersRelationships, Preferences
+from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer, WishSerializer, EventSerializer, TagSerializer
+from .models import Users, Wishes, Events, UsersRelationships, Preferences, Tags
 from mongoengine.django.auth import User
 from upto.forms import UsersLoginForm, FilterForm
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -20,7 +20,6 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 
 def index(request):
     return render(request, 'upto/index.html')
-
 
 @ensure_csrf_cookie
 @api_view(('GET', 'POST'))
@@ -86,15 +85,26 @@ def logout_view(request):
     form = UsersLoginForm()
     return render(request, 'upto/index.html', {'form': form})
 
+def getFriends(_user):
+    return UsersRelationships.objects(accepted=True, to_user=_user.id)
 
 @permission_classes((IsAuthenticated,))
 def account(request):
-    # test with a user
-    user_id = Users.objects.get(user__username=request.session['username']).id
-    user = Users.objects.get(id=user_id)
+    """
+    Get Account information and friends requests
+    :param request:
+    :return:
+    """
+    connected_user = getConnectedUser(request)
+    friends_requests = UsersRelationships.objects(accepted=False, to_user=connected_user.id) #UsersRelationships.objects.get(to_user=connected_user.id)
+    my_friends = UsersRelationships.objects(accepted=True, to_user=connected_user.id)
+
     context = {
-        'one_user': user,
+        'user': connected_user,
+        'friends_requests': friends_requests,
+        'my_friends': my_friends,
     }
+    print 'testmarc'
     return render(request, 'upto/myaccount.html', context)
 
 
@@ -202,8 +212,7 @@ def allwishesAndEvent(request):
             if user.preferences.display_weeshes:
                 displayWeeshesChecked = 'checked'
 
-            frmFilter = FilterForm(initial={'display_events': displayEventsChecked, 'display_weeshes': displayWeeshesChecked})
-            print frmFilter
+            frmFilter = FilterForm(initial={'display_events': displayEventsChecked, 'display_weeshes': displayWeeshesChecked, 'selected_network': user.preferences.selected_network})
             wishes_user = Wishes.objects[:5](user_id=user.id).order_by('-creation_date')
             context = {
                 'current_user': user,
@@ -229,14 +238,28 @@ def allwishesAndEvent(request):
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def weeshesevents(request):
     connected_user = getConnectedUser(request)
+
+    ### 1 - manage private and public network ###
+    AllEvents = list()
+    AllWishes = list()
+    if connected_user.preferences.selected_network == "public":
+        AllEvents = Events.objects
+        AllWishes = Wishes.objects
+    if connected_user.preferences.selected_network == "friends":
+        for relationship in getFriends(connected_user):
+            for event in Events.objects(user_id=relationship.from_user.id):
+                AllEvents.append(event)
+            for wish in Wishes.objects(user_id=relationship.from_user.id):
+                AllWishes.append(wish)
+    ### 1                                   #######
     tmplst = list()
-    print connected_user.preferences.display_events
     if connected_user.preferences.display_events:
-        for event in Events.objects:
+        for event in AllEvents:
             tmplst.append(event)
     if connected_user.preferences.display_weeshes:
-        for wish in Wishes.objects:
+        for wish in AllWishes:
             tmplst.append(wish)
+
     context = {
         'eventsList': sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True)
     }
@@ -251,11 +274,41 @@ def getWeeshById(request):
 
     wish = Wishes.objects(wish_id=request.GET['id'])
     username = wish[0].user_id.user.username
-    wishSerializer = WishSerializer2(instance=wish,many=True)
+    wishSerializer = WishSerializer(instance=wish,many=True)
 
     return Response({'wish': wishSerializer.data, 'username': username})
 
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
+def getEventById(request):
 
+    event = Events.objects(event_id=request.GET['id'])
+    username = event[0].user_id.user.username
+    eventSerializer = EventSerializer(instance=event,many=True)
+
+    if event[0].thumbnail:
+        picture = event[0].get_picture()
+    else:
+        picture = ''
+
+    return Response({'event': eventSerializer.data, 'event_picture': picture, 'username': username})
+
+
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
+def getAutoCompleteTags(request):
+
+    """
+
+    :param request:
+    :return:
+    """
+    tags = Tags.objects(title__istartswith=request.GET['tag'])
+    tagSerializer = TagSerializer(instance=tags, many=True)
+
+    return Response({'tags': tagSerializer.data})
 
 def getConnectedUser(request):
     return Users.objects.get(user__username=request.session['username'])
@@ -265,7 +318,6 @@ def getUserWithUsername(_username):
 
 def getEventInfo(request, _event_id):
     event = Events.objects.get(id=_event_id)
-    print _event_id
     context = {
         'currentEvent': event,
         'current_user': getConnectedUser(request),
@@ -299,10 +351,24 @@ def addfriend(request, username):
     else:
         return redirect('/upto/wishes/')
 
+def acceptfriend(request, friend_id):
+    try:
+        connected_user = getConnectedUser(request)
+        relation = UsersRelationships.objects.get(from_user=friend_id, to_user=connected_user.id)
+        relation_symetrical = UsersRelationships(from_user=connected_user.id, to_user=friend_id, accepted=True)
+        relation.accepted = True
+        relation_symetrical.save()
+        relation.save()
+    except connected_user.DoesNotExist:
+        raise Http404('Wish id does not exist')
+    else:
+        return redirect('/upto/wishes/')
 def unfriend(request, _user_id):
     try:
         connected_user = getConnectedUser(request)
         relation = UsersRelationships.objects.get(from_user=connected_user.id, to_user=_user_id)
+        relation_symetrical = UsersRelationships.objects.get(to_user=connected_user.id, from_user=_user_id)
+        relation_symetrical.delete()
         relation.delete()
     except connected_user.DoesNotExist:
         raise Http404('Wish id does not exist')
@@ -337,9 +403,13 @@ def createEvent(request):
 
         start_date = datetime.datetime.strptime(request.POST['start_date'], "%Y/%m/%d %H:%M")
         end_date = datetime.datetime.strptime(request.POST['end_date'], "%Y/%m/%d %H:%M")
-        thumbnail = request.FILES['thumbnail']
 
-        getConnectedUser(request).create_event(eventName, start_date, end_date, thumbnail)
+        if request.FILES:
+            thumbnail = request.FILES['thumbnail']
+            getConnectedUser(request).create_event(eventName=eventName, start_date=start_date, end_date=end_date, thumbnail=thumbnail)
+        else:
+            getConnectedUser(request).create_event(eventName=eventName, start_date=start_date, end_date=end_date)
+
     except Users.DoesNotExist:
         raise Http404('Event id does not exist')
     else:
@@ -362,7 +432,7 @@ def deleteEvent(request, _event_id):
 
 def filter_list(request):
     """
-
+    Define filter for the current user and record it on its preferences
     :param request:
     :return:
     """
@@ -378,7 +448,7 @@ def filter_list(request):
                 connected_user.preferences.display_weeshes = True
             else:
                 connected_user.preferences.display_weeshes = False
-            # 2 - call view weeshesAndEvents with filter
+            connected_user.preferences.selected_network = request.POST['selected_network']
             connected_user.save()
         except Wishes.DoesNotExist:
             raise Http404('Wish id does not exist')

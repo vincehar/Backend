@@ -17,6 +17,7 @@ class Wishes(Document):
     title = StringField(required=True)
     creation_date = DateTimeField(default=datetime.datetime.now())
     interested = ListField(ReferenceField('Users'))
+    tags = ListField(ReferenceField('Tags'))
 
     def user_name(self):
         return self.user_id.username
@@ -26,6 +27,10 @@ class Wishes(Document):
 
     def add_interested(self, user):
         self.interested.append(user)
+
+
+class Tags(Document):
+    title = StringField(required=True)
 
 
 class Logs(Document):
@@ -175,22 +180,42 @@ class Users(Document):
         :param _creation_date:
         :return: self
         """
+
         wish = Wishes(user_id=self.id, title=_title, creation_date=datetime.datetime.now())
+
+        splitTitle = _title.split(' ')
+        for word in splitTitle:
+            if word.startswith('#'):
+                tag = Tags.objects.get_or_create(title=word)
+                wish.tags.append(tag[0])
+
         wish.save()
 
         #Connect and send message to the queue
         # Use plain credentials for authentication
         myrabbit = rabbitmq()
         myrabbit.create_connection()
-        myrabbit.publish_newweesh(wish.wish_id)
-
+        myrabbit.publish_newweesh(wish.wish_id,wish.user_id.user.username)
         myrabbit.close()
         return wish
 
     def create_event(self, **kwargs):
 
-        event = Events(user_id=self.id, name=kwargs.get('_name'), start_date=kwargs.get('_start_date'), end_date=kwargs.get('_end_date'), creation_date=datetime.datetime.now())
+        if 'thumbnail' in kwargs:
+            event = Events(user_id=self.id, name=kwargs['eventName'], start_date=kwargs['start_date'], end_date=kwargs['end_date'], thumbnail=kwargs['thumbnail'], creation_date=datetime.datetime.now())
+        else:
+            event = Events(user_id=self.id, name=kwargs['eventName'], start_date=kwargs['start_date'], end_date=kwargs['end_date'], creation_date=datetime.datetime.now())
         event.save()
+
+        #Connect and send message to the queue
+        # Use plain credentials for authentication
+        myrabbit = rabbitmq()
+        myrabbit.create_connection()
+        myrabbit.publish_newevent(event.event_id, event.user_id.user.username)
+        myrabbit.close()
+        #mqueue.publish_message('coco', 'New weesh created', channel, 'amq_fanout')
+        #mqueue.close(connection)
+
         return event
 
     def interests_to_wish(self, _user, _wish):
