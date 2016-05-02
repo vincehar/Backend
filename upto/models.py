@@ -16,6 +16,7 @@ class Wishes(Document):
     title = StringField(required=True)
     creation_date = DateTimeField(default=datetime.datetime.now())
     interested = ListField(ReferenceField('Users'))
+    is_active = BooleanField(default=True)
     tags = ListField(ReferenceField('Tags'))
 
     def user_name(self):
@@ -62,10 +63,10 @@ class Events(Document):
     address = EmbeddedDocumentField('Address')
     creation_date = DateTimeField(default=datetime.datetime.now())
     price = FloatField()
-    #devise = models
     categories = ListField(EmbeddedDocumentField('Categories'))
     eventStatus = EmbeddedDocumentField('EventStatus')
-
+    tags = ListField(ReferenceField('Tags'))
+    is_active = BooleanField(default=True)
 
     def get_ref_date(self):
         return self.creation_date
@@ -203,8 +204,13 @@ class Users(Document):
             event = Events(user_id=self.id, name=kwargs['eventName'], start_date=kwargs['start_date'], end_date=kwargs['end_date'], thumbnail=kwargs['thumbnail'], creation_date=datetime.datetime.now())
         else:
             event = Events(user_id=self.id, name=kwargs['eventName'], start_date=kwargs['start_date'], end_date=kwargs['end_date'], creation_date=datetime.datetime.now())
-        event.save()
 
+        splitTitle = kwargs['eventName'].split(' ')
+        for word in splitTitle:
+            if word.startswith('#'):
+                tag = Tags.objects.get_or_create(title=word)
+                event.tags.append(tag[0])
+        event.save()
         #Connect and send message to the queue
         # Use plain credentials for authentication
         myrabbit = rabbitmq()

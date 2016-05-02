@@ -5,6 +5,7 @@ from regme.documents import User
 from upto.models import Users, Preferences
 from regme.forms import UserCreationForm
 from django.forms.widgets import Input
+from django.core.validators import *
 from rabbitmq import rabbitmq
 
 class RangeInput(Input):
@@ -54,5 +55,5 @@ class FilterForm(forms.Form):
         CHOICES = [('public', 'Public'),
                    ('friends', 'Friends')]
         selected_network = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
-        search_distance = forms.CharField(widget=RangeInput())
+        search_distance = forms.CharField(widget=RangeInput(), validators=[MaxValueValidator(10), MinValueValidator(1)])
 #class CreateEventForm(forms.Form):

@@ -68,10 +68,10 @@ li:hover {
 
 #header-container{
     width:100%;
-    background-color:lightskyblue;
+    background-color:#3764a7;
     border-with:1px;
     border-style:solid;
-    border-color:lightskyblue;
+    border-color:#3764a7;
     padding:1%;
     border-radius: 10px;
 }

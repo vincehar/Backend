@@ -104,10 +104,31 @@ def account(request):
         'friends_requests': friends_requests,
         'my_friends': my_friends,
     }
-    print 'testmarc'
     return render(request, 'upto/myaccount.html', context)
 
+def myevents(request):
+    try:
+        events_matched = list()
+        connected_user = getConnectedUser(request)
+        # - 1 get Events matching with Myweesh
+        for weesh in Wishes.objects(user_id=connected_user.id, is_active=True):
+            for event in Events.objects(is_active=True, tags__in=weesh.tags):
+                events_matched.append(event)
 
+        # - 2 get created events by current user
+        for event in Events.objects(is_active=True, user_id=connected_user.id):
+            events_matched.append(event)
+
+        context = {
+            'user': connected_user,
+            'events_matched': sorted(events_matched, key=methodcaller('get_ref_date'), reverse=True)
+        }
+    except connected_user.DoesNotExist:
+        form = UsersLoginForm()
+        return render(request, 'upto/index.html', {'form': form})
+    else:
+        # - 3 reset notifications
+        return render(request, 'upto/myevents.html', context)
 '''
 --------- A GARDER ------
 

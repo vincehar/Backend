@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^register/', include('regme.urls')),
     url(r'^account/register/', UsersBackend.as_view(form_class=UsersRegistrationForm), name='register'),
     url(r'^account/$', views.account, name='account'),
+    url(r'^myevents/$', views.myevents, name='myevents'),
     url(r'^wishes/$', views.allwishesAndEvent, name='wishes'),
     url(r'^weeshesevents/$', views.weeshesevents, name='weeshesevents'),
     url(r'^getautocompletetags/$', views.getAutoCompleteTags, name='getautocompletetags'),
