@@ -6,6 +6,8 @@
     <link rel="stylesheet" type="text/css" href="/static/js/datetimepicker/jquery.datetimepicker.css"/>
     <link rel="stylesheet" href="/static/css/bootstrap.css">
     <link rel="stylesheet" href="/static/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="/static/css/vex.css">
+    <link rel="stylesheet" href="/static/css/vex-theme-default.css">
     <style type="text/css">
 
 .custom-date-style {
@@ -31,6 +33,8 @@
 <script src="/static/js/stomp.js"></script>
 <script src="/static/js/listener-app.js"></script>
 <script src="/static/js/moment.min.js"></script>
+<script src="/static/js/vex.combined.min.js"></script>
+<script>vex.defaultOptions.className = 'vex-theme-default';</script>
 <div class="container-fluid">
     <div class="row">
             <div id="col-sm-12">
@@ -138,7 +142,6 @@
         </div>
         <div class="col-sm-6" id="weeshes-list">
         </div>
-        <div id="dialog"></div>
         <div class="col-sm-3">
             <div id="right-suggestions-container">
                 Suggestions
@@ -173,8 +176,7 @@ $("#addweesh").submit(function(e)
         data : postData,
         success:function(data, textStatus, jqXHR)
         {
-            //data: return data from server
-            //refreshWeeshesEvents()
+
         },
         error: function(jqXHR, textStatus, errorThrown)
         {
@@ -202,8 +204,6 @@ $("#addevent").submit(function(e)
         contentType: false,
         success:function(data, textStatus, jqXHR)
         {
-            //data: return data from server
-            //refreshWeeshesEvents()
 
         },
         error: function(jqXHR, textStatus, errorThrown)
@@ -217,7 +217,7 @@ $("#addevent").submit(function(e)
 
 $( document ).ready(function() {
 
-    refreshWeeshesEvents()
+    loadWeeshesEvents()
 
     output = document.getElementById("output");
 
@@ -289,37 +289,60 @@ $( document ).ready(function() {
               return false;
             }
     });
-
-
-    //Activer les popups
-
-    $('li[id*="weesh"]').click(function(){
-            $(this).dialog({
-                modal: true
-
-            });
-    });
-
-    $('li[id*="event"]').click(function(){
-        var fullidEvent = this.id;
-        var n = fullidEvent.indexOf("_");
-        var idEvent = fullidEvent.substring(n+1, fullidEvent.length);
-
-        $.ajax({
-                url: '{% url 'popupevent' %}',
-                data: { id : idEvent},
-                success: function(data) {
-                    $('#dialog').html(data).dialog({modal: true}).dialog('open');
-                }
-        });
-    });
 });
 
-function refreshWeeshesEvents() {
+function loadWeeshesEvents() {
      $.ajax({
              url: '{% url 'weeshesevents' %}',
              success: function(data) {
                     $('#weeshes-list').html(data);
+
+                    //Activer les popups
+                    $('li[id*="weesh"]').click(function(){
+                        var fullidWeesh = this.id;
+                        var n = fullidWeesh.indexOf("_");
+                        var idWeesh = fullidWeesh.substring(n+1, fullidWeesh.length);
+
+                        $.ajax({
+                                url: '{% url 'popupweesh' %}',
+                                data: { id : idWeesh},
+                                success: function(data)
+                                {
+                                                vex.open({content: data,  showCloseButton: true,
+                                                afterOpen: function($vexContent) {
+                                                    return $vexContent.append($el);
+                                                },
+                                                afterClose: function() {
+                                                    return console.log('vexClose');
+                                                }
+                                                });
+                                }
+                        });
+
+
+                    });
+
+                    $('li[id*="event"]').click(function(){
+                        var fullidEvent = this.id;
+                        var n = fullidEvent.indexOf("_");
+                        var idEvent = fullidEvent.substring(n+1, fullidEvent.length);
+
+                        $.ajax({
+                                url: '{% url 'popupevent' %}',
+                                data: { id : idEvent},
+                                success: function(data)
+                                {
+                                                vex.open({content: data,  showCloseButton: true,
+                                                afterOpen: function($vexContent) {
+                                                    return $vexContent.append($el);
+                                                },
+                                                afterClose: function() {
+                                                    return console.log('vexClose');
+                                                }
+                                                });
+                                }
+                        });
+                    });
              }
      });
 }

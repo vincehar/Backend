@@ -1,5 +1,10 @@
 <div id="popupevent">
-    <ul>
-        {% include 'upto/event.html' %}
-    </ul>
+    {% if object.thumbnail %}
+        <img class="thumbnail" src='data:image/jpeg;base64,{{ object.get_picture }}' height="100">
+    {% endif%}
+    <div>Event : {{ object.name }}</div>
+    <div>Date : {{ object.start_date}}</div>
+    <div>Creator :  {{ object.user_id.user.username }}</div>
+    <a href="../event/{{ object.id }}">Details >> </a>
+    <div><a href="../deleteevent/{{ object.id }}">DELETE X </a></div>
 </div>

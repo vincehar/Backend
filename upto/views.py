@@ -340,6 +340,20 @@ def popUpEvent(request):
 
     return render(request, 'upto/popupevent.html', context)
 
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def popUpWeesh(request):
+
+    weesh = Wishes.objects.get(id=request.GET['id'])
+
+    context = {
+        'object': weesh
+
+    }
+
+    return render(request, 'upto/popupweesh.html', context)
+
 
 
 @api_view(('GET',))

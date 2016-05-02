@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^getautocompletetags/$', views.getAutoCompleteTags, name='getautocompletetags'),
     url(r'^getweeshbyid/$', views.getWeeshById, name='getweeshbyid'),
     url(r'^popupevent/$', views.popUpEvent, name='popupevent'),
+    url(r'^popupweesh/$', views.popUpWeesh, name='popupweesh'),
     url(r'^geteventbyid/$', views.getEventById, name='geteventbyid'),
     url(r'^createwish/$', views.createWish, name='createwish'),
     url(r'^filter/$', views.filter_list, name='filter'),
