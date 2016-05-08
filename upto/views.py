@@ -95,16 +95,20 @@ def account(request):
     :param request:
     :return:
     """
-    connected_user = getConnectedUser(request)
-    friends_requests = UsersRelationships.objects(accepted=False, to_user=connected_user.id) #UsersRelationships.objects.get(to_user=connected_user.id)
-    my_friends = UsersRelationships.objects(accepted=True, to_user=connected_user.id)
+    try:
+        connected_user = getConnectedUser(request)
+        friends_requests = UsersRelationships.objects(accepted=False, to_user=connected_user.id) #UsersRelationships.objects.get(to_user=connected_user.id)
+        my_friends = UsersRelationships.objects(accepted=True, to_user=connected_user.id)
 
-    context = {
-        'user': connected_user,
-        'friends_requests': friends_requests,
-        'my_friends': my_friends,
-    }
-    return render(request, 'upto/myaccount.html', context)
+        context = {
+            'user': connected_user,
+            'friends_requests': friends_requests,
+            'my_friends': my_friends,
+        }
+    except connected_user.DoesNotExist:
+        raise Http404('Not logged')
+    else:
+        return render(request, 'upto/myaccount.html', context)
 
 def myevents(request):
     try:
@@ -372,7 +376,7 @@ def getAutoCompleteTags(request):
     return Response({'tags': tagSerializer.data})
 
 def getConnectedUser(request):
-    return Users.objects.get(user__username=request.session['username'])
+        return Users.objects.get(user__username=request.session['username'])
 
 def getUserWithUsername(_username):
     return Users.objects.get(user__username=_username)
@@ -515,3 +519,22 @@ def filter_list(request):
             raise Http404('Wish id does not exist')
         else:
             return redirect('/upto/wishes/')
+
+def weeshback(request, _wish_id):
+    connected_user = getConnectedUser(request)
+    weesh = Wishes.objects.get(id=_wish_id)
+    weesh.add_interested(connected_user)
+
+def geoloc(request):
+    from django.contrib.gis.geoip import GeoIP
+    return render(request, 'upto/testGeoLocalisation.html')
+
+def getCurrentPosition(request):
+    """
+    Define the current position of the current user
+    :param request:
+    """
+    connected_user = getConnectedUser(request)
+    connected_user.current_coordinates.lattitude = request.POST['lgnt']
+    connected_user.current_coordinates.longitude = request.POST['latd']
+    connected_user.save()

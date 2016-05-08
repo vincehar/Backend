@@ -31,7 +31,7 @@ for use in ['alex', 'vincent', 'marc']:
 #Users.objects
 
 
-marc=Users.objects.get_or_create(user=User.objects.get(username='marc'), preferences=Preferences())
+marc=Users.objects.get_or_create(user=User.objects.get(username='marc'), preferences=Preferences(), )
 vincent=Users.objects.get_or_create(user=User.objects.get(username='vincent'), preferences=Preferences())
 alex=Users.objects.get_or_create(user=User.objects.get(username='alex'), preferences=Preferences())
 
@@ -82,13 +82,13 @@ t8=Tags.objects.get_or_create(title='#Cycling')
 
 marc.create_wish('cine')
 marc.create_wish('Je veux voir les etoiles !!!')
-marc.create_event(eventName='Concert de Johnny !!!',start_date=datetime.datetime.today(), end_date=datetime.datetime.today())
-marc.create_wish('Je vais coder en python ce soir')
+marc.create_event(eventName='#Concert de Johnny !!!',start_date=datetime.datetime.today(), end_date=datetime.datetime.today())
+marc.create_wish('Je vais #coder en #python ce soir')
 marc.save()
 
 vincent.create_wish('#Cycling')
 vincent.create_wish('Je veux me reposer ce soir ')
-vincent.create_event(eventName='Sortie Ski a la Clusaz', start_date=datetime.datetime.today(), end_date=datetime.datetime.today())
+vincent.create_event(eventName='Sortie #Ski a la Clusaz', start_date=datetime.datetime.today(), end_date=datetime.datetime.today())
 vincent.create_wish('Je suis chaud pour un #Foot')
 vincent.save()
 

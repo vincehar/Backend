@@ -10,6 +10,10 @@ from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocument
     ReferenceField, StringField, ListField, DateTimeField, BinaryField, BooleanField, ObjectIdField, ImageField, IntField
 from bson import ObjectId
 
+class Coordinates(EmbeddedDocument):
+    lattitude = FloatField()
+    longitude = FloatField()
+    update_date = DateTimeField(default=datetime.datetime.now())
 
 class Wishes(Document):
     user_id = ReferenceField('Users')
@@ -67,6 +71,7 @@ class Events(Document):
     eventStatus = EmbeddedDocumentField('EventStatus')
     tags = ListField(ReferenceField('Tags'))
     is_active = BooleanField(default=True)
+    coordinates = EmbeddedDocumentField('Coordinates')
 
     def get_ref_date(self):
         return self.creation_date
@@ -127,6 +132,7 @@ class Users(Document):
     picture = ImageField()
     preferences = EmbeddedDocumentField('Preferences')
     date_created = DateTimeField(default=datetime.datetime.now())
+    current_coordinates = EmbeddedDocumentField('Coordinates')
     #friends = ListField(ReferenceField('UsersRelationships'))
     #wishes = ListField(ReferenceField('Wishes'))
     #logs = ListField(ReferenceField('Logs'))
