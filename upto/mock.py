@@ -1,5 +1,5 @@
 from upto.rabbitmq import rabbitmq
-from upto.models import User, Users, Wishes, UsersRelationships, Events, Preferences, Tags
+from upto.models import User, Users, Wishes, UsersRelationships, Events, Preferences, Tags, Coordinates
 from pymongo import Connection
 from django.contrib import auth
 import datetime
@@ -31,15 +31,23 @@ for use in ['alex', 'vincent', 'marc']:
 #Users.objects
 
 
-marc=Users.objects.get_or_create(user=User.objects.get(username='marc'), preferences=Preferences(), )
-vincent=Users.objects.get_or_create(user=User.objects.get(username='vincent'), preferences=Preferences())
-alex=Users.objects.get_or_create(user=User.objects.get(username='alex'), preferences=Preferences())
+
+marc=Users.objects.get_or_create(user=User.objects.get(username='marc'), preferences=Preferences(), current_coordinates=Coordinates())
+vincent=Users.objects.get_or_create(user=User.objects.get(username='vincent'), preferences=Preferences(), current_coordinates=Coordinates())
+alex=Users.objects.get_or_create(user=User.objects.get(username='alex'), preferences=Preferences(), current_coordinates=Coordinates())
+
+
 
 marc=Users.objects.get(user__username='marc')
 vincent=Users.objects.get(user__username='vincent')
 alex=Users.objects.get(user__username='alex')
 #vincent=Users.objects.get_or_create(user=User.objects.get(username='vincent'), preferences=Preferences())
 #alex=Users.objects.get_or_create(user=User.objects.get(username='alex'), preferences=Preferences())
+
+# Rue des Contamines, 1206 GENEVE
+vincent.current_coordinates.lat = 46.1954229
+vincent.current_coordinates.lng = 6.1552161
+vincent.save()
 
 #Creation des queues
 myrabbit = rabbitmq()

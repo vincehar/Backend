@@ -2,5 +2,6 @@
     <div>Weesh : {{ object.title }}</div>
     <div>Date : {{ object.creation_date }}</div>
     <div>Weesher : <a href="{% url 'userdetails' object.user_id.user.username %}"> {{ object.user_id.user.username }}</a></div>
+    <div>GeoLoc : {{ object.user_id.get_position }}</div>
     <div><a href="../deletewish/{{ object.id }}">DELETE X </a></div>
 </li>

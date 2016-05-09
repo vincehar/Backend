@@ -9,10 +9,11 @@ import base64
 from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocumentField, \
     ReferenceField, StringField, ListField, DateTimeField, BinaryField, BooleanField, ObjectIdField, ImageField, IntField
 from bson import ObjectId
+from geolocalisation import geolocalisation
 
 class Coordinates(EmbeddedDocument):
-    lattitude = FloatField()
-    longitude = FloatField()
+    lat = FloatField(default=5)
+    lng = FloatField(default=5)
     update_date = DateTimeField(default=datetime.datetime.now())
 
 class Wishes(Document):
@@ -80,6 +81,10 @@ class Events(Document):
         thumbnail = base64.b64encode(self.thumbnail.read())
         return thumbnail
 
+    def get_position(self):
+        geo = geolocalisation()
+        return geo.geoCodeWithAddress(self.address.address_1 + " "+ self.address.address_2+ " " + self.address.zip_code + " " + self.address.city)
+
 class Messages(Document):
     from_user = ReferenceField('Users')
     to_user = ReferenceField('Users')
@@ -141,6 +146,15 @@ class Users(Document):
     #medias = ListField(ReferenceField('Medias'))
     #events_Owned = ListField(ReferenceField('Events'))
     #interested_in = ListField(ReferenceField('Wishes'))
+
+
+    def get_position(self):
+        """
+        Return formatted position
+        #{ "lat" : 46.1954229 , "lng" : 6.1552161 }
+        :return:
+        """
+        return "{'lat': "+ str(self.current_coordinates.lat) +", 'lng':"+ str(self.current_coordinates.lat)+"}"
 
     def date_joined(self):
         """

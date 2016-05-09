@@ -16,6 +16,8 @@ from .models import Users, Wishes, Events, UsersRelationships, Preferences, Tags
 from mongoengine.django.auth import User
 from upto.forms import UsersLoginForm, FilterForm
 from django.views.decorators.csrf import ensure_csrf_cookie
+from mongoengine.queryset import DoesNotExist
+from geolocalisation import geolocalisation
 
 
 def index(request):
@@ -79,7 +81,6 @@ def login(request):
         form = UsersLoginForm()
         return render(request, 'upto/index.html', {'form': form})
 
-
 def logout_view(request):
     logout(request)
     form = UsersLoginForm()
@@ -127,36 +128,12 @@ def myevents(request):
             'user': connected_user,
             'events_matched': sorted(events_matched, key=methodcaller('get_ref_date'), reverse=True)
         }
-    except connected_user.DoesNotExist:
+    except DoesNotExist:
         form = UsersLoginForm()
         return render(request, 'upto/index.html', {'form': form})
     else:
         # - 3 reset notifications
         return render(request, 'upto/myevents.html', context)
-'''
---------- A GARDER ------
-
-@api_view(('GET',))
-@permission_classes((AllowAny, ))
-@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
-def userdetails(request, username):
-
-    user = Users.objects.get(user__username=username)
-    relationShips = UsersRelationships.objects(Q(from_user=user) | Q(to_user=user))
-
-    context = {
-            'user': user,
-            'relationShips': relationShips
-    }
-    if request.accepted_renderer.format == 'html':
-        return render(request, 'upto/userdetails.html', context)
-
-    userSerializer = UsersSerializer(instance=user)
-    relationShipsSerializer = UsersRelationShipsSerializer(instance=relationShips, many=True)
-
-    return Response({'user': userSerializer.data, 'relationShips': relationShipsSerializer.data})
-'''
-
 
 @api_view(('GET',))
 @permission_classes((AllowAny,))
@@ -263,6 +240,7 @@ def allwishesAndEvent(request):
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def weeshesevents(request):
     connected_user = getConnectedUser(request)
+    geoloc = geolocalisation()
 
     ### 1 - manage private and public network ###
     AllEvents = list()
@@ -285,8 +263,9 @@ def weeshesevents(request):
         for wish in AllWishes:
             tmplst.append(wish)
 
+
     context = {
-        'eventsList': sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True)
+        'eventsList': sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True),
     }
 
     return render(request, 'upto/weeshesevents.html', context)
@@ -428,6 +407,7 @@ def acceptfriend(request, friend_id):
         raise Http404('Wish id does not exist')
     else:
         return redirect('/upto/wishes/')
+
 def unfriend(request, _user_id):
     try:
         connected_user = getConnectedUser(request)
@@ -526,15 +506,44 @@ def weeshback(request, _wish_id):
     weesh.add_interested(connected_user)
 
 def geoloc(request):
-    from django.contrib.gis.geoip import GeoIP
+    from geolocalisation import geolocalisation
+    geo = geolocalisation()
+
+    matrix = geo.getDistance()
+    for row in matrix['rows']:
+        for element in row['elements']:
+             distance = element['distance']['text']
+
+    #return distance
     return render(request, 'upto/testGeoLocalisation.html')
 
-def getCurrentPosition(request):
+
+def getDistanceTextFormat(request, origin, destination):
+    from geolocalisation import geolocalisation
+    geo = geolocalisation()
+
+    matrix = geo.getDistance(origin, destination)
+    for row in matrix['rows']:
+        for element in row['elements']:
+             distance = element['distance']['text']
+
+    return distance
+    #return render(request, 'upto/testGeoLocalisation.html')
+
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def saveCurrentPosition(request):
     """
     Define the current position of the current user
     :param request:
     """
-    connected_user = getConnectedUser(request)
-    connected_user.current_coordinates.lattitude = request.POST['lgnt']
-    connected_user.current_coordinates.longitude = request.POST['latd']
+    connected_user = Users.objects.get(user__username='marc')
+    #'getConnectedUser(request)
+    lat = request.GET['lat']
+    lng = request.GET['lng']
+
+    connected_user.current_coordinates.lattitude = float(lat)
+    connected_user.current_coordinates.longitude = float(lng)
     connected_user.save()
+    return Response({'status': 0})
