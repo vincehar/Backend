@@ -29,11 +29,11 @@
 <script src="/static/js/datetimepicker/build/jquery.datetimepicker.full.js"></script>
 <script type="text/javascript" src="/static/js/autoCompleteAddress.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcRm_4W48Hu4OdwAHSaIfmWerF475RQA0&libraries=places&callback=initAutocomplete" async defer></script>
-<script src="/static/js/sockjs-1.0.0.min.js"></script>
-<script src="/static/js/stomp.js"></script>
-<script src="/static/js/listener-app.js"></script>
+<script src="/static/js/rabbitmq/sockjs-1.0.0.min.js"></script>
+<script src="/static/js/rabbitmq/stomp.js"></script>
 <script src="/static/js/moment.min.js"></script>
 <script src="/static/js/vex.combined.min.js"></script>
+<script src="/static/js/rabbitmq/sockjs-connection.js"></script>
 <script>vex.defaultOptions.className = 'vex-theme-default';</script>
 <div class="container-fluid">
     <div class="row">
@@ -174,17 +174,11 @@ $("#addweesh").submit(function(e)
         url : formURL,
         type: "POST",
         data : postData,
-        success:function(data, textStatus, jqXHR)
-        {
-
-        },
         error: function(jqXHR, textStatus, errorThrown)
         {
-            //if fails
+            alert('Impossible to add a weesh');
         }
     });
-
-
     e.unbind(); //unbind. to stop multiple form submit.
 });
 
@@ -202,13 +196,9 @@ $("#addevent").submit(function(e)
         data: new FormData(this),
         processData: false,
         contentType: false,
-        success:function(data, textStatus, jqXHR)
-        {
-
-        },
         error: function(jqXHR, textStatus, errorThrown)
         {
-            //if fails
+            alert('Impossible to add an event');
         }
     });
     e.unbind(); //unbind. to stop multiple form submit.
@@ -217,21 +207,12 @@ $("#addevent").submit(function(e)
 
 $( document ).ready(function() {
 
-    loadWeeshesEvents()
+    loadWeeshesEvents();
 
-    output = document.getElementById("output");
-
-    // Connect to user queue
-    client.connect(
-        mq_username,
-        mq_password,
-        on_connect,
-        on_connect_error,
-        mq_vhost
-    );
+    //Init connection for the user's queue
+    initConnection("/queue/{{ current_user.user.username }}",  document.getElementById("output"));
 
     // Autocomplete for tags
-
     function split( val ) {
        return val.split( / \s*/ );
     }
@@ -296,27 +277,13 @@ function loadWeeshesEvents() {
              url: '{% url 'weeshesevents' %}',
              success: function(data) {
                     $('#weeshes-list').html(data);
-
-                    $('li[id*="event"]').click(function(){
-                        var fullidEvent = this.id;
-                        var n = fullidEvent.indexOf("_");
-                        var idEvent = fullidEvent.substring(n+1, fullidEvent.length);
-
-                        $.ajax({
-                                url: '{% url 'popupevent' %}',
-                                data: { id : idEvent},
-                                success: function(data)
-                                {
-                                    vex.open({content: data,  showCloseButton: true});
-                                }
-                        });
-                    });
+                    $('li[id*="event"]').click(openEventPopUp);
              }
      });
 }
 
 function getWeeshById(idWeesh) {
-     $.ajax({
+    $.ajax({
              url: '{% url 'getweeshbyid' %}',
              data: { id : idWeesh},
              success: function(data) {
@@ -332,6 +299,7 @@ function getWeeshById(idWeesh) {
                 alert(errorThrown);
              }
      });
+
 }
 
 function getEventById(idEvent) {
@@ -340,6 +308,7 @@ function getEventById(idEvent) {
              data: { id : idEvent},
              success: function(data) {
                    $('#weeshesevents').prepend(data);
+                   $('li[id*=\"event_' + idEvent + '\"]').click(openEventPopUp);
              },
              error: function(jqXHR, textStatus, errorThrown) {
                 alert(errorThrown);
@@ -348,51 +317,20 @@ function getEventById(idEvent) {
 }
 
 
+function openEventPopUp(){
+     var fullidEvent = this.id;
+     var n = fullidEvent.indexOf("_");
+     var idEvent = fullidEvent.substring(n+1, fullidEvent.length);
 
-// Use SockJS
-Stomp.WebSocketClass = SockJS;
-
-// Connection parameters
-var mq_username = "youweesh",
-    mq_password = "upto2016",
-    mq_vhost    = "/",
-    mq_url      = 'http://' + window.location.hostname + ':15674/stomp',
-    mq_queue = "/queue/{{ current_user.user.username }}";
-
-
-// This is where we print incomoing messages
-var output;
-
-// This will be called upon successful connection
-function on_connect() {
-  output.innerHTML += 'Connected to RabbitMQ-Web-Stomp<br />';
-  console.log(client);
-  client.subscribe(mq_queue, on_message);
+     $.ajax({
+        url: '{% url 'popupevent' %}',
+        data: { id : idEvent},
+        success: function(data)
+        {
+           vex.open({content: data,  showCloseButton: true});
+        }
+     });
 }
-
-// This will be called upon a connection error
-function on_connect_error() {
-  output.innerHTML += 'Connection failed!<br />';
-}
-
-// This will be called upon arrival of a message
-function on_message(m) {
-
-    if(m.headers['type'] == "weesh")
-    {
-        getWeeshById(m.headers['id']);
-    }
-    else if(m.headers['type'] == "event")
-    {
-        getEventById(m.headers['id']);
-    }
-
-
-}
-
-// Create a client
-var client = Stomp.client(mq_url);
-
 
  </script>
 

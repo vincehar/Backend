@@ -1,3 +1,5 @@
+<script src="/static/js/chat/jquery.ui.chatbox.js"></script>
+<link rel="stylesheet" href="/static/js/chat/jquery.ui.chatbox.css">
 <div id="popupevent">
     {% if object.thumbnail %}
         <img class="thumbnail" src='data:image/jpeg;base64,{{ object.get_picture }}' height="100">
@@ -5,6 +7,23 @@
     <div>Event : {{ object.name }}</div>
     <div>Date : {{ object.start_date}}</div>
     <div>Creator :  {{ object.user_id.user.username }}</div>
+    <div id="chat_div"></div>
+    <div id="test"></div>
     <a href="../event/{{ object.id }}">Details >> </a>
     <div><a href="../deleteevent/{{ object.id }}">DELETE X </a></div>
 </div>
+<script>
+    $(document).ready(function(){
+          // to create
+          $("#chat_div").chatbox({id : "chat_div",
+                                  title : "Title",
+                                  user : "can be anything",
+                                  messageSent: function(id, user, msg){
+                                      this.boxManager.addMsg(user.first_name, msg);
+                                  }});
+          $("#chat_div").chatbox("option", "boxManager").addMsg("Mr. Foo", "Barrr!");
+          $("#test").html($('.ui-chatbox'));
+
+     });
+
+</script>
