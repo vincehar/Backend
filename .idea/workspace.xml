@@ -646,7 +646,13 @@
       <option name="project" value="LOCAL" />
       <updated>1462813989753</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="[02.05.2016] - Marc -&#10;+ Add  myEvents with match weeshes algorithm">
+      <created>1462814010989</created>
+      <option name="number" value="00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1462814010989</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
