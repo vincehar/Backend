@@ -6,7 +6,6 @@ from upto.models import Users, Preferences
 from regme.forms import UserCreationForm
 from django.forms.widgets import Input
 from django.core.validators import *
-from rabbitmq import rabbitmq
 
 class RangeInput(Input):
     """HTML5 Range Input."""
@@ -36,10 +35,10 @@ class UsersRegistrationForm(UserCreationForm):
         print('Salut')
 
         #Connect and create the queue for the user
-        myrabbit = rabbitmq()
-        myrabbit.create_connection()
-        myrabbit.create_queue(profile)
-        myrabbit.close()
+        #myrabbit = rabbitmq()
+        #myrabbit.create_connection()
+        #myrabbit.create_queue(profile)
+        #myrabbit.close()
 
 class UsersLoginForm(AuthenticationForm):
     username = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': 'form-control'}))

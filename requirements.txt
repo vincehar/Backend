@@ -1,0 +1,12 @@
+django==1.8
+djangotoolbox==1.8.0
+mongoengine==0.9.0
+djangorestframework
+django-rest-framework-mongoengine
+regme
+mongodbforms
+googlemaps
+django-cors-headers
+django-registration
+Pillow==2.9.0
+pymongo==2.7.2

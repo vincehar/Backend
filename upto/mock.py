@@ -1,7 +1,7 @@
-from upto.rabbitmq import rabbitmq
+#from upto.rabbitmq import rabbitmq
 from upto.models import User, Users, Wishes, UsersRelationships, Events, Preferences, Tags, Coordinates
 from pymongo import Connection
-from django.contrib import auth
+#from django.contrib import auth
 import datetime
 
 # Clean users
@@ -50,12 +50,12 @@ vincent.current_coordinates.lng = 6.1552161
 vincent.save()
 
 #Creation des queues
-myrabbit = rabbitmq()
-myrabbit.create_connection()
-myrabbit.create_queue(marc)
-myrabbit.create_queue(vincent)
-myrabbit.create_queue(alex)
-myrabbit.close()
+#myrabbit = rabbitmq()
+#myrabbit.create_connection()
+#myrabbit.create_queue(marc)
+#myrabbit.create_queue(vincent)
+#myrabbit.create_queue(alex)
+#myrabbit.close()
 
 #us[0].save()
 #usa[0].save()

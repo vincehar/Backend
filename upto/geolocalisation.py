@@ -1,6 +1,6 @@
 import googlemaps
 from datetime import datetime
-import responses
+#import responses
 
 class geolocalisation():
 
@@ -17,11 +17,11 @@ class geolocalisation():
         return self.client.geocode(address)
 
     def getDistance(self):
-        responses.add(responses.GET,
-                      self.matrixServiceAdress,
-                      body='{"status":"OK","rows":[]}',
-                      status=200,
-                      content_type='application/json')
+       # responses.add(responses.GET,
+        #              self.matrixServiceAdress,
+         #             body='{"status":"OK","rows":[]}',
+          #            status=200,
+           #           content_type='application/json')
 
         # sample adresses
         origins = [{ "lat" : 46.1954229 , "lng" : 6.1552161 }] #["8 place Camoletti, 1205 Geneve"]

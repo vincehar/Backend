@@ -11,14 +11,13 @@ from rest_framework.decorators import api_view, renderer_classes, permission_cla
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.response import Response
-from serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer, WishSerializer, EventSerializer, TagSerializer
+from upto.serializers import UsersSerializer, UsersRelationShipsSerializer, BaseUserSerializer, WishSerializer, EventSerializer, TagSerializer
 from .models import Users, Wishes, Events, UsersRelationships, Preferences, Tags
 from mongoengine.django.auth import User
 from upto.forms import UsersLoginForm, FilterForm
 from django.views.decorators.csrf import ensure_csrf_cookie
 from mongoengine.queryset import DoesNotExist
-from geolocalisation import geolocalisation
-
+from upto.geolocalisation import geolocalisation
 
 def index(request):
     return render(request, 'upto/index.html')
@@ -201,14 +200,15 @@ def relationships(request, username):
 
 
 @api_view(('GET',))
-@permission_classes((IsAuthenticated,))
+@permission_classes((AllowAny,))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def allwishesAndEvent(request):
     try:
-        if 'username' in request.session:
+        #if 'username' in request.session:
+
             displayEventsChecked = ''
             displayWeeshesChecked = ''
-            user = Users.objects.get(user__username=request.session['username'])
+            user = Users.objects.get(user__username='marc') #request.session['username'])
             if user.preferences.display_events:
                 displayEventsChecked = 'checked'
             if user.preferences.display_weeshes:
@@ -218,21 +218,21 @@ def allwishesAndEvent(request):
             wishes_user = Wishes.objects[:5](user_id=user.id).order_by('-creation_date')
             context = {
                 'current_user': user,
-                'wishes_user': wishes_user,
-                'form': frmFilter,
+                'wishes_user': wishes_user
+                #'form': frmFilter,
             }
-        else:
-            form = UsersLoginForm(request)
-            return render(request, 'upto/index.html', {'form': form})
+        #else:
+        #    form = UsersLoginForm(request)
+        #    return render(request, 'upto/index.html', {'form': form})
     except Users.DoesNotExist:
         raise Http404('Not logged')
-    else:
-        if request.accepted_renderer.format == 'html':
-            return render(request, 'upto/wishes.html', context)
-        else:
-            serializer = WishSerializer(instance=context)
-            data = serializer.data
-            return Response(data)
+    #else:
+        #if request.accepted_renderer.format == 'html':
+        #    return render(request, 'upto/wishes.html', context)
+        #boomhttpelse:
+    serializer = WishSerializer(instance=context)
+    data = serializer.data
+    return Response(data)
 
 
 @api_view(('GET',))
@@ -276,16 +276,16 @@ def weeshesevents(request):
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def getWeeshById(request):
 
-    wish = Wishes.objects.get(id=request.GET['id'])
+    wish = Wishes.objects.get(id='57270439430356405de4007a')#request.GET['id'])
 
-    if request.accepted_renderer.format == 'html':
-        context = {
-            'object': wish
-        }
-        return render(request, 'upto/weesh.html', context)
+    #if request.accepted_renderer.format == 'html':
+    #    context = {
+    #        'object': wish
+    #    }
+    #    return render(request, 'upto/weesh.html', context)
 
     wishSerializer = WishSerializer(instance=wish)
-    return Response({'wish': wishSerializer.data})
+    return Response(wishSerializer.data)
 
 @api_view(('GET',))
 @permission_classes((AllowAny,))
@@ -370,20 +370,17 @@ def getEventInfo(request, _event_id):
     return render(request, 'upto/eventDetails.html', context)
 
 
+
 @api_view(('POST',))
 @permission_classes((AllowAny,))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def createWish(request):
-    """
-    View used to create a wish for a user
-    :rtype: object
-    :param _id_user:
-    :param request:
-    """
+
     # 2 - get wish title from form
     _wish_title = request.POST['weeshtitle']
     getConnectedUser(request).create_wish(_wish_title)
     return redirect('/upto/wishes/')
+
 
 def addfriend(request, username):
     try:

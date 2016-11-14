@@ -2,14 +2,14 @@ from django.core.mail.backends.console import EmailBackend
 from djangotoolbox.fields import ListField, EmbeddedModelField
 from mongoengine.django.auth import User
 #from regme.documents import User
-from rabbitmq import rabbitmq
-import pika
+#from rabbitmq import rabbitmq
+#import pika
 import datetime
 import base64
 from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocumentField, \
     ReferenceField, StringField, ListField, DateTimeField, BinaryField, BooleanField, ObjectIdField, ImageField, IntField
 from bson import ObjectId
-from geolocalisation import geolocalisation
+#from geolocalisation import geolocalisation
 
 class Coordinates(EmbeddedDocument):
     lat = FloatField(default=5)
@@ -81,9 +81,9 @@ class Events(Document):
         thumbnail = base64.b64encode(self.thumbnail.read())
         return thumbnail
 
-    def get_position(self):
-        geo = geolocalisation()
-        return geo.geoCodeWithAddress(self.address.address_1 + " "+ self.address.address_2+ " " + self.address.zip_code + " " + self.address.city)
+   # def get_position(self):
+    #    geo = geolocalisation()
+     #   return geo.geoCodeWithAddress(self.address.address_1 + " "+ self.address.address_2+ " " + self.address.zip_code + " " + self.address.city)
 
 class Messages(Document):
     from_user = ReferenceField('Users')
@@ -212,10 +212,11 @@ class Users(Document):
 
         #Connect and send message to the queue
         # Use plain credentials for authentication
-        myrabbit = rabbitmq()
-        myrabbit.create_connection()
-        myrabbit.publish_newweesh(wish.id,wish.user_id.user.username)
-        myrabbit.close()
+        #myrabbit = rabbitmq()
+        #myrabbit.create_connection()
+        #myrabbit.publish_newweesh(wish.id,wish.user_id.user.username)
+        #
+        # myrabbit.close()
         return wish
 
     def create_event(self, **kwargs):

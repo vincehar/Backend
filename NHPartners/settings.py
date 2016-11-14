@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 import django
 import mongoengine
+from pymongo.read_preferences import ReadPreference
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -64,12 +66,12 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'upto',
-    'social_auth',
+    #'social_auth',
     # 'mongo_auth',
     # 'mongo_auth.contrib',
-    'sekizai',
+    #'sekizai',
     'mongoengine',
-    'django_browserid',
+    #'django_browserid',
     'mongoengine.django.mongo_auth',
     'rest_framework',
     'rest_framework_mongoengine',
@@ -92,11 +94,11 @@ MIDDLEWARE_CLASSES = (
 AUTHENTICATION_BACKENDS = (
     # 'django_mongoengine.mongo_auth.backends.MongoEngineBackend',
     'mongoengine.django.auth.MongoEngineBackend',
-    'social_auth.backends.twitter.TwitterBackend',
-    'social_auth.backends.facebook.FacebookBackend',
-    'social_auth.backends.google.GoogleOAuthBackend',
-    'social_auth.backends.google.GoogleOAuth2Backend',
-    'social_auth.backends.google.GoogleBackend',
+    #'social_auth.backends.twitter.TwitterBackend',
+    #'social_auth.backends.facebook.FacebookBackend',
+    #'social_auth.backends.google.GoogleOAuthBackend',
+    #'social_auth.backends.google.GoogleOAuth2Backend',
+    #'social_auth.backends.google.GoogleBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -136,7 +138,7 @@ MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'
 #MONGOENGINE_USER_DOCUMENT = 'regme.documents.User'
 SESSION_ENGINE = 'mongoengine.django.sessions'
 SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
-mongoengine.connect('upto', host='mongodb://127.0.0.1/upto')
+mongoengine.connect('upto', host='mongodb://127.0.0.1/upto', read_preference=ReadPreference.PRIMARY)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -183,15 +185,15 @@ FACEBOOK_APP_ID = '222535738090638'
 FACEBOOK_API_SECRET = '09a2f8b2122cd05061e50fa00dcc999a'
 FACEBOOK_EXTENDED_PERMISSIONS = ['email']
 django.setup()
-SOCIAL_AUTH_MODELS = 'social_auth.db.mongoengine_models'
-SOCIAL_AUTH_USER_MODEL = 'mongoengine.django.auth.User'
+#SOCIAL_AUTH_MODELS = 'social_auth.db.mongoengine_models'
+#SOCIAL_AUTH_USER_MODEL = 'mongoengine.django.auth.User'
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/upto/wishes/'
 LOGIN_ERROR_URL = '/login-error/'
 
-SOCIAL_AUTH_COMPLETE_URL_NAME = 'socialauth_complete'
-SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
+#SOCIAL_AUTH_COMPLETE_URL_NAME = 'socialauth_complete'
+#SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
 
 ACCOUNT_ACTIVATION_DAYS = 2
 
