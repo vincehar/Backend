@@ -138,8 +138,8 @@ MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'
 #MONGOENGINE_USER_DOCUMENT = 'regme.documents.User'
 SESSION_ENGINE = 'mongoengine.django.sessions'
 SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
-mongoengine.connect(os.environ.get('DATABASE_NAME'), host='mongodb://'+os.environ.get('DATABASE_URL') + '/' + os.environ.get('DATABASE_NAME'), read_preference=ReadPreference.PRIMARY)
-
+#mongoengine.connect(os.environ.get('DATABASE_NAME'), host='mongodb://'+os.environ.get('DATABASE_URL') + '/' + os.environ.get('DATABASE_NAME'), read_preference=ReadPreference.PRIMARY)
+mongoengine.connect('upto', host='mongodb://127.0.0.1/upto', read_preference=ReadPreference.PRIMARY)
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
