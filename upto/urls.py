@@ -32,5 +32,6 @@ urlpatterns = [
     url(r'^relationships/(?P<username>[a-z0-9]+)/$', views.relationships, name='relationships'),
     url(r'^testgeoloc/', views.geoloc, name='geoloc'),
     url(r'^savecoordinates/', views.saveCurrentPosition, name='savecoordinates'),
+    url(r'^getfriends/', views.getFriends, name='getfriends'),
     #url(r'^login/', views.login, name='login'),
 ]

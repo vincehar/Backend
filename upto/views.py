@@ -85,13 +85,26 @@ def logout_view(request):
     form = UsersLoginForm()
     return render(request, 'upto/index.html', {'form': form})
 
-def getFriends(_user):
-    return UsersRelationships.objects(accepted=True, to_user=_user.id)
-
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def getFriends(request):
+    try:
+        connected_user = Users.objects.get(user__username='marc')
+        lstRelationships = UsersRelationships.objects()
+        lstFriends = list()
+        for rl in lstRelationships:
+            lstFriends.append(rl.to_user)
+        usersSerializer = UsersSerializer(instance=lstFriends, many=True)
+        
+    except connected_user.DoesNotExist:
+        raise Http404('Not logged')
+    else:
+        return Response(usersSerializer.data)
 @permission_classes((IsAuthenticated,))
 def account(request):
     """
-    Get Account information and friends requests
+    Get Account information and requests
     :param request:
     :return:
     """
