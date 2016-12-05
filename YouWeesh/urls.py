@@ -1,20 +1,22 @@
 from django.conf.urls import url, include
 from upto.regbackend import UsersBackend
 from upto.forms import UsersRegistrationForm
+import YouWeesh.Controllers.WishController as WishController
+import YouWeesh.Controllers.EventController as EventController
 
 from . import views
 
 app_name = 'YouWeesh'
 urlpatterns = [
-    url(r'^$', views.login, name='index'),
+    url(r'^$',views.login, name='index'),
     url(r'^register/', include('regme.urls')),
     url(r'^account/register/', UsersBackend.as_view(form_class=UsersRegistrationForm), name='register'),
     url(r'^account/$', views.account, name='account'),
     url(r'^myevents/$', views.myevents, name='myevents'),
     url(r'^wishes/$', views.allwishesAndEvent, name='wishes'),
-    url(r'^weeshesevents/$', views.weeshesevents, name='weeshesevents'),
+    #url(r'^weeshesevents/$', views.weeshesevents, name='weeshesevents'),
     url(r'^getautocompletetags/$', views.getAutoCompleteTags, name='getautocompletetags'),
-    url(r'^getweeshbyid/$', views.getWeeshById, name='getweeshbyid'),
+    url(r'^getweeshbyid/$', WishController.getWeeshById, name='getweeshbyid'),
     url(r'^popupevent/$', views.popUpEvent, name='popupevent'),
     url(r'^geteventbyid/$', views.getEventById, name='geteventbyid'),
     url(r'^createwish/$', views.createWish, name='createwish'),
@@ -30,7 +32,7 @@ urlpatterns = [
     url(r'^unfriend/(?P<_user_id>\w+)$', views.unfriend, name='unfriend'),
     url(r'^logout/', views.logout_view, name='logout'),
     url(r'^relationships/(?P<username>[a-z0-9]+)/$', views.relationships, name='relationships'),
-    url(r'^testgeoloc/', views.geoloc, name='geoloc'),
+    #url(r'^testgeoloc/', views.geoloc, name='geoloc'),
     url(r'^savecoordinates/', views.saveCurrentPosition, name='savecoordinates'),
     #url(r'^login/', views.login, name='login'),
 ]
