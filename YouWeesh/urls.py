@@ -2,6 +2,7 @@ from django.conf.urls import url, include
 from upto.regbackend import UsersBackend
 from upto.forms import UsersRegistrationForm
 import YouWeesh.Controllers.WishController as WishController
+import YouWeesh.Controllers.UsersController as UsersController
 import YouWeesh.Controllers.EventController as EventController
 
 from . import views
@@ -11,8 +12,8 @@ urlpatterns = [
     url(r'^$',views.login, name='index'),
     url(r'^register/', include('regme.urls')),
     url(r'^account/register/', UsersBackend.as_view(form_class=UsersRegistrationForm), name='register'),
-    url(r'^account/$', views.account, name='account'),
-    url(r'^myevents/$', views.myevents, name='myevents'),
+    url(r'^account/$', UsersController.account, name='account'),
+    url(r'^myevents/$', UsersController.myNextEvents, name='myevents'),
     url(r'^wishes/$', views.allwishesAndEvent, name='wishes'),
     #url(r'^weeshesevents/$', views.weeshesevents, name='weeshesevents'),
     url(r'^getautocompletetags/$', views.getAutoCompleteTags, name='getautocompletetags'),
@@ -34,5 +35,6 @@ urlpatterns = [
     url(r'^relationships/(?P<username>[a-z0-9]+)/$', views.relationships, name='relationships'),
     #url(r'^testgeoloc/', views.geoloc, name='geoloc'),
     url(r'^savecoordinates/', views.saveCurrentPosition, name='savecoordinates'),
+    url(r'^getfriends/', UsersController.getFriends, name='getfriends'),
     #url(r'^login/', views.login, name='login'),
 ]
