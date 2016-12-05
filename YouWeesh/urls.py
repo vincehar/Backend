@@ -4,7 +4,7 @@ from upto.forms import UsersRegistrationForm
 
 from . import views
 
-app_name = 'upto'
+app_name = 'YouWeesh'
 urlpatterns = [
     url(r'^$', views.login, name='index'),
     url(r'^register/', include('regme.urls')),

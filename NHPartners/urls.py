@@ -9,5 +9,6 @@ urlpatterns = [
     #url(r'^', include('mongo_auth.contrib.urls')),
     url(r'^upto/', include('upto.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^YouWeesh/', include('YouWeesh.urls')),
     #url(r'', include('social_auth.urls')),
 ]
