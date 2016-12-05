@@ -96,7 +96,7 @@ def getFriends(request):
         for rl in lstRelationships:
             lstFriends.append(rl.to_user)
         usersSerializer = UsersSerializer(instance=lstFriends, many=True)
-        
+
     except connected_user.DoesNotExist:
         raise Http404('Not logged')
     else:
