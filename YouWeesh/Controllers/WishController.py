@@ -26,25 +26,11 @@ from upto.forms import UsersLoginForm, FilterForm
 from django.views.decorators.csrf import ensure_csrf_cookie
 from mongoengine.queryset import DoesNotExist
 
-
 @api_view(('GET',))
 @permission_classes((AllowAny,))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
-def getEventById(request):
+def getWeeshById(request):
 
-    event = Events.objects.get(id=request.GET['id'])
-
-    if request.accepted_renderer.format == 'html':
-        context = {
-            'object': event
-        }
-        return render(request, 'upto/event.html', context)
-
-    if event.thumbnail:
-        picture = event.get_picture()
-    else:
-        picture = ''
-
-    eventSerializer = EventSerializer(instance=event)
-
-    return Response({'event': eventSerializer.data, 'event_picture': picture})
+    wish = Wishes.objects.get(id='57270439430356405de4007a')#request.GET['id'])
+    wishSerializer = WishSerializer(instance=wish)
+    return Response(wishSerializer.data)
