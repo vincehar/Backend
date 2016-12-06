@@ -1,12 +1,16 @@
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.contrib.auth import authenticate, logout
 from rest_framework.decorators import api_view, renderer_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.response import Response
 from YouWeesh.Serializers import UsersSerializer, EventSerializer
 from YouWeesh.Models.Users import Users, Events
+from mongoengine.django.auth import User
+from YouWeesh.Serializers.UserSerializer import BaseUserSerializer
 from YouWeesh.Models.UsersRelationships import UsersRelationships
+from YouWeesh.Serializers.UserSerializer import BaseUserSerializer
 from datetime import datetime
 
 @permission_classes((IsAuthenticated,))
@@ -68,3 +72,41 @@ def myNextEvents(request):
         raise Http404('Not logged')
     else:
         return Response(events.data)
+
+
+@api_view(('GET','POST'))
+@permission_classes((AllowAny,))
+@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
+def login(request):
+    from mongoengine.queryset import DoesNotExist
+    """
+    si on recupere un POST, on essaie de connecter le user
+    """
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        """
+        gestion specifique pour les rendering json => mobile
+        """
+        import json
+        requser = {'username': request.POST.get('username'), 'password': request.POST.get('password')}
+        serializer = BaseUserSerializer(data=requser)
+        data = {}
+        try:
+            user = User.objects.get(username=username)
+            user = authenticate(username=username, password=password)
+            if user.is_active and user.check_password(password):
+                request.session['UserName'] = user.username
+                user.backend = 'mongoengine.django.auth.MongoEngineBackend'
+                data['result'] = 'success'
+                data['username'] = username
+            else:
+                print("no log")
+                data['result'] = 'failed'
+                data['username'] = 'please log in'
+        except DoesNotExist:
+            data['result'] = 'does not exist'
+            data['username'] = 'please register'
+        return HttpResponse(json.dumps(data), content_type="application/json")
+

@@ -5,6 +5,7 @@ from YouWeesh.Models.Wishes import Wishes
 from YouWeesh.Models.Tags import Tags
 from YouWeesh.Models.Events import Events
 from YouWeesh.Models.Medias import Medias
+from mongoengine.django.auth import User
 from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocumentField, \
     ReferenceField, StringField, ListField, DateTimeField, BinaryField, BooleanField, ObjectIdField, ImageField, IntField
 from bson import ObjectId
