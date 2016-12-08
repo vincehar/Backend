@@ -83,30 +83,27 @@ def login(request):
     si on recupere un POST, on essaie de connecter le user
     """
     if request.method == 'POST':
-        username = request.POST['username']
+        username = request.POST['username'].lower();
         password = request.POST['password']
 
         """
         gestion specifique pour les rendering json => mobile
         """
         import json
-        requser = {'username': request.POST.get('username'), 'password': request.POST.get('password')}
-        serializer = BaseUserSerializer(data=requser)
-        data = {}
-        try:
-            user = User.objects.get(username=username)
-            user = authenticate(username=username, password=password)
-            if user.is_active and user.check_password(password):
-                request.session['UserName'] = user.username
-                user.backend = 'mongoengine.django.auth.MongoEngineBackend'
-                data['result'] = 'success'
-                data['username'] = username
-            else:
-                print("no log")
-                data['result'] = 'failed'
-                data['username'] = 'please log in'
-        except DoesNotExist:
-            data['result'] = 'does not exist'
-            data['username'] = 'please register'
-        return HttpResponse(json.dumps(data), content_type="application/json")
+        #requser = {'username': request.POST.get('username'), 'password': request.POST.get('password')}
+        #serializer = BaseUserSerializer(data=requser)
+       # data = {}
+
+        user = User.objects.get(username=username)
+        users = Users.objects.get(user__username=username)
+        userAuth = authenticate(username=username, password=password)
+        if user.is_active and user.check_password(password):
+            #request.session['UserName'] = user.username
+            user.backend = 'mongoengine.django.auth.MongoEngineBackend'
+            usersSerializer = UsersSerializer(instance=users)
+            return Response(usersSerializer.data)
+
+
+
+
 
