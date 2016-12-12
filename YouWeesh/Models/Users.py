@@ -76,7 +76,7 @@ class Users(Document):
         relation.save()
         return self
 
-    def create_wish(self, _title):
+    def create_wish(self, _title, _level):
         """
         Method used to create a wish
         :param _title:
@@ -84,7 +84,7 @@ class Users(Document):
         :return: self
         """
 
-        wish = Wishes(user_id=self.id, title=_title, creation_date=datetime.datetime.now())
+        wish = Wishes(user_id=self.id, title=_title, creation_date=datetime.datetime.now(), level=_level)
 
         splitTitle = _title.split(' ')
         for word in splitTitle:
@@ -93,14 +93,6 @@ class Users(Document):
                 wish.tags.append(tag[0])
 
         wish.save()
-
-        #Connect and send message to the queue
-        # Use plain credentials for authentication
-        #myrabbit = rabbitmq()
-        #myrabbit.create_connection()
-        #myrabbit.publish_newweesh(wish.id,wish.user_id.user.username)
-        #
-        # myrabbit.close()
         return wish
 
     def create_event(self, **kwargs):

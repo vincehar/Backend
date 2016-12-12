@@ -5,5 +5,5 @@ from bson import ObjectId
 
 
 class Level(Document):
-    id = IntField()
+    idLevel = IntField()
     description = StringField()

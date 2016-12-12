@@ -7,6 +7,7 @@ from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.response import Response
 from YouWeesh.Serializers.UsersSerializer import UsersSerializer
 from YouWeesh.Serializers.EventSerializer import EventSerializer
+from YouWeesh.Models.Level import Level
 from YouWeesh.Models.Users import Users
 from YouWeesh.Models.Events import Events
 from mongoengine.django.auth import User
@@ -114,9 +115,13 @@ def login(request):
 def createWish(request):
 
     try:
-        _wish_title = request.POST['weeshtitle']
+        _wish_title = request.POST['weesh']
+        _idLevel = request.POST['idLevel']
+
+        selectedLevel = Level.objects.get(idLevel=_idLevel)
         connected_user = getConnectedUser(request)
-        connected_user.create_wish(_wish_title)
+
+        connected_user.create_wish(_wish_title, selectedLevel)
     except connected_user.DoesNotExist:
         raise Http404('Not logged')
     else:
