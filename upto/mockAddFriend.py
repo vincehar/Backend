@@ -35,5 +35,5 @@ print "-----------------------------------"
 
 # 1 - insert picture on DB
 f = open("/home/ubuntu/Pictures/profil.jpeg", "rb")
-vincent.picture.replace(f)
-vincent.save()
+marc.picture.replace(f)
+marc.save()
