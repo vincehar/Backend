@@ -4,12 +4,20 @@ from rest_framework.decorators import api_view, renderer_classes, permission_cla
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.response import Response
-from YouWeesh.Serializers import UsersSerializer, EventSerializer
-from YouWeesh.Models.Users import Users, Events
+from YouWeesh.Serializers.UsersSerializer import UsersSerializer
+from YouWeesh.Serializers.EventSerializer import EventSerializer
+from YouWeesh.Models.Users import Users
+from YouWeesh.Models.Events import Events
 from YouWeesh.Models.UsersRelationships import UsersRelationships
+from mongoengine.django.auth import User
 from datetime import datetime
 
-@permission_classes((IsAuthenticated,))
+def getConnectedUser(request):
+        return Users.objects.get(user__username='marc')
+
+@api_view(('GET',))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+@permission_classes((AllowAny,))
 def account(request):
     """
     Get Account information and requests
@@ -18,18 +26,13 @@ def account(request):
     """
     try:
         connected_user = getConnectedUser(request)
-        friends_requests = UsersRelationships.objects(accepted=False, to_user=connected_user.id) #UsersRelationships.objects.get(to_user=connected_user.id)
-        my_friends = UsersRelationships.objects(accepted=True, to_user=connected_user.id)
-
-        context = {
-            'user': connected_user,
-            'friends_requests': friends_requests,
-            'my_friends': my_friends,
-        }
+        #friends_requests = UsersRelationships.objects(accepted=False, to_user=connected_user.id) #UsersRelationships.objects.get(to_user=connected_user.id)
+        #my_friends = UsersRelationships.objects(accepted=True, to_user=connected_user.id)
+        usersSerializer = UsersSerializer(instance=connected_user)
     except connected_user.DoesNotExist:
         raise Http404('Not logged')
     else:
-        return render(request, 'upto/myaccount.html', context)
+        return Response(usersSerializer.data)
 
 
 @api_view(('GET',))
@@ -62,9 +65,9 @@ def getTags(request):
 def myNextEvents(request):
     try:
         connected_user = Users.objects.get(user__username='marc')
-        lstNextEvents = Events.objects.get(user_id=connected_user.id, end_date__lte=datetime.now()) #LTE a changer an SUP
-        events = EventSerializer(instance=lstNextEvents, many=True)
+        lstNextEvents = Events.objects() #user_id=connected_user.id)end_date__lte=datetime.now()) #LTE a changer an SUP
+        eventssrz = EventSerializer(instance=lstNextEvents, many=True)
     except connected_user.DoesNotExist:
         raise Http404('Not logged')
     else:
-        return Response(events.data)
+        return Response(eventssrz.data)

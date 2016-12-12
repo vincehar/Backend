@@ -8,7 +8,7 @@ class Wishes(Document):
     user_id = ReferenceField('Users')
     title = StringField(required=True)
     creation_date = DateTimeField(default=datetime.datetime.now())
-    interested = ListField(ReferenceField('Users'))
+    weeshback = ListField(ReferenceField('Users'))
     is_active = BooleanField(default=True)
     tags = ListField(ReferenceField('Tags'))
 
@@ -19,5 +19,5 @@ class Wishes(Document):
         return self.creation_date
 
     def add_interested(self, user):
-        self.interested.append(user)
+        self.weeshback.append(user)
 

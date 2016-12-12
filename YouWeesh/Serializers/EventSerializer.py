@@ -1,4 +1,4 @@
-from YouWeesh.Models import Users, Wishes, Events, UsersRelationships, Tags
+from YouWeesh.Models.Events import Events
 #from rest_framework import serializers
 #from rest_framework_mongoengine import serializers as mongoserializers
 from rest_framework_mongoengine.serializers import DocumentSerializer
