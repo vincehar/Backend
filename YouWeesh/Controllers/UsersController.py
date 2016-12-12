@@ -46,6 +46,7 @@ def account(request):
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def getFriends(request):
     try:
+
         connected_user = Users.objects.get(user__username='marc')
         lstRelationships = UsersRelationships.objects()
         lstFriends = list()
