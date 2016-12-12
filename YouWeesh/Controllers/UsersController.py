@@ -11,7 +11,6 @@ from YouWeesh.Models.Level import Level
 from YouWeesh.Models.Users import Users
 from YouWeesh.Models.Events import Events
 from mongoengine.django.auth import User
-from YouWeesh.Serializers.UserSerializer import BaseUserSerializer
 from YouWeesh.Models.UsersRelationships import UsersRelationships
 from mongoengine.django.auth import User
 from YouWeesh.Serializers.UserSerializer import BaseUserSerializer
@@ -89,8 +88,10 @@ def login(request):
     si on recupere un POST, on essaie de connecter le user
     """
     if request.method == 'POST':
-        username = request.POST['username'].lower();
-        password = request.POST['password']
+        #username = request.POST['username'].lower();
+        #password = request.POST['password']
+        username = 'marc'
+        password = '123'
 
         """
         gestion specifique pour les rendering json => mobile
