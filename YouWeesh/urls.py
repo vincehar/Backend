@@ -10,6 +10,7 @@ from . import views
 app_name = 'YouWeesh'
 urlpatterns = [
     url(r'^$',views.login, name='index'),
+    url(r'^login/', UsersController.login, name='login'),
     url(r'^register/', include('regme.urls')),
     url(r'^account/register/', UsersBackend.as_view(form_class=UsersRegistrationForm), name='register'),
     url(r'^account/$', UsersController.account, name='account'),

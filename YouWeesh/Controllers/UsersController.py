@@ -1,5 +1,6 @@
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.contrib.auth import authenticate, logout
 from rest_framework.decorators import api_view, renderer_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
@@ -8,8 +9,13 @@ from YouWeesh.Serializers.UsersSerializer import UsersSerializer
 from YouWeesh.Serializers.EventSerializer import EventSerializer
 from YouWeesh.Models.Users import Users
 from YouWeesh.Models.Events import Events
+from YouWeesh.Serializers import UsersSerializer, EventSerializer
+from YouWeesh.Models.Users import Users, Events
+from mongoengine.django.auth import User
+from YouWeesh.Serializers.UserSerializer import BaseUserSerializer
 from YouWeesh.Models.UsersRelationships import UsersRelationships
 from mongoengine.django.auth import User
+from YouWeesh.Serializers.UserSerializer import BaseUserSerializer
 from datetime import datetime
 
 def getConnectedUser(request):
@@ -71,3 +77,39 @@ def myNextEvents(request):
         raise Http404('Not logged')
     else:
         return Response(eventssrz.data)
+        return Response(events.data)
+
+
+@api_view(('GET','POST'))
+@permission_classes((AllowAny,))
+@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
+def login(request):
+    from mongoengine.queryset import DoesNotExist
+    """
+    si on recupere un POST, on essaie de connecter le user
+    """
+    if request.method == 'POST':
+        username = request.POST['username'].lower();
+        password = request.POST['password']
+
+        """
+        gestion specifique pour les rendering json => mobile
+        """
+        import json
+        #requser = {'username': request.POST.get('username'), 'password': request.POST.get('password')}
+        #serializer = BaseUserSerializer(data=requser)
+       # data = {}
+
+        user = User.objects.get(username=username)
+        users = Users.objects.get(user__username=username)
+        userAuth = authenticate(username=username, password=password)
+        if user.is_active and user.check_password(password):
+            #request.session['UserName'] = user.username
+            user.backend = 'mongoengine.django.auth.MongoEngineBackend'
+            usersSerializer = UsersSerializer(instance=users)
+            return Response(usersSerializer.data)
+
+
+
+
+

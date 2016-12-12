@@ -15,7 +15,7 @@ from YouWeesh.Serializers.TagSerializer import TagSerializer
 from YouWeesh.Serializers.WishSerializer import WishSerializer
 from YouWeesh.Serializers.UserSerializer import BaseUserSerializer
 from YouWeesh.Serializers.EventSerializer import EventSerializer
-from YouWeesh.Serializers.UsersRelationShipsSerializer import UsersRelationships
+from YouWeesh.Serializers.UsersRelationShipsSerializer import UsersRelationShipsSerializer
 from YouWeesh.Models.Users import Users
 from YouWeesh.Models.Wishes import Wishes
 from YouWeesh.Models.Events import Events
