@@ -9,8 +9,6 @@ from YouWeesh.Serializers.UsersSerializer import UsersSerializer
 from YouWeesh.Serializers.EventSerializer import EventSerializer
 from YouWeesh.Models.Users import Users
 from YouWeesh.Models.Events import Events
-from YouWeesh.Serializers import UsersSerializer, EventSerializer
-from YouWeesh.Models.Users import Users, Events
 from mongoengine.django.auth import User
 from YouWeesh.Serializers.UserSerializer import BaseUserSerializer
 from YouWeesh.Models.UsersRelationships import UsersRelationships
@@ -110,7 +108,19 @@ def login(request):
             usersSerializer = UsersSerializer(instance=users)
             return Response(usersSerializer.data)
 
+@api_view(('POST',))
+@permission_classes((AllowAny,))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def createWish(request):
 
+    try:
+        _wish_title = request.POST['weeshtitle']
+        connected_user = getConnectedUser(request)
+        connected_user.create_wish(_wish_title)
+    except connected_user.DoesNotExist:
+        raise Http404('Not logged')
+    else:
+        return True
 
 
 

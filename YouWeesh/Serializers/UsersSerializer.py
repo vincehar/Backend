@@ -6,9 +6,6 @@ from rest_framework_mongoengine.serializers import DocumentSerializer
 
 
 class UsersSerializer(DocumentSerializer):
-    user = BaseUserSerializer()
-    preferences = PreferencesSerializer()
-    current_coordinates = CoordinatesSerializer()
     class Meta:
         model = Users
         depth = 1

@@ -11,6 +11,8 @@ class Wishes(Document):
     weeshback = ListField(ReferenceField('Users'))
     is_active = BooleanField(default=True)
     tags = ListField(ReferenceField('Tags'))
+    level = ReferenceField('Level')
+
 
     def user_name(self):
         return self.user_id.username

@@ -34,3 +34,4 @@ def getWeeshById(request):
     wish = Wishes.objects.get(id='57270439430356405de4007a')#request.GET['id'])
     wishSerializer = WishSerializer(instance=wish)
     return Response(wishSerializer.data)
+
