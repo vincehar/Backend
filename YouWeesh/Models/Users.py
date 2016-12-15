@@ -5,6 +5,7 @@ from YouWeesh.Models.Wishes import Wishes
 from YouWeesh.Models.Tags import Tags
 from YouWeesh.Models.Events import Events
 from YouWeesh.Models.Medias import Medias
+from YouWeesh.Models.Preferences import Preferences
 from mongoengine.django.auth import User
 from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocumentField, \
     ReferenceField, StringField, ListField, DateTimeField, BinaryField, BooleanField, ObjectIdField, ImageField, IntField
@@ -135,6 +136,10 @@ class Users(Document):
         return self.wishes
 
     def get_picture(self):
-        picture = base64.b64encode(self.picture.read())
-        return picture
+        # TODO : Test is null
+        if self.picture:
+            picture = base64.b64encode(self.picture.read())
+            return picture
+        else:
+            return None
 

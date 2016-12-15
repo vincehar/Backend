@@ -1,5 +1,6 @@
 #from upto.rabbitmq import rabbitmq
-from upto.models import User, Users, Wishes, UsersRelationships, Events, Preferences, Tags, Coordinates
+from YouWeesh.models. import  Users
+    import User, Users, Wishes, UsersRelationships, Events, Preferences, Tags, Coordinates
 from pymongo import Connection
 #from django.contrib import auth
 import datetime
@@ -36,4 +37,8 @@ print "-----------------------------------"
 # 1 - insert picture on DB
 f = open("/home/ubuntu/Pictures/profil.jpeg", "rb")
 marc.picture.replace(f)
+marc.save()
+
+
+marc.preferences.background_picture.replace(f)
 marc.save()

@@ -1,5 +1,8 @@
-#from upto.rabbitmq import rabbitmq
-from upto.models import User, Users, Wishes, UsersRelationships, Events, Preferences, Tags, Coordinates
+from YouWeesh.Models.Users import Users, User
+from YouWeesh.Models.UsersRelationships import UsersRelationships
+from YouWeesh.Models.Preferences import Preferences
+from YouWeesh.Models.Coordinates import Coordinates
+
 from pymongo import Connection
 #from django.contrib import auth
 import datetime
@@ -37,3 +40,8 @@ print "-----------------------------------"
 f = open("/home/ubuntu/Pictures/profil.jpeg", "rb")
 vincent.picture.replace(f)
 vincent.save()
+
+
+f = open("/home/ubuntu/Pictures/profil.jpeg", "rb")
+marc.preferences.background_picture.replace(f)
+marc.save()

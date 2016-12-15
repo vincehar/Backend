@@ -126,6 +126,7 @@ class Preferences(EmbeddedDocument):
     display_events = BooleanField(default=True)
     search_distance = IntField(default=50)
     selected_network = StringField(default='PUBLIC')
+    background_picture = ImageField()
 
 class Users(Document):
     """
