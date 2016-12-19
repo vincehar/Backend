@@ -42,6 +42,6 @@ vincent.picture.replace(f)
 vincent.save()
 
 
-f = open("/home/ubuntu/Pictures/profil.jpeg", "rb")
+f = open("/home/ubuntu/Pictures/background.jpg", "rb")
 marc.preferences.background_picture.replace(f)
 marc.save()

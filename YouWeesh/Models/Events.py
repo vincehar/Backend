@@ -23,6 +23,9 @@ class Events(Document):
     def get_ref_date(self):
         return self.creation_date
 
-    def get_picture(self):
-        thumbnail = base64.b64encode(self.thumbnail.read())
-        return thumbnail
+    def get_thumbnail(self):
+        if self.thumbnail:
+            picture = base64.b64encode(self.thumbnail.read())
+            return picture
+        else:
+            return None

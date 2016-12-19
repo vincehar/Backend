@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^getweeshbyid/$', WishController.getWeeshById, name='getweeshbyid'),
     url(r'^popupevent/$', views.popUpEvent, name='popupevent'),
     url(r'^geteventbyid/$', views.getEventById, name='geteventbyid'),
+    url(r'^getnbrfriends/$', UsersController.getNbrFriends, name='getnbrfriends'),
     url(r'^createwish/$', UsersController.createWish, name='createwish'),
     url(r'^filter/$', views.filter_list, name='filter'),
     url(r'^deletewish/(?P<_wish_id>\w+)$', views.deleteWish, name='deletewish'),

@@ -199,8 +199,48 @@ ACCOUNT_ACTIVATION_DAYS = 2
 
 SITE = {'domain': '127.0.0.1:8000', 'name': 'YouWeesh'}
 
+# TODO : Configure email and try to know how to use it
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'alexandre.frigout@gmail.com'
-EMAIL_HOST_PASSWORD = 'njgjxbwgwucqypdf'
+EMAIL_HOST_USER = 'marc.negri@nh-partners.com'
+EMAIL_HOST_PASSWORD = 'Youweesh2016'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+
+# LOGGIN PART - DEFINE HOW AND WHERE TO WRITE LOG FILES
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'applogfile': {
+            'level':'DEBUG',
+            'class':'logging.handlers.RotatingFileHandler',
+            # TODO : Define a ROOT_PATH for the filename path
+            'filename': os.path.join('/home/ubuntu/', 'APPNAME.log'),
+            'maxBytes': 1024*1024*15, # 15MB
+            'backupCount': 10
+        }
+    },
+
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'APPNAME': {
+            'handlers': ['applogfile',],
+            'level': 'DEBUG',
+        },
+    }
+}

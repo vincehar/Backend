@@ -38,6 +38,18 @@ def account(request):
     else:
         return Response(usersSerializer.data)
 
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def getNbrFriends(request):
+    try:
+        connected_user = Users.objects.get(user__username='marc')
+        # TODO : Add criteria for relationship
+        nbr = len(UsersRelationships.objects())
+    except connected_user.DoesNotExist:
+        raise Http404('Not logged')
+    else:
+        return Response(nbr)
 
 @api_view(('GET',))
 @permission_classes((AllowAny,))
@@ -46,6 +58,7 @@ def getFriends(request):
     try:
 
         connected_user = Users.objects.get(user__username='marc')
+        # TODO : Add criteria for relationship
         lstRelationships = UsersRelationships.objects()
         lstFriends = list()
         for rl in lstRelationships:
@@ -76,10 +89,9 @@ def myNextEvents(request):
         raise Http404('Not logged')
     else:
         return Response(eventssrz.data)
-        return Response(events.data)
 
 
-@api_view(('GET','POST'))
+@api_view(('POST',))
 @permission_classes((AllowAny,))
 @renderer_classes((JSONRenderer, TemplateHTMLRenderer))
 def login(request):
@@ -126,7 +138,7 @@ def createWish(request):
     except connected_user.DoesNotExist:
         raise Http404('Not logged')
     else:
-        return True
+        return Response(True)
 
 
 

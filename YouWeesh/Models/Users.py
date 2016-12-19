@@ -94,6 +94,7 @@ class Users(Document):
                 wish.tags.append(tag[0])
 
         wish.save()
+        print wish
         return wish
 
     def create_event(self, **kwargs):
@@ -136,7 +137,6 @@ class Users(Document):
         return self.wishes
 
     def get_picture(self):
-        # TODO : Test is null
         if self.picture:
             picture = base64.b64encode(self.picture.read())
             return picture

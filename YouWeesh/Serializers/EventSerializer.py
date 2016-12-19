@@ -1,13 +1,17 @@
 from YouWeesh.Models.Events import Events
-#from rest_framework import serializers
-#from rest_framework_mongoengine import serializers as mongoserializers
+from YouWeesh.Serializers.UsersSerializer import UsersSerializer
+from rest_framework import serializers
 from rest_framework_mongoengine.serializers import DocumentSerializer
-
-from mongoengine.django.auth import User
 
 
 class EventSerializer(DocumentSerializer):
-   class Meta:
+    thumbnail = serializers.SerializerMethodField()
+    #user_id = UsersSerializer()
+
+    class Meta:
         model = Events
         depth = 1
-        fields = '__all__'
+        fields = ('id', 'thumbnail', 'name') #'start_date', 'end_date', 'price', 'name', 'user_id')
+
+    def get_thumbnail(self, events):
+        return events.get_thumbnail()
