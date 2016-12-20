@@ -14,8 +14,9 @@ collection = connection[databaseName]
 users = collection['users']
 user = collection['user']
 events = collection['events_Owned']
+copains = collection['UsersRelationships']
 
-
+copains = collection['UsersRelationships']
 print "-----------------------------------"
 print "Create Relationships - add friends"
 print "-----------------------------------"
@@ -26,7 +27,11 @@ marc = Users.objects.get(user__username='marc')
 vincent = Users.objects.get(user__username='vincent')
 
 
+alex = Users.objects.get(user__username='alex')
+
+
 UsersRelationships.objects.get_or_create(from_user=marc.id, to_user=vincent.id, accepted=True)
+UsersRelationships.objects.get_or_create(from_user=marc.id, to_user=alex.id, accepted=True)
 
 
 print "-----------------------------------"
@@ -37,11 +42,16 @@ print "-----------------------------------"
 #antho=Users.objects.get_or_create(user=User.objects.get(username='Anthony'), preferences=Preferences(), current_coordinates=Coordinates(), picture="")
 
 # 1 - insert picture on DB
-f = open("/home/ubuntu/Pictures/profil.jpeg", "rb")
+f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/profil.jpeg", "rb")
+marc.picture.replace(f)
+marc.save()
+
+f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/index3.jpeg", "rb")
 vincent.picture.replace(f)
 vincent.save()
 
 
-f = open("/home/ubuntu/Pictures/background.jpg", "rb")
-marc.preferences.background_picture.replace(f)
-marc.save()
+f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/index2.jpeg", "rb")
+alex.picture.replace(f)
+
+alex.save()

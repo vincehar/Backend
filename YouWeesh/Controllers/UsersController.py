@@ -56,7 +56,9 @@ def getNbrFriends(request):
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def getFriends(request):
     try:
-
+        users = Users.objects()
+        for u in users:
+            print u
         connected_user = Users.objects.get(user__username='marc')
         # TODO : Add criteria for relationship
         lstRelationships = UsersRelationships.objects()
