@@ -248,40 +248,6 @@ def allwishesAndEvent(request):
     return Response(data)
 
 
-@api_view(('GET',))
-@permission_classes((AllowAny,))
-@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
-def weeshesevents(request):
-    connected_user = getConnectedUser(request)
-    geoloc = geolocalisation()
-
-    ### 1 - manage private and public network ###
-    AllEvents = list()
-    AllWishes = list()
-    if connected_user.preferences.selected_network == "public":
-        AllEvents = Events.objects
-        AllWishes = Wishes.objects
-    if connected_user.preferences.selected_network == "friends":
-        for relationship in getFriends(connected_user):
-            for event in Events.objects(user_id=relationship.from_user.id):
-                AllEvents.append(event)
-            for wish in Wishes.objects(user_id=relationship.from_user.id):
-                AllWishes.append(wish)
-    ### 1                                   #######
-    tmplst = list()
-    if connected_user.preferences.display_events:
-        for event in AllEvents:
-            tmplst.append(event)
-    if connected_user.preferences.display_weeshes:
-        for wish in AllWishes:
-            tmplst.append(wish)
-
-
-    context = {
-        'eventsList': sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True),
-    }
-
-    return render(request, 'upto/weeshesevents.html', context)
 
 
 @api_view(('GET',))

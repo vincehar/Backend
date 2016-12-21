@@ -1,3 +1,5 @@
+from operator import methodcaller
+
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth import authenticate, logout
@@ -7,9 +9,13 @@ from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.response import Response
 from YouWeesh.Serializers.UsersSerializer import UsersSerializer
 from YouWeesh.Serializers.EventSerializer import EventSerializer
+from YouWeesh.Serializers.GenericSerializer import GenericSerializer
+from YouWeesh.Serializers.WishSerializer import WishSerializer
 from YouWeesh.Models.Level import Level
 from YouWeesh.Models.Users import Users
 from YouWeesh.Models.Events import Events
+from YouWeesh.Models.Wishes import Wishes
+from YouWeesh.Models.Preferences import Preferences
 from mongoengine.django.auth import User
 from YouWeesh.Models.UsersRelationships import UsersRelationships
 from mongoengine.django.auth import User
@@ -61,7 +67,7 @@ def getFriends(request):
             print u
         connected_user = Users.objects.get(user__username='marc')
         # TODO : Add criteria for relationship
-        lstRelationships = UsersRelationships.objects()
+        lstRelationships = UsersRelationships.objects(from_user=connected_user.id)
         lstFriends = list()
         for rl in lstRelationships:
             lstFriends.append(rl.to_user)
@@ -85,6 +91,7 @@ def getTags(request):
 def myNextEvents(request):
     try:
         connected_user = Users.objects.get(user__username='marc')
+        #TODO : Select only objects where current user is creator or participant
         lstNextEvents = Events.objects() #user_id=connected_user.id)end_date__lte=datetime.now()) #LTE a changer an SUP
         eventssrz = EventSerializer(instance=lstNextEvents, many=True)
     except connected_user.DoesNotExist:
@@ -141,6 +148,47 @@ def createWish(request):
         raise Http404('Not logged')
     else:
         return Response(True)
+
+
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def weeshesevents(request):
+    """
+    Get Weeshes And Events sorted by create_date
+    :param request:
+    :return:
+    """
+    connected_user = getConnectedUser(request)
+    #geoloc = geolocalisation()
+
+    ### 1 - manage private and public network ###
+    AllEvents = list()
+    AllWishes = list()
+    if connected_user.preferences.selected_network == "PUBLIC":
+        AllEvents = Events.objects
+        AllWishes = Wishes.objects
+    if connected_user.preferences.selected_network == "friends":
+        for relationship in getFriends(connected_user):
+            for event in Events.objects(user_id=relationship.from_user.id):
+                AllEvents.append(event)
+            for wish in Wishes.objects(user_id=relationship.from_user.id):
+                AllWishes.append(wish)
+    ### 1                                   #######
+    tmplst = list()
+    if connected_user.preferences.display_events:
+        for event in AllEvents:
+            tmplst.append(event)
+    if connected_user.preferences.display_weeshes:
+        for wish in AllWishes:
+            tmplst.append(wish)
+
+
+    context = sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True)
+    lstEvents = EventSerializer(instance=AllEvents, many=True)
+    lstWishes = WishSerializer(instance=AllWishes, many=True)
+    
+    return Response(lstEvents.data + lstWishes.data)
 
 
 
