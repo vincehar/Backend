@@ -5,6 +5,7 @@ from YouWeesh.Models.Wishes import Wishes
 from YouWeesh.Models.Tags import Tags
 from YouWeesh.Models.Events import Events
 from YouWeesh.Models.Medias import Medias
+from YouWeesh.Models.Coordinates import Coordinates
 from YouWeesh.Models.Preferences import Preferences
 from mongoengine.django.auth import User
 from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocumentField, \
@@ -23,6 +24,7 @@ class Users(Document):
     preferences = EmbeddedDocumentField('Preferences')
     date_created = DateTimeField(default=datetime.datetime.now())
     current_coordinates = EmbeddedDocumentField('Coordinates')
+    address = EmbeddedDocumentField('Address')
     #friends = ListField(ReferenceField('UsersRelationships'))
     #wishes = ListField(ReferenceField('Wishes'))
     #logs = ListField(ReferenceField('Logs'))
@@ -94,15 +96,14 @@ class Users(Document):
                 wish.tags.append(tag[0])
 
         wish.save()
-        print wish
         return wish
 
     def create_event(self, **kwargs):
 
         if 'thumbnail' in kwargs:
-            event = Events(user_id=self.id, name=kwargs['eventName'], start_date=kwargs['start_date'], end_date=kwargs['end_date'], thumbnail=kwargs['thumbnail'], creation_date=datetime.datetime.now())
+            event = Events(creator=self.id, name=kwargs['eventName'], start_date=kwargs['start_date'], end_date=kwargs['end_date'], thumbnail=kwargs['thumbnail'], creation_date=datetime.datetime.now())
         else:
-            event = Events(user_id=self.id, name=kwargs['eventName'], start_date=kwargs['start_date'], end_date=kwargs['end_date'], creation_date=datetime.datetime.now())
+            event = Events(creator=self.id, name=kwargs['eventName'], start_date=kwargs['start_date'], end_date=kwargs['end_date'], creation_date=datetime.datetime.now())
 
         splitTitle = kwargs['eventName'].split(' ')
         for word in splitTitle:

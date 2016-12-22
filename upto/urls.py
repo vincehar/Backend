@@ -4,7 +4,7 @@ from upto.forms import UsersRegistrationForm
 
 from . import views
 
-app_name = 'upto'
+#app_name = 'upto'
 urlpatterns = [
     url(r'^$', views.login, name='index'),
     url(r'^register/', include('regme.urls')),
@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^account/$', views.account, name='account'),
     url(r'^myevents/$', views.myevents, name='myevents'),
     url(r'^wishes/$', views.allwishesAndEvent, name='wishes'),
-    url(r'^weeshesevents/$', views.weeshesevents, name='weeshesevents'),
+    ##url(r'^weeshesevents/$', views.weeshesevents, name='weeshesevents'),
     url(r'^getautocompletetags/$', views.getAutoCompleteTags, name='getautocompletetags'),
     url(r'^getweeshbyid/$', views.getWeeshById, name='getweeshbyid'),
     url(r'^popupevent/$', views.popUpEvent, name='popupevent'),

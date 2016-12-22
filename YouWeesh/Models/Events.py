@@ -5,7 +5,7 @@ import base64
 
 
 class Events(Document):
-    user_id = ReferenceField('Users')
+    creator = ReferenceField('Users')
     interested = ListField(ReferenceField('Users'))
     name = StringField(required=True)
     thumbnail = ImageField()

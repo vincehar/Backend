@@ -12,20 +12,23 @@ collection = connection[databaseName]
 users = collection['users']
 user = collection['user']
 events = collection['events_Owned']
-
+copains = collection['UsersRelationships']
 
 print "-----------------------------------"
 print "Create Relationships - add friends"
 print "-----------------------------------"
 
+copains = collection['UsersRelationships']
 # - 1 Get ID de Marc
 marc = Users.objects.get(user__username='marc')
 # - 2 Get ID de Vincent
 vincent = Users.objects.get(user__username='vincent')
 
+alex = Users.objects.get(user__username='alex')
+
 
 UsersRelationships.objects.get_or_create(from_user=marc.id, to_user=vincent.id, accepted=True)
-
+UsersRelationships.objects.get_or_create(from_user=marc.id, to_user=alex.id, accepted=True)
 
 print "-----------------------------------"
 print "Create User                        "

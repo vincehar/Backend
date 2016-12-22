@@ -1,5 +1,11 @@
-#from upto.rabbitmq import rabbitmq
-from upto.models import User, Users, Wishes, UsersRelationships, Events, Preferences, Tags, Coordinates
+from YouWeesh.Models.Users import Users, User
+from YouWeesh.Models.Events import Events
+from YouWeesh.Models.Preferences import Preferences
+from YouWeesh.Models.Tags import Tags
+from YouWeesh.Models.Coordinates import Coordinates
+from YouWeesh.Models.Wishes import Wishes
+from YouWeesh.Models.Level import Level
+
 from pymongo import Connection
 #from django.contrib import auth
 import datetime
@@ -10,13 +16,21 @@ connection = Connection(host='127.0.0.1')
 collection = connection[databaseName]
 users = collection['users']
 user = collection['user']
-events = collection['events_Owned']
+events = collection['events']
+wishes = collection['wishes']
+level = collection['level']
+tags = collection['tags']
+
 
 print "------------------------------------------"
 print "         clearing Users Collection"
 print "------------------------------------------"
 user.remove()
 users.remove()
+wishes.remove()
+level.remove()
+tags.remove()
+events.remove()
 
 
 for use in ['alex', 'vincent', 'marc']:
@@ -30,11 +44,18 @@ for use in ['alex', 'vincent', 'marc']:
 
 #Users.objects
 
+lvl = Level()
+coo = Coordinates()
 
+lvl.idLevel = 1
+lvl.description = 'Beginner'
+lvl.save()
 
-marc=Users.objects.get_or_create(user=User.objects.get(username='marc'), preferences=Preferences(), current_coordinates=Coordinates())
-vincent=Users.objects.get_or_create(user=User.objects.get(username='vincent'), preferences=Preferences(), current_coordinates=Coordinates())
-alex=Users.objects.get_or_create(user=User.objects.get(username='alex'), preferences=Preferences(), current_coordinates=Coordinates())
+print coo.lat
+
+marc=Users.objects.get_or_create(user=User.objects.get(username='marc'), preferences=Preferences(), current_coordinates=coo)
+vincent=Users.objects.get_or_create(user=User.objects.get(username='vincent'), preferences=Preferences(), current_coordinates=coo)
+alex=Users.objects.get_or_create(user=User.objects.get(username='alex'), preferences=Preferences(), current_coordinates=coo)
 
 
 
@@ -69,41 +90,36 @@ vincent.save()
 #Wishes part
 #----------------
 
-#Create Tags
-t1=Tags.objects.get_or_create(title='#Cinema')
-t2=Tags.objects.get_or_create(title='#Running')
-t3=Tags.objects.get_or_create(title='#Foot')
-t4=Tags.objects.get_or_create(title='#Museum')
-t5=Tags.objects.get_or_create(title='#Dancing')
-t6=Tags.objects.get_or_create(title='#Cooking')
-t7=Tags.objects.get_or_create(title='#Chess')
-t8=Tags.objects.get_or_create(title='#Cycling')
+marc.create_wish('Match de #Basket dans le coin ?', lvl)
+marc.create_wish('A fond chaud pour un sparing de #Boxe', lvl)
+marc.create_event(eventName='#Trail des Roussets !',start_date=datetime.datetime.today(), end_date=datetime.datetime.today())
 
-#t1.save()
-#t2.save()
-#t3.save()
-#t4.save()
-#t5.save()
-#t6.save()
-#t7.save()
-#t8.save()
+ev = Events.objects.get(name='#Trail des Roussets !')
+f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/trail.jpg", "rb")
+ev.thumbnail.replace(f)
+ev.save()
 
-marc.create_wish('cine')
-marc.create_wish('Je veux voir les etoiles !!!')
-marc.create_event(eventName='#Concert de Johnny !!!',start_date=datetime.datetime.today(), end_date=datetime.datetime.today())
-marc.create_wish('Je vais #coder en #python ce soir')
+marc.create_wish('Du #velo ce week-end qui est chaud ?', lvl)
 marc.save()
 
-vincent.create_wish('#Cycling')
-vincent.create_wish('Je veux me reposer ce soir ')
+vincent.create_wish('#Cycling', lvl)
+vincent.create_wish('Un #futsal organise cette semaine ?', lvl)
 vincent.create_event(eventName='Sortie #Ski a la Clusaz', start_date=datetime.datetime.today(), end_date=datetime.datetime.today())
-vincent.create_wish('Je suis chaud pour un #Foot')
+ev = Events.objects.get(name='Sortie #Ski a la Clusaz')
+f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/ski.jpg", "rb")
+ev.thumbnail.replace(f)
+ev.save()
+vincent.create_wish('Je suis chaud pour un #trail', lvl)
 vincent.save()
 
-alex.create_wish('alapeche')
-alex.create_wish('Qui pour une raclette')
-alex.create_event(eventName='Visite du #Museum dimanche', start_date=datetime.datetime.today(), end_date=datetime.datetime.today())
-alex.create_wish('Je vais coder en python ce soir')
+alex.create_wish('Je propose un #tennis a un 30-4 ou niveau equivalent', lvl)
+alex.create_wish('Quelqu un connait une salle de #muscu sympa ?', lvl)
+alex.create_event(eventName='#Futsal du dimanche', start_date=datetime.datetime.today(), end_date=datetime.datetime.today())
+ev = Events.objects.get(name='#Futsal du dimanche')
+f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/futsal.jpg", "rb")
+ev.thumbnail.replace(f)
+ev.save()
+alex.create_wish('Depart de Geneve pour du #ski, quelqu un', lvl)
 alex.save()
 
 #----------------
