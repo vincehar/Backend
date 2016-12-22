@@ -3,6 +3,7 @@ from upto.regbackend import UsersBackend
 from upto.forms import UsersRegistrationForm
 import YouWeesh.Controllers.WishController as WishController
 import YouWeesh.Controllers.UsersController as UsersController
+import YouWeesh.Controllers.LoginController as LoginController
 import YouWeesh.Controllers.EventController as EventController
 
 from . import views
@@ -10,7 +11,8 @@ from . import views
 app_name = 'YouWeesh'
 urlpatterns = [
     url(r'^$',views.login, name='index'),
-    url(r'^login/', UsersController.login, name='login'),
+    url(r'^login/$', LoginController.loginUser, name='login'),
+    url(r'^getToken/$', LoginController.getToken, name='getToken'),
     url(r'^register/', include('regme.urls')),
     url(r'^account/register/', UsersBackend.as_view(form_class=UsersRegistrationForm), name='register'),
     url(r'^account/$', UsersController.account, name='account'),
