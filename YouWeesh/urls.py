@@ -41,4 +41,7 @@ urlpatterns = [
     url(r'^savecoordinates/', views.saveCurrentPosition, name='savecoordinates'),
     url(r'^getfriends/', UsersController.getFriends, name='getfriends'),
     #url(r'^login/', views.login, name='login'),
+
+    url(r'^allweeshes/$', UsersController.allweeshes, name='allweeshes'),
+    url(r'^allevents/$', UsersController.allEvents, name='allevents'),
 ]

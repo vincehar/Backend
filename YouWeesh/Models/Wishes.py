@@ -5,7 +5,7 @@ from bson import ObjectId
 
 
 class Wishes(Document):
-    user_id = ReferenceField('Users')
+    creator = ReferenceField('Users')
     title = StringField(required=True)
     creation_date = DateTimeField(default=datetime.datetime.now())
     weeshback = ListField(ReferenceField('Users'))

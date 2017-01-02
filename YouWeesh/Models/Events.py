@@ -7,7 +7,7 @@ import base64
 class Events(Document):
     creator = ReferenceField('Users')
     interested = ListField(ReferenceField('Users'))
-    name = StringField(required=True)
+    title = StringField(required=True)
     thumbnail = ImageField()
     start_date = DateTimeField(required=True)
     end_date = DateTimeField(required=True)

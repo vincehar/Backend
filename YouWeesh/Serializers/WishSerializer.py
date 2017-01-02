@@ -5,7 +5,7 @@ from rest_framework_mongoengine.serializers import DocumentSerializer
 
 
 class WishSerializer(DocumentSerializer):
-   user_id = UsersSerializer()
+   creator = UsersSerializer()
    tags = TagSerializer(many=True)
    class Meta:
         model = Wishes

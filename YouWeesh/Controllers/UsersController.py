@@ -55,7 +55,7 @@ def getNbrFriends(request):
     try:
         connected_user = Users.objects.get(user__username='marc')
         # TODO : Add criteria for relationship
-        nbr = len(UsersRelationships.objects())
+        nbr = len(UsersRelationships.objects(from_user=connected_user.id))
     except connected_user.DoesNotExist:
         raise Http404('Not logged')
     else:
@@ -108,7 +108,6 @@ def myNextEvents(request):
 @permission_classes((AllowAny,))
 @renderer_classes((JSONRenderer, TemplateHTMLRenderer))
 def login(request):
-    from mongoengine.queryset import DoesNotExist
     """
     si on recupere un POST, on essaie de connecter le user
     """
@@ -141,6 +140,7 @@ def login(request):
 def createWish(request):
 
     try:
+        connected_user = Users.objects.get(user__username='marc')
         _wish_title = request.POST['weesh']
         _idLevel = request.POST['idLevel']
 
@@ -157,6 +157,52 @@ def createWish(request):
 @api_view(('GET',))
 @permission_classes((AllowAny,))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def allweeshes(request):
+    '''
+
+    :return:
+    '''
+    connected_user = getConnectedUser(request)
+    if connected_user.preferences.display_weeshes:
+        AllWishes = list()
+        if connected_user.preferences.selected_network == "PUBLIC":
+            AllWishes = Wishes.objects
+        if connected_user.preferences.selected_network == "friends":
+            for relationship in getFriends(connected_user):
+                for wish in Wishes.objects(creator=relationship.from_user.id):
+                    AllWishes.append(wish)
+
+        lstWishes = WishSerializer(instance=AllWishes, many=True)
+        return Response(lstWishes.data)
+    else:
+        return None
+
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def allEvents(request):
+    '''
+
+    :return:
+    '''
+    connected_user = getConnectedUser(request)
+    if connected_user.preferences.display_weeshes:
+        AllEvents = list()
+        if connected_user.preferences.selected_network == "PUBLIC":
+            AllEvents = Events.objects
+        if connected_user.preferences.selected_network == "friends":
+            for relationship in getFriends(connected_user):
+                for wish in Events.objects(creator=relationship.from_user.id):
+                    AllEvents.append(wish)
+
+        lstEvents = EventSerializer(instance=AllEvents, many=True)
+        return Response(lstEvents.data)
+    else:
+        return None
+
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def weeshesevents(request):
     """
     Get Weeshes And Events sorted by create_date
@@ -164,7 +210,6 @@ def weeshesevents(request):
     :return:
     """
     connected_user = getConnectedUser(request)
-    #geoloc = geolocalisation()
 
     ### 1 - manage private and public network ###
     AllEvents = list()
@@ -174,9 +219,9 @@ def weeshesevents(request):
         AllWishes = Wishes.objects
     if connected_user.preferences.selected_network == "friends":
         for relationship in getFriends(connected_user):
-            for event in Events.objects(user_id=relationship.from_user.id):
+            for event in Events.objects(creator=relationship.from_user.id):
                 AllEvents.append(event)
-            for wish in Wishes.objects(user_id=relationship.from_user.id):
+            for wish in Wishes.objects(creator=relationship.from_user.id):
                 AllWishes.append(wish)
     ### 1                                   #######
     tmplst = list()
@@ -191,8 +236,8 @@ def weeshesevents(request):
     context = sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True)
     lstEvents = EventSerializer(instance=AllEvents, many=True)
     lstWishes = WishSerializer(instance=AllWishes, many=True)
-
-    return Response(lstEvents.data + lstWishes.data)
+    
+    return Response(lstWishes.data)
 
 
 

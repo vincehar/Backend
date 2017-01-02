@@ -87,7 +87,7 @@ class Users(Document):
         :return: self
         """
 
-        wish = Wishes(user_id=self.id, title=_title, creation_date=datetime.datetime.now(), level=_level)
+        wish = Wishes(creator=self.id, title=_title, creation_date=datetime.datetime.now(), level=_level)
 
         splitTitle = _title.split(' ')
         for word in splitTitle:
@@ -101,9 +101,9 @@ class Users(Document):
     def create_event(self, **kwargs):
 
         if 'thumbnail' in kwargs:
-            event = Events(creator=self.id, name=kwargs['eventName'], start_date=kwargs['start_date'], end_date=kwargs['end_date'], thumbnail=kwargs['thumbnail'], creation_date=datetime.datetime.now())
+            event = Events(creator=self.id, title=kwargs['eventName'], start_date=kwargs['start_date'], end_date=kwargs['end_date'], thumbnail=kwargs['thumbnail'], creation_date=datetime.datetime.now())
         else:
-            event = Events(creator=self.id, name=kwargs['eventName'], start_date=kwargs['start_date'], end_date=kwargs['end_date'], creation_date=datetime.datetime.now())
+            event = Events(creator=self.id, title=kwargs['eventName'], start_date=kwargs['start_date'], end_date=kwargs['end_date'], creation_date=datetime.datetime.now())
 
         splitTitle = kwargs['eventName'].split(' ')
         for word in splitTitle:
