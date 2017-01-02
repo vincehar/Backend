@@ -18,7 +18,7 @@ from upto.forms import UsersLoginForm, FilterForm
 from django.views.decorators.csrf import ensure_csrf_cookie
 from mongoengine.queryset import DoesNotExist
 from upto.geolocalisation import geolocalisation
-from YouWeesh.Tools.tools import Tools
+from YouWeesh.Tools.app import App
 
 def index(request):
     return render(request, 'upto/index.html')
@@ -110,7 +110,7 @@ def account(request):
     :return:
     """
     try:
-        connected_user = Tools.getCurrentUser(request)
+        connected_user = App.getCurrentUser(request)
         friends_requests = UsersRelationships.objects(accepted=False, to_user=connected_user.id) #UsersRelationships.objects.get(to_user=connected_user.id)
         my_friends = UsersRelationships.objects(accepted=True, to_user=connected_user.id)
 
@@ -127,7 +127,7 @@ def account(request):
 def myevents(request):
     try:
         events_matched = list()
-        connected_user = Tools.getCurrentUser(request)
+        connected_user = App.getCurrentUser(request)
         # - 1 get Events matching with Myweesh
         for weesh in Wishes.objects(user_id=connected_user.id, is_active=True):
             for event in Events.objects(is_active=True, tags__in=weesh.tags):
@@ -153,7 +153,7 @@ def myevents(request):
 @renderer_classes((JSONRenderer, TemplateHTMLRenderer))
 def userdetails(request, username):
     try:
-        connected_user = Tools.getCurrentUser(request)
+        connected_user = App.getCurrentUser(request)
         user = Users.objects.get(user__username=username)
         context = {
                 'user': user,
@@ -184,7 +184,7 @@ def uploadPictureUser(request):
     :param request:
     """
     try:
-        connected_user = Tools.getCurrentUser(request)
+        connected_user = App.getCurrentUser(request)
         picture = request.FILES['picture']
         connected_user.picture.replace(picture)
         connected_user.save()
@@ -341,7 +341,7 @@ def getEventInfo(request, _event_id):
     event = Events.objects.get(id=_event_id)
     context = {
         'currentEvent': event,
-        'current_user': Tools.getCurrentUser(request),
+        'current_user': App.getCurrentUser(request),
     }
 
     return render(request, 'upto/eventDetails.html', context)
@@ -355,13 +355,13 @@ def createWish(request):
 
     # 2 - get wish title from form
     _wish_title = request.POST['weeshtitle']
-    Tools.getCurrentUser(request).create_wish(_wish_title)
+    App.getCurrentUser(request).create_wish(_wish_title)
     return redirect('/upto/wishes/')
 
 
 def addfriend(request, username):
     try:
-        connected_user = Tools.getCurrentUser(request)
+        connected_user = App.getCurrentUser(request)
         friend_user = getUserWithUsername(username)
         connected_user.add_friend(friend_user)
     except connected_user.DoesNotExist:
@@ -371,7 +371,7 @@ def addfriend(request, username):
 
 def acceptfriend(request, friend_id):
     try:
-        connected_user = Tools.getCurrentUser(request)
+        connected_user = App.getCurrentUser(request)
         relation = UsersRelationships.objects.get(from_user=friend_id, to_user=connected_user.id)
         relation_symetrical = UsersRelationships(from_user=connected_user.id, to_user=friend_id, accepted=True)
         relation.accepted = True
@@ -384,7 +384,7 @@ def acceptfriend(request, friend_id):
 
 def unfriend(request, _user_id):
     try:
-        connected_user = Tools.getCurrentUser(request)
+        connected_user = App.getCurrentUser(request)
         relation = UsersRelationships.objects.get(from_user=connected_user.id, to_user=_user_id)
         relation_symetrical = UsersRelationships.objects.get(to_user=connected_user.id, from_user=_user_id)
         relation_symetrical.delete()
@@ -425,9 +425,9 @@ def createEvent(request):
 
         if request.FILES:
             thumbnail = request.FILES['thumbnail']
-            Tools.getCurrentUser(request).create_event(eventName=eventName, start_date=start_date, end_date=end_date, thumbnail=thumbnail)
+            App.getCurrentUser(request).create_event(eventName=eventName, start_date=start_date, end_date=end_date, thumbnail=thumbnail)
         else:
-            Tools.getCurrentUser(request).create_event(eventName=eventName, start_date=start_date, end_date=end_date)
+            App.getCurrentUser(request).create_event(eventName=eventName, start_date=start_date, end_date=end_date)
 
     except Users.DoesNotExist:
         raise Http404('Event id does not exist')
@@ -456,7 +456,7 @@ def filter_list(request):
     :return:
     """
     # 1 - record new conf into user preferences
-    connected_user = Tools.getCurrentUser(request)
+    connected_user = App.getCurrentUser(request)
     if request.method == "POST":
         try:
             if "display_events" in request.POST:
@@ -475,7 +475,7 @@ def filter_list(request):
             return redirect('/upto/wishes/')
 
 def weeshback(request, _wish_id):
-    connected_user = Tools.getCurrentUser(request)
+    connected_user = App.getCurrentUser(request)
     weesh = Wishes.objects.get(id=_wish_id)
     weesh.add_interested(connected_user)
 

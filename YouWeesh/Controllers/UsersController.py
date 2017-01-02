@@ -21,7 +21,7 @@ from YouWeesh.Models.Preferences import Preferences
 from mongoengine.django.auth import User
 from YouWeesh.Models.UsersRelationships import UsersRelationships
 from mongoengine.django.auth import User
-from YouWeesh.Tools.tools import Tools
+from YouWeesh.Tools.app import App
 #from rest_framework.authtoken.models import Token
 from django.views.decorators.csrf import ensure_csrf_cookie
 from YouWeesh.Serializers.UserSerializer import BaseUserSerializer
@@ -37,7 +37,7 @@ def account(request):
     :return:
     """
     try:
-        connected_user = Tools.getCurrentUser(request)
+        connected_user = App.getCurrentUser(request)
         #friends_requests = UsersRelationships.objects(accepted=False, to_user=connected_user.id) #UsersRelationships.objects.get(to_user=connected_user.id)
         #my_friends = UsersRelationships.objects(accepted=True, to_user=connected_user.id)
         usersSerializer = UsersSerializer(instance=connected_user)
@@ -138,12 +138,11 @@ def login(request):
 def createWish(request):
 
     try:
-        connected_user = Users.objects.get(user__username='marc')
         _wish_title = request.POST['weesh']
         _idLevel = request.POST['idLevel']
 
         selectedLevel = Level.objects.get(idLevel=_idLevel)
-        connected_user = Tools.getCurrentUser(request)
+        connected_user = App.getCurrentUser(request)
 
         connected_user.create_wish(_wish_title, selectedLevel)
     except connected_user.DoesNotExist:
@@ -160,7 +159,7 @@ def allweeshes(request):
 
     :return:
     '''
-    connected_user = Tools.getCurrentUser(request)
+    connected_user = App.getCurrentUser(request)
     if connected_user.preferences.display_weeshes:
         AllWishes = list()
         if connected_user.preferences.selected_network == "PUBLIC":
@@ -183,7 +182,7 @@ def allEvents(request):
 
     :return:
     '''
-    connected_user = Tools.getCurrentUser(request)
+    connected_user = App.getCurrentUser(request)
     if connected_user.preferences.display_weeshes:
         AllEvents = list()
         if connected_user.preferences.selected_network == "PUBLIC":
@@ -207,7 +206,7 @@ def weeshesevents(request):
     :param request:
     :return:
     """
-    connected_user = Tools.getCurrentUser(request)
+    connected_user = App.getCurrentUser(request)
 
     ### 1 - manage private and public network ###
     AllEvents = list()

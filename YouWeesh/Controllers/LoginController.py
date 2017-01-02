@@ -7,7 +7,7 @@ from django.http import HttpResponseForbidden
 from YouWeesh.Serializers.UsersSerializer import UsersSerializer
 from YouWeesh.Models.Users import Users
 from YouWeesh.Models.Token import Token
-from YouWeesh.Tools.tools import Tools
+from YouWeesh.Tools.app import App
 from mongoengine.django.auth import User
 
 
@@ -34,7 +34,7 @@ def loginUser(request):
     else:
         return HttpResponseForbidden
     '''''
-    user = Tools.getCurrentUser(request)
+    user = App.getCurrentUser(request)
     if user is not None:
         usersSerializer = UsersSerializer(instance=user)
         return Response(usersSerializer.data)

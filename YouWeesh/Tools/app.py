@@ -2,7 +2,7 @@ from YouWeesh.Models.Users import Users
 from YouWeesh.Models.Token import Token
 from mongoengine.django.auth import User
 
-class Tools(object):
+class App(object):
 
     @staticmethod
     def getCurrentUser(request):

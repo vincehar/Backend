@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="852d6613-cb4b-4e27-b693-97210e43cefd" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/YouWeesh/Tools/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/YouWeesh/Tools/tools.py" />
+    <list default="true" id="852d6613-cb4b-4e27-b693-97210e43cefd" name="Default" comment="+ Modify weeshandevents&#10;+ Modify mock.py : add background picture for Marc">
+      <change type="MOVED" beforePath="$PROJECT_DIR$/YouWeesh/Tools/tools.py" afterPath="$PROJECT_DIR$/YouWeesh/Tools/app.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/YouWeesh/Controllers/LoginController.py" afterPath="$PROJECT_DIR$/YouWeesh/Controllers/LoginController.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/YouWeesh/Controllers/UsersController.py" afterPath="$PROJECT_DIR$/YouWeesh/Controllers/UsersController.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/YouWeesh/Mocks/mock.py" afterPath="$PROJECT_DIR$/YouWeesh/Mocks/mock.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/YouWeesh/views.py" afterPath="$PROJECT_DIR$/YouWeesh/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/upto/views.py" afterPath="$PROJECT_DIR$/upto/views.py" />
     </list>
@@ -30,24 +28,33 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="UsersController.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UsersController.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/YouWeesh/Controllers/UsersController.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5094664">
-              <caret line="171" column="0" selection-start-line="171" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="144" column="36" selection-start-line="144" selection-start-column="36" selection-end-line="144" selection-end-column="36" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
-                <marker date="1483360245184" expanded="true" signature="35:40" placeholder="import ..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WishController.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/YouWeesh/Controllers/WishController.py">
+      <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/YouWeesh/Tools/app.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.56">
+              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/YouWeesh/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <caret line="23" column="30" selection-start-line="23" selection-start-column="30" selection-end-line="23" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -57,16 +64,14 @@
         <entry file="file://$PROJECT_DIR$/YouWeesh/Controllers/LoginController.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="46" column="55" selection-start-line="46" selection-start-column="55" selection-end-line="46" selection-end-column="55" />
-              <folding>
-                <element signature="e#0#51#0" expanded="true" />
-              </folding>
+              <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/YouWeesh/models.py">
+      <file leaf-file-name="Categories.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Categories.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -75,36 +80,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="apps.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/YouWeesh/apps.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tests.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/YouWeesh/tests.py">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/YouWeesh/Tools/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tools.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/YouWeesh/Tools/tools.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -113,20 +94,10 @@
         <entry file="file://$PROJECT_DIR$/upto/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="336" column="0" selection-start-line="336" selection-start-column="0" selection-end-line="336" selection-end-column="0" />
+              <caret line="31" column="7" selection-start-line="31" selection-start-column="7" selection-end-line="31" selection-end-column="7" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/YouWeesh/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="23" column="38" selection-start-line="23" selection-start-column="38" selection-end-line="23" selection-end-column="38" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -135,11 +106,23 @@
         <entry file="file://$PROJECT_DIR$/YouWeesh/Mocks/mock.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="132" column="17" selection-start-line="132" selection-start-column="17" selection-end-line="132" selection-end-column="17" />
-              <folding>
-                <element signature="e#0#45#0" expanded="true" />
-              </folding>
+              <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+              <folding />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="trail.jpg" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/YouWeesh/Mocks/Pictures/trail.jpg">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sportback.jpeg" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/YouWeesh/Mocks/Pictures/sportback.jpeg">
+          <provider selected="true" editor-type-id="images">
+            <state />
           </provider>
         </entry>
       </file>
@@ -159,59 +142,65 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/.ebextensions/django.config" />
         <option value="$PROJECT_DIR$/YouWeesh/Models/Event.py" />
         <option value="$PROJECT_DIR$/YouWeesh/Models/Weesh.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Serializers/WeeshSerializer.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/Coordinates.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/Tags.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/Logs.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/Categories.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/EventStatus.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/Events.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/Messages.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/Album.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/Medias.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/UsersRelationships.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/Preferences.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/Address.py" />
-        <option value="$PROJECT_DIR$/upto/urls.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Serializers/EventSerializer.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Serializers/WishSerializer.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Serializers/UsersRelationShipsSerializer.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Serializers/TagSerializer.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Controllers/WeeshController.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/Wishes.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Controllers/WishController.py" />
         <option value="$PROJECT_DIR$/YouWeesh/Controllers/EventController.py" />
-        <option value="$PROJECT_DIR$/.ebextensions/django.config" />
-        <option value="$PROJECT_DIR$/.ebextensions/variables.config" />
+        <option value="$PROJECT_DIR$/YouWeesh/Controllers/WeeshController.py" />
+        <option value="$PROJECT_DIR$/YouWeesh/Serializers/WeeshSerializer.py" />
         <option value="$PROJECT_DIR$/YouWeesh/Serializers/UserSerializer.py" />
-        <option value="$PROJECT_DIR$/NHPartners/urls.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Serializers/CoordinatesSerializer.py" />
+        <option value="$PROJECT_DIR$/YouWeesh/Controllers/WishController.py" />
+        <option value="$PROJECT_DIR$/YouWeesh/Models/Level.py" />
+        <option value="$PROJECT_DIR$/upto/models.py" />
+        <option value="$PROJECT_DIR$/YouWeesh/Models/Preferences.py" />
         <option value="$PROJECT_DIR$/YouWeesh/Serializers/PreferencesSerializer.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/Users.py" />
-        <option value="$PROJECT_DIR$/upto/mockAddFriend.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Serializers/UsersSerializer.py" />
-        <option value="/usr/local/lib/python2.7/dist-packages/django/contrib/auth/__init__.py" />
         <option value="$PROJECT_DIR$/NHPartners/settings.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/MongoToken.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/test.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/Token.py" />
+        <option value="$PROJECT_DIR$/YouWeesh/Mocks/mockAddEvent.py" />
+        <option value="$PROJECT_DIR$/YouWeesh/Serializers/AddressSerializer.py" />
+        <option value="$PROJECT_DIR$/YouWeesh/Serializers/UsersSerializer.py" />
+        <option value="$PROJECT_DIR$/upto/mockAddFriend.py" />
+        <option value="$PROJECT_DIR$/YouWeesh/Mocks/mockAddFriend.py" />
+        <option value="$PROJECT_DIR$/upto/urls.py" />
+        <option value="$PROJECT_DIR$/YouWeesh/Serializers/GenericSerializer.py" />
+        <option value="$PROJECT_DIR$/YouWeesh/Models/Wishes.py" />
+        <option value="$PROJECT_DIR$/YouWeesh/Serializers/WishSerializer.py" />
         <option value="$PROJECT_DIR$/YouWeesh/urls.py" />
+        <option value="$PROJECT_DIR$/YouWeesh/Models/Events.py" />
+        <option value="$PROJECT_DIR$/YouWeesh/Serializers/EventSerializer.py" />
+        <option value="$PROJECT_DIR$/YouWeesh/Models/Users.py" />
         <option value="$PROJECT_DIR$/YouWeesh/Mocks/mock.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Controllers/UsersController.py" />
-        <option value="$PROJECT_DIR$/upto/views.py" />
+        <option value="$PROJECT_DIR$/YouWeesh/Tools/app.py" />
         <option value="$PROJECT_DIR$/YouWeesh/Controllers/LoginController.py" />
         <option value="$PROJECT_DIR$/YouWeesh/views.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Tools/tools.py" />
+        <option value="$PROJECT_DIR$/upto/views.py" />
+        <option value="$PROJECT_DIR$/YouWeesh/Controllers/UsersController.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="65" />
-    <option name="y" value="24" />
+    <option name="y" value="-4" />
     <option name="width" value="1615" />
-    <option name="height" value="1026" />
+    <option name="height" value="1054" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>Python</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>PyPep8Inspection</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -238,7 +227,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -318,24 +306,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Mocks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NHPartners" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NHPartners" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="YouWeesh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="Controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -354,64 +324,19 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NHPartners" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NHPartners" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value=".elasticbeanstalk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NHPartners" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NHPartners" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value=".ebextensions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$/manage.py" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="145" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="164" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="171" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1069" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="145" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="164" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="171" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1069" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/YouWeesh/Serializers" />
-      <recent name="$PROJECT_DIR$/YouWeesh/Models" />
-      <recent name="$PROJECT_DIR$/YouWeesh/Controllers" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/YouWeesh/Serializers" />
+      <recent name="$PROJECT_DIR$/YouWeesh/Mocks/Pictures" />
+      <recent name="$PROJECT_DIR$/YouWeesh/Mocks" />
       <recent name="$PROJECT_DIR$/YouWeesh" />
     </key>
   </component>
@@ -430,14 +355,11 @@
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="UPDATED" />
           <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/workspace.xml</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/YouWeesh/Controllers/LoginController.py</PATH>
           <PATH vcs="Git" revision="">$PROJECT_DIR$/YouWeesh/Controllers/UsersController.py</PATH>
           <PATH vcs="Git" revision="">$PROJECT_DIR$/YouWeesh/Mocks/mock.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/YouWeesh/Models/Events.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/YouWeesh/Models/Users.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/YouWeesh/Models/Wishes.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/YouWeesh/Serializers/EventSerializer.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/YouWeesh/Serializers/WishSerializer.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/YouWeesh/urls.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/YouWeesh/views.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/upto/views.py</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Created" />
@@ -445,6 +367,8 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="CREATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/YouWeesh/Tools/__init__.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/YouWeesh/Tools/tools.py</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Deleted" />
@@ -664,7 +588,7 @@
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
-        <env name="DATABASE_URL" value="127.0.0.1" />
+        <env name="DATABASE_URL" value="0.0.0.0" />
         <env name="DATABASE_NAME" value="upto" />
       </envs>
       <option name="SDK_HOME" value="/usr/bin/python2.7" />
@@ -693,97 +617,79 @@
       <option name="number" value="Default" />
       <updated>1479122326017</updated>
     </task>
-    <task id="LOCAL-00001" summary="-Restructuration du projet">
-      <created>1480816493151</created>
+    <task id="LOCAL-00001" summary="+ Connection with Xamarin">
+      <created>1480814011174</created>
       <option name="number" value="00001" />
       <option name="project" value="LOCAL" />
-      <updated>1480816493151</updated>
+      <updated>1480814011174</updated>
     </task>
-    <task id="LOCAL-00002" summary="-Restructuration du projet">
-      <created>1480937267925</created>
+    <task id="LOCAL-00002" summary="+ Connection with Xamarin">
+      <created>1480926223868</created>
       <option name="number" value="00002" />
       <option name="project" value="LOCAL" />
-      <updated>1480937267925</updated>
+      <updated>1480926223868</updated>
     </task>
-    <task id="LOCAL-00003" summary="-Restructuration du projet">
-      <created>1480942837244</created>
+    <task id="LOCAL-00003" summary="+ Add UsersController.py&#10;+ Add myNextEvents in urls">
+      <created>1480960955813</created>
       <option name="number" value="00003" />
       <option name="project" value="LOCAL" />
-      <updated>1480942837244</updated>
+      <updated>1480960955813</updated>
     </task>
-    <task id="LOCAL-00004" summary="-Restructuration du projet">
-      <created>1480943380247</created>
+    <task id="LOCAL-00004" summary="+ Add UsersController.py&#10;+ Add myNextEvents in urls">
+      <created>1481540930015</created>
       <option name="number" value="00004" />
       <option name="project" value="LOCAL" />
-      <updated>1480943380247</updated>
+      <updated>1481540930015</updated>
     </task>
-    <task id="LOCAL-00005" summary="-Restructuration du projet">
-      <created>1480949101177</created>
+    <task id="LOCAL-00005" summary="+ Add UsersController.py&#10;+ Add myNextEvents in urls">
+      <created>1481541124928</created>
       <option name="number" value="00005" />
       <option name="project" value="LOCAL" />
-      <updated>1480949101177</updated>
+      <updated>1481541124928</updated>
     </task>
-    <task id="LOCAL-00006" summary="-Restructuration du projet">
-      <created>1480949837902</created>
+    <task id="LOCAL-00006" summary="+ Add mockAddFriend.py">
+      <created>1481550158231</created>
       <option name="number" value="00006" />
       <option name="project" value="LOCAL" />
-      <updated>1480949837902</updated>
+      <updated>1481550158231</updated>
     </task>
-    <task id="LOCAL-00007" summary="-Restructuration du projet">
-      <created>1480950127923</created>
+    <task id="LOCAL-00007" summary="+ Add mockAddFriend.py">
+      <created>1481562815102</created>
       <option name="number" value="00007" />
       <option name="project" value="LOCAL" />
-      <updated>1480950127923</updated>
+      <updated>1481562815102</updated>
     </task>
-    <task id="LOCAL-00008" summary="-Restructuration du projet">
-      <created>1480950136260</created>
+    <task id="LOCAL-00008" summary="+ Modify MockAddFriend : Add background profile picture&#10;+ Modify Preferences Model">
+      <created>1481822881991</created>
       <option name="number" value="00008" />
       <option name="project" value="LOCAL" />
-      <updated>1480950136260</updated>
+      <updated>1481822881991</updated>
     </task>
-    <task id="LOCAL-00009" summary="-Restructuration du projet">
-      <created>1480950288197</created>
+    <task id="LOCAL-00009" summary="+ Add Log in file for project&#10;+ Add createWeesh&#10;+ Create  EventSerializer&#10;+ Create PreferencesSerializer">
+      <created>1482136131803</created>
       <option name="number" value="00009" />
       <option name="project" value="LOCAL" />
-      <updated>1480950288197</updated>
+      <updated>1482136131803</updated>
     </task>
-    <task id="LOCAL-00010" summary="-Restructuration du projet">
-      <created>1480950538945</created>
+    <task id="LOCAL-00010" summary="+Add correct Mock with images / Events / Friends and correct profiles&#10;+ Add AddressSerializer&#10;+ Complete Event and Users serializer">
+      <created>1482265243745</created>
       <option name="number" value="00010" />
       <option name="project" value="LOCAL" />
-      <updated>1480950538945</updated>
+      <updated>1482265243745</updated>
     </task>
-    <task id="LOCAL-00011" summary="-Restructuration du projet">
-      <created>1480950996760</created>
+    <task id="LOCAL-00011" summary="+ Modify weeshandevents">
+      <created>1482355608480</created>
       <option name="number" value="00011" />
       <option name="project" value="LOCAL" />
-      <updated>1480950996760</updated>
+      <updated>1482355608480</updated>
     </task>
-    <task id="LOCAL-00012" summary="-Login user">
-      <created>1481056951629</created>
+    <task id="LOCAL-00012" summary="+ Modify weeshandevents&#10;+ Modify mock.py : add background picture for Marc">
+      <created>1483356089601</created>
       <option name="number" value="00012" />
       <option name="project" value="LOCAL" />
-      <updated>1481056951629</updated>
+      <updated>1483356089601</updated>
     </task>
-    <task id="LOCAL-00013" summary="-Login user">
-      <created>1481229219853</created>
-      <option name="number" value="00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1481229219853</updated>
-    </task>
-    <task id="LOCAL-00014" summary="-Login user with picture">
-      <created>1481557508745</created>
-      <option name="number" value="00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1481557508745</updated>
-    </task>
-    <task id="LOCAL-00015" summary="-Login + token authentification">
-      <created>1482437175849</created>
-      <option name="number" value="00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1482437175849</updated>
-    </task>
-    <option name="localTasksCounter" value="16" />
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -801,24 +707,24 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="1615" height="1026" extended-state="6" />
+    <frame x="65" y="-4" width="1615" height="1054" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.4962325" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28077888" sideWeight="0.72321427" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2549889" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2192211" sideWeight="0.5582255" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40022174" sideWeight="0.49748743" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28077888" sideWeight="0.2767857" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2383592" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30709535" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2192211" sideWeight="0.4417745" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37583148" sideWeight="0.5025126" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -836,151 +742,92 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="-Restructuration du projet" />
-    <MESSAGE value="-Login user" />
-    <MESSAGE value="-Login user with picture" />
-    <MESSAGE value="-Login + token authentification" />
-    <option name="LAST_COMMIT_MESSAGE" value="-Login + token authentification" />
+    <MESSAGE value="+ Connection with Xamarin" />
+    <MESSAGE value="+ Add UsersController.py&#10;+ Add myNextEvents in urls" />
+    <MESSAGE value="+ Add mockAddFriend.py" />
+    <MESSAGE value="+ Modify MockAddFriend : Add background profile picture&#10;+ Modify Preferences Model" />
+    <MESSAGE value="+ Add Log in file for project&#10;+ Add createWeesh&#10;+ Create  EventSerializer&#10;+ Create PreferencesSerializer" />
+    <MESSAGE value="+Add correct Mock with images / Events / Friends and correct profiles&#10;+ Add AddressSerializer&#10;+ Complete Event and Users serializer" />
+    <MESSAGE value="+ Modify weeshandevents" />
+    <MESSAGE value="+ Modify weeshandevents&#10;+ Modify mock.py : add background picture for Marc" />
+    <option name="LAST_COMMIT_MESSAGE" value="+ Modify weeshandevents&#10;+ Modify mock.py : add background picture for Marc" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="python-line">
-          <url>file:///usr/local/lib/python2.7/dist-packages/django/contrib/auth/__init__.py</url>
-          <line>113</line>
-          <option name="timeStamp" value="116" />
+          <url>file://$PROJECT_DIR$/YouWeesh/Mocks/mock.py</url>
+          <line>7</line>
+          <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
-          <url>file:///usr/local/lib/python2.7/dist-packages/django/contrib/auth/__init__.py</url>
-          <line>114</line>
-          <option name="timeStamp" value="117" />
+          <url>file://$PROJECT_DIR$/YouWeesh/Mocks/mockAddEvent.py</url>
+          <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
-          <url>file:///usr/local/lib/python2.7/dist-packages/django/contrib/auth/__init__.py</url>
-          <line>115</line>
-          <option name="timeStamp" value="118" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file:///usr/local/lib/python2.7/dist-packages/django/contrib/auth/__init__.py</url>
-          <line>116</line>
-          <option name="timeStamp" value="120" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file:///usr/local/lib/python2.7/dist-packages/django/contrib/auth/__init__.py</url>
-          <line>118</line>
-          <option name="timeStamp" value="123" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file:///usr/local/lib/python2.7/dist-packages/django/contrib/auth/__init__.py</url>
-          <line>119</line>
-          <option name="timeStamp" value="124" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file:///usr/local/lib/python2.7/dist-packages/django/contrib/auth/__init__.py</url>
-          <line>109</line>
-          <option name="timeStamp" value="129" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file:///usr/local/lib/python2.7/dist-packages/django/contrib/auth/__init__.py</url>
-          <line>110</line>
-          <option name="timeStamp" value="133" />
+          <url>file://$PROJECT_DIR$/YouWeesh/Controllers/UsersController.py</url>
+          <line>147</line>
+          <option name="timeStamp" value="35" />
         </line-breakpoint>
       </breakpoints>
-      <default-breakpoints>
-        <breakpoint type="python-exception">
-          <properties notifyOnTerminate="true" exception="BaseException">
-            <option name="notifyOnTerminate" value="true" />
-          </properties>
-        </breakpoint>
-      </default-breakpoints>
-      <option name="time" value="161" />
+      <option name="time" value="37" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="SESSION_KEY" />
-        <watch expression="SESSION_KEY" />
-        <watch expression="request.session" />
-        <watch expression="session.user" language="Python" />
-        <watch expression="request.user" language="Python" />
-        <watch expression="self.model" />
-        <watch expression="model.objects()" language="Python" />
-        <watch expression="self.model.object()" language="Python" />
-        <watch expression="MongoToken.objects()" language="Python" />
-        <watch expression="token.get_token" />
-        <watch expression="token.get_token()" />
-        <watch expression="djangoSerializers.serialize(&quot;json&quot;, token.get_token())" />
-        <watch expression="request.META.items()" language="Python" />
-        <watch expression="token" language="Python" />
-        <watch expression="request.META['HTTP_AUTHORIZATION'] " />
-        <watch expression="tokenCode" language="Python" />
-        <watch expression="tokenCode[8:-1]" language="Python" />
-        <watch expression="token" />
-        <watch expression="token.user.id" language="Python" />
-        <watch expression="token.id" language="Python" />
-        <watch expression="user" />
-        <watch expression="user.username" language="Python" />
+        <watch expression="connected_user" language="Python" />
+        <watch expression="_wish_title" language="Python" />
+        <watch expression="selectedLevel.description" language="Python" />
+        <watch expression="request.POST['password']" language="Python" />
       </configuration>
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/YouWeesh/Serializers/TagSerializer.py">
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Serializers/UserSerializer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/YouWeesh/Serializers/EventSerializer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Preferences.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Messages.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="1" column="40" selection-start-line="1" selection-start-column="40" selection-end-line="1" selection-end-column="40" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/YouWeesh/Models/UsersRelationships.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/upto/mockAddFriend.py">
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Serializers/AddressSerializer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="12" selection-start-line="42" selection-start-column="12" selection-end-line="42" selection-end-column="12" />
+          <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/YouWeesh/Serializers/UsersRelationShipsSerializer.py">
+    <entry file="file:///usr/local/lib/python2.7/dist-packages/mongoengine/queryset/manager.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/YouWeesh/Serializers/UsersSerializer.py">
+    <entry file="file:///usr/local/lib/python2.7/dist-packages/mongoengine/queryset/queryset.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="24" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#39#0" expanded="false" />
-          </folding>
+          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YouWeesh/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Coordinates.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -991,60 +838,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/upto/urls.py">
+    <entry file="file:///usr/local/lib/python2.7/dist-packages/rest_framework/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="38" selection-start-line="15" selection-start-column="38" selection-end-line="15" selection-end-column="38" />
+          <caret line="465" column="0" selection-start-line="465" selection-start-column="0" selection-end-line="465" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/rest_framework/authentication.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="123" column="0" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/django/http/request.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="185" column="0" selection-start-line="185" selection-start-column="0" selection-end-line="185" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/django/conf/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_sys_patch.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/django/utils/functional.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="226" column="0" selection-start-line="226" selection-start-column="0" selection-end-line="226" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/django/views/decorators/csrf.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/django/utils/six.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="575" column="0" selection-start-line="575" selection-start-column="0" selection-end-line="575" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1052,20 +850,50 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/rest_framework/views.py">
+    <entry file="file:///usr/local/lib/python2.7/dist-packages/django/views/decorators/csrf.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="365" column="0" selection-start-line="365" selection-start-column="0" selection-end-line="365" selection-end-column="0" />
+          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/rest_framework/request.py">
+    <entry file="file:///usr/local/lib/python2.7/dist-packages/bson/dbref.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="352" column="0" selection-start-line="352" selection-start-column="0" selection-end-line="352" selection-end-column="0" />
+          <caret line="90" column="0" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/upto/mockAddFriend.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="30" selection-end-column="91" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Models/EventStatus.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Messages.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.elasticbeanstalk/config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1078,75 +906,73 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.ebextensions/variables.config">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="-3.6">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
+    <entry file="file://$PROJECT_DIR$/manage.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/django/apps/registry.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="200" column="0" selection-start-line="200" selection-start-column="0" selection-end-line="200" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/NHPartners/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="136" column="40" selection-start-line="136" selection-start-column="40" selection-end-line="136" selection-end-column="40" />
+          <caret line="199" column="55" selection-start-line="199" selection-start-column="55" selection-end-line="199" selection-end-column="55" />
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/django/contrib/auth/__init__.py">
+    <entry file="file://$PROJECT_DIR$/NHPartners/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="114" column="51" selection-start-line="114" selection-start-column="51" selection-end-line="114" selection-end-column="51" />
+          <caret line="10" column="38" selection-start-line="10" selection-start-column="38" selection-end-line="10" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/upto/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#41#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.7/dist-packages/rest_framework/decorators.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Logs.py">
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Serializers/UsersSerializer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="37" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#39#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/mongoengine/django/auth.py">
+    <entry file="file://$PROJECT_DIR$/upto/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="205" column="42" selection-start-line="205" selection-start-column="14" selection-end-line="205" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.33277312">
+          <caret line="195" column="8" selection-start-line="195" selection-start-column="8" selection-end-line="195" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Wishes.py">
+    <entry file="file://$PROJECT_DIR$/upto/mock.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="88" selection-start-line="1" selection-start-column="88" selection-end-line="1" selection-end-column="88" />
+          <caret line="96" column="11" selection-start-line="96" selection-start-column="8" selection-end-line="96" selection-end-column="19" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/rest_framework/authtoken/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/YouWeesh/Serializers/UserSerializer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="43" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="43" />
         </state>
       </provider>
     </entry>
@@ -1158,19 +984,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Album.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Token.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#15#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Serializers/GenericSerializer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="45" selection-start-line="8" selection-start-column="45" selection-end-line="8" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Serializers/WishSerializer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="24" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#64#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1178,35 +1015,23 @@
     <entry file="file://$PROJECT_DIR$/YouWeesh/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="15" selection-start-line="14" selection-start-column="15" selection-end-line="14" selection-end-column="15" />
-          <folding>
-            <marker date="1483354296672" expanded="true" signature="0:398" placeholder="import ..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="45" column="50" selection-start-line="45" selection-start-column="50" selection-end-line="45" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Users.py">
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Controllers/EventController.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/upto/mock.py">
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Serializers/EventSerializer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="19" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
+          <caret line="13" column="43" selection-start-line="13" selection-start-column="43" selection-end-line="13" selection-end-column="43" />
           <folding />
         </state>
       </provider>
@@ -1214,25 +1039,7 @@
     <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Events.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="5" selection-start-line="9" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/YouWeesh/Mocks/mockAddEvent.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/YouWeesh/Controllers/EventController.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
           <folding />
         </state>
       </provider>
@@ -1240,32 +1047,77 @@
     <entry file="file://$PROJECT_DIR$/YouWeesh/Controllers/WishController.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/upto/views.py">
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Mocks/mockAddFriend.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="336" column="0" selection-start-line="336" selection-start-column="0" selection-end-line="336" selection-end-column="0" />
+          <caret line="56" column="11" selection-start-line="56" selection-start-column="11" selection-end-line="56" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Mocks/mockAddEvent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Users.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="21" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="false" />
           </folding>
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Preferences.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="22" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Wishes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Mocks/Pictures/background.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Mocks/Pictures/trail.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Mocks/Pictures/sportback.jpeg">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/YouWeesh/Mocks/mock.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="132" column="17" selection-start-line="132" selection-start-column="17" selection-end-line="132" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
+          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/YouWeesh/tests.py">
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Tools/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1273,28 +1125,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/YouWeesh/models.py">
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Categories.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/YouWeesh/apps.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/YouWeesh/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="38" selection-start-line="23" selection-start-column="38" selection-end-line="23" selection-end-column="38" />
           <folding />
         </state>
       </provider>
@@ -1302,31 +1136,44 @@
     <entry file="file://$PROJECT_DIR$/YouWeesh/Controllers/LoginController.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="55" selection-start-line="46" selection-start-column="55" selection-end-line="46" selection-end-column="55" />
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-          </folding>
+          <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/YouWeesh/Tools/tools.py">
+    <entry file="file://$PROJECT_DIR$/YouWeesh/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <caret line="23" column="30" selection-start-line="23" selection-start-column="30" selection-end-line="23" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/upto/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="7" selection-start-line="31" selection-start-column="7" selection-end-line="31" selection-end-column="7" />
           <folding>
-            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/YouWeesh/Controllers/UsersController.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5094664">
-          <caret line="171" column="0" selection-start-line="171" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="144" column="36" selection-start-line="144" selection-start-column="36" selection-end-line="144" selection-end-column="36" />
           <folding>
             <element signature="e#0#33#0" expanded="true" />
-            <marker date="1483360245184" expanded="true" signature="35:40" placeholder="import ..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Tools/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.56">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
