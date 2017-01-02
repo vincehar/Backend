@@ -47,7 +47,7 @@ for use in ['alex', 'vincent', 'marc']:
 lvl = Level()
 coo = Coordinates()
 
-lvl.idLevel = 1
+lvl.idLevel = 0
 lvl.description = 'Beginner'
 lvl.save()
 
@@ -89,9 +89,9 @@ vincent.save()
 #----------------
 #Wishes part
 #----------------
-f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/sportback.jpeg", "rb")
-marc.preferences.background_picture.replace(f)
-marc.save()
+#f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/sportback.jpeg", "rb")
+#marc.preferences.background_picture.replace(f)
+#marc.save()
 
 
 marc.create_wish('Match de #Basket dans le coin ?', lvl)
@@ -125,6 +125,10 @@ ev.thumbnail.replace(f)
 ev.save()
 alex.create_wish('Depart de Geneve pour du #ski, quelqu un', lvl)
 alex.save()
+
+f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/sportback.jpeg", "rb")
+marc.preferences.background_picture.replace(f)
+marc.save()
 
 #----------------
 #Events part

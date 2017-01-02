@@ -7,6 +7,7 @@ from django.http import HttpResponseForbidden
 from YouWeesh.Serializers.UsersSerializer import UsersSerializer
 from YouWeesh.Models.Users import Users
 from YouWeesh.Models.Token import Token
+from YouWeesh.Tools.tools import Tools
 from mongoengine.django.auth import User
 
 
@@ -18,6 +19,8 @@ def loginUser(request):
     """
     si on recupere un POST, on essaie de connecter le user
     """
+
+    ''''
     tokenCode = request.META['HTTP_AUTHORIZATION']
     tokenCode = tokenCode[8:-1]
 
@@ -27,6 +30,13 @@ def loginUser(request):
         user = User.objects.get(id=token.user.id)
         users = Users.objects.get(user__username=user.username)
         usersSerializer = UsersSerializer(instance=users)
+        return Response(usersSerializer.data)
+    else:
+        return HttpResponseForbidden
+    '''''
+    user = Tools.getCurrentUser(request)
+    if user is not None:
+        usersSerializer = UsersSerializer(instance=user)
         return Response(usersSerializer.data)
     else:
         return HttpResponseForbidden
