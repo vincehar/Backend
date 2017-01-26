@@ -5,6 +5,7 @@ from YouWeesh.Models.Tags import Tags
 from YouWeesh.Models.Coordinates import Coordinates
 from YouWeesh.Models.Wishes import Wishes
 from YouWeesh.Models.Level import Level
+from YouWeesh.Models.SocialNetworks import SocialNetworks
 
 from pymongo import Connection
 #from django.contrib import auth
@@ -20,6 +21,7 @@ events = collection['events']
 wishes = collection['wishes']
 level = collection['level']
 tags = collection['tags']
+socialnetworks = collection['socialNetworks']
 
 
 print "------------------------------------------"
@@ -31,7 +33,12 @@ wishes.remove()
 level.remove()
 tags.remove()
 events.remove()
+socialnetworks.remove()
 
+#Feed social networks collection
+youweesh = SocialNetworks.objects.create(label="Youweesh")
+facebook = SocialNetworks.objects.create(label="Facebook")
+twitter = SocialNetworks.objects.create(label="Twitter")
 
 for use in ['alex', 'vincent', 'marc']:
     print('create user : ' + use)
@@ -82,7 +89,12 @@ alex=Users.objects.get(user__username='alex')
 # Rue des Contamines, 1206 GENEVE
 vincent.current_coordinates.lat = 46.1954229
 vincent.current_coordinates.lng = 6.1552161
+
+# Set the social network to use for logging in
+vincent.social_network = youweesh
+
 vincent.save()
+
 
 #Creation des queues
 #myrabbit = rabbitmq()
@@ -118,6 +130,9 @@ ev.thumbnail.replace(f)
 ev.save()
 
 marc.create_wish('Du #velo ce week-end qui est chaud ?', lvl)
+
+#set the social network for logging in
+marc.social_network = facebook
 marc.save()
 
 vincent.create_wish('#Cycling', lvl)
