@@ -45,12 +45,26 @@ for use in ['alex', 'vincent', 'marc']:
 #Users.objects
 
 lvl = Level()
+lvl2 =  Level()
+lvl3 =  Level()
+lvl4 =  Level()
 coo = Coordinates()
 
 lvl.idLevel = 0
 lvl.description = 'Beginner'
 lvl.save()
 
+lvl2.idLevel = 1
+lvl2.description = 'Initiated'
+lvl2.save()
+
+lvl3.idLevel = 2
+lvl3.description = 'Confirmed'
+lvl3.save()
+
+lvl4.idLevel = 3
+lvl4.description = 'Expert'
+lvl4.save()
 print coo.lat
 
 marc=Users.objects.get_or_create(user=User.objects.get(username='marc'), preferences=Preferences(), current_coordinates=coo)

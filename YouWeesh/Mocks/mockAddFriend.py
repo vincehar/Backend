@@ -42,7 +42,7 @@ print "-----------------------------------"
 #antho=Users.objects.get_or_create(user=User.objects.get(username='Anthony'), preferences=Preferences(), current_coordinates=Coordinates(), picture="")
 
 # 1 - insert picture on DB
-f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/profil.jpeg", "rb")
+f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/profile.png", "rb")
 marc.picture.replace(f)
 marc.save()
 

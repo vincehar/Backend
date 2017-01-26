@@ -1,5 +1,6 @@
 import datetime
 import base64
+import string
 from YouWeesh.Models.UsersRelationships import UsersRelationships
 from YouWeesh.Models.Wishes import Wishes
 from YouWeesh.Models.Tags import Tags
@@ -42,6 +43,17 @@ class Users(Document):
         :return:
         """
         return "{'lat': "+ str(self.current_coordinates.lat) +", 'lng':"+ str(self.current_coordinates.lat)+"}"
+
+    def update_position(self, lat, lng):
+        '''
+        Update User to his current position
+        :param lat:
+        :param lng:
+        :return:
+        '''
+        coo = Coordinates(lat=float(string.replace(lat, ',', '.')), lng=float(string.replace(lng, ',', '.')))
+        self.update(current_coordinates=coo)
+        self.save()
 
     def date_joined(self):
         """

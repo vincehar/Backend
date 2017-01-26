@@ -29,9 +29,24 @@ from mongoengine.queryset import DoesNotExist
 @api_view(('GET',))
 @permission_classes((AllowAny,))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
-def getWeeshById(request):
+def getWeeshById(request, _wish_id):
 
-    wish = Wishes.objects.get(id='57270439430356405de4007a')#request.GET['id'])
+    wish = Wishes.objects.get(id=_wish_id)
     wishSerializer = WishSerializer(instance=wish)
     return Response(wishSerializer.data)
 
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def getWeeshBackCount(request, _wish_id):
+    wish = Wishes.objects.get(id=_wish_id)
+    nbrWeeshBack = len(wish.weeshback)
+    return Response(nbrWeeshBack)
+
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def getWeeshBackUsers(request):
+    wish = Wishes.objects.get(id='57270439430356405de4007a')#request.GET['id'])
+    usersSerializer = UsersSerializer(wish.weeshback)
+    return Response(usersSerializer.data)

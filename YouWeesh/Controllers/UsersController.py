@@ -38,8 +38,6 @@ def account(request):
     """
     try:
         connected_user = App.getCurrentUser(request)
-        #friends_requests = UsersRelationships.objects(accepted=False, to_user=connected_user.id) #UsersRelationships.objects.get(to_user=connected_user.id)
-        #my_friends = UsersRelationships.objects(accepted=True, to_user=connected_user.id)
         usersSerializer = UsersSerializer(instance=connected_user)
     except connected_user.DoesNotExist:
         raise Http404('Not logged')
@@ -145,11 +143,33 @@ def createWish(request):
         connected_user = App.getCurrentUser(request)
 
         connected_user.create_wish(_wish_title, selectedLevel)
+
+    except selectedLevel.DoesNotExist:
+        raise Http404('Level is not existing. Check DB')
     except connected_user.DoesNotExist:
         raise Http404('Not logged')
     else:
         return Response(True)
 
+@api_view(('POST',))
+@permission_classes((AllowAny,))
+@renderer_classes((JSONRenderer,))
+def updatePosition(request):
+    """
+
+    :type request: object
+    """
+    try:
+        _lat = request.POST['lat']
+        _lng = request.POST['lng']
+
+        connected_user = App.getCurrentUser(request)
+        connected_user.update_position(_lat, _lng)
+
+    except connected_user.DoesNotExist:
+        raise Http404('Not logged')
+    else:
+        return Response(True)
 
 @api_view(('GET',))
 @permission_classes((AllowAny,))
@@ -159,7 +179,7 @@ def allweeshes(request):
 
     :return:
     '''
-    connected_user = App.getCurrentUser(request)
+    connected_user = Users.objects.get(user__username='marc') #App.getCurrentUser(request)
     if connected_user.preferences.display_weeshes:
         AllWishes = list()
         if connected_user.preferences.selected_network == "PUBLIC":
@@ -237,4 +257,15 @@ def weeshesevents(request):
     return Response(lstWishes.data)
 
 
+@api_view(('POST',))
+@permission_classes((AllowAny,))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def weeshback(request):
+    try:
+        connected_user = App.getCurrentUser(request)
+        current_wish = Wishes.objects.get(id=request.POST['weesh_id'])
+        current_wish.weeshback.append(current_wish)
+    except connected_user.DoesNotExist:
+        raise Http404('Not logged')
 
+    return True
