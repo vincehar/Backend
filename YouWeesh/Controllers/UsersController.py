@@ -179,7 +179,7 @@ def allweeshes(request):
 
     :return:
     '''
-    connected_user = Users.objects.get(user__username='marc') #App.getCurrentUser(request)
+    connected_user = App.getCurrentUser(request)
     if connected_user.preferences.display_weeshes:
         AllWishes = list()
         if connected_user.preferences.selected_network == "PUBLIC":
@@ -264,8 +264,9 @@ def weeshback(request):
     try:
         connected_user = App.getCurrentUser(request)
         current_wish = Wishes.objects.get(id=request.POST['weesh_id'])
-        current_wish.weeshback.append(current_wish)
+        current_wish.weeshback.append(connected_user)
+        current_wish.save()
     except connected_user.DoesNotExist:
         raise Http404('Not logged')
 
-    return True
+    return Response(True)

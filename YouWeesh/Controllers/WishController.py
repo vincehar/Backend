@@ -46,7 +46,7 @@ def getWeeshBackCount(request, _wish_id):
 @api_view(('GET',))
 @permission_classes((AllowAny,))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
-def getWeeshBackUsers(request):
-    wish = Wishes.objects.get(id='57270439430356405de4007a')#request.GET['id'])
+def getWeeshBackUsers(request, _wish_id):
+    wish = Wishes.objects.get(id=_wish_id)
     usersSerializer = UsersSerializer(wish.weeshback)
     return Response(usersSerializer.data)
