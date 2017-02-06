@@ -6,7 +6,7 @@ from YouWeesh.Models.Coordinates import Coordinates
 from YouWeesh.Models.Wishes import Wishes
 from YouWeesh.Models.Level import Level
 from YouWeesh.Models.SocialNetworks import SocialNetworks
-
+from YouWeesh.Models.Address import Address
 from pymongo import Connection
 #from django.contrib import auth
 import datetime
@@ -21,7 +21,7 @@ events = collection['events']
 wishes = collection['wishes']
 level = collection['level']
 tags = collection['tags']
-socialnetworks = collection['socialNetworks']
+socialnetworks = collection['social_networks']
 
 
 print "------------------------------------------"
@@ -72,7 +72,6 @@ lvl3.save()
 lvl4.idLevel = 3
 lvl4.description = 'Expert'
 lvl4.save()
-print coo.lat
 
 marc=Users.objects.get_or_create(user=User.objects.get(username='marc'), preferences=Preferences(), current_coordinates=coo)
 vincent=Users.objects.get_or_create(user=User.objects.get(username='vincent'), preferences=Preferences(), current_coordinates=coo)
@@ -91,7 +90,7 @@ vincent.current_coordinates.lat = 46.1954229
 vincent.current_coordinates.lng = 6.1552161
 
 # Set the social network to use for logging in
-vincent.social_network = youweesh
+#vincent.social_network = youweesh
 
 vincent.save()
 
@@ -122,9 +121,16 @@ vincent.save()
 
 marc.create_wish('Match de #Basket dans le coin ?', lvl)
 marc.create_wish('A fond chaud pour un sparing de #Boxe', lvl)
+
+addr= Address()
+addr.address_1 ="50 chemin des Vannees"
+addr.city="Veigy Foncenex"
+addr.getorUpdateCoordinates()
+print(addr)
 marc.create_event(eventName='#Trail des Roussets !',start_date=datetime.datetime.today(), end_date=datetime.datetime.today())
 
 ev = Events.objects.get(title='#Trail des Roussets !')
+ev.address = addr
 f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/trail.jpg", "rb")
 ev.thumbnail.replace(f)
 ev.save()
@@ -132,7 +138,7 @@ ev.save()
 marc.create_wish('Du #velo ce week-end qui est chaud ?', lvl)
 
 #set the social network for logging in
-marc.social_network = facebook
+#marc.social_network = facebook
 marc.save()
 
 vincent.create_wish('#Cycling', lvl)

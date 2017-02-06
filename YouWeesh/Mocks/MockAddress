@@ -1,0 +1,7 @@
+from YouWeesh.Tools.geolocalisation import geolocalisation
+
+
+geo = geolocalisation()
+
+coo = geo.geoCodeWithAddress("50 chemin des Vannes Veigy Foncenex")
+print(coo.lat)

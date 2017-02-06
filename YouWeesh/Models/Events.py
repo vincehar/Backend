@@ -2,11 +2,11 @@ import datetime
 from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocumentField, \
     ReferenceField, StringField, ListField, DateTimeField, BinaryField, BooleanField, ObjectIdField, ImageField, IntField
 import base64
-
+from YouWeesh.Models.Address import Address
 
 class Events(Document):
     creator = ReferenceField('Users')
-    interested = ListField(ReferenceField('Users'))
+    participants = ListField(ReferenceField('Users'))
     title = StringField(required=True)
     thumbnail = ImageField()
     start_date = DateTimeField(required=True)
@@ -18,7 +18,6 @@ class Events(Document):
     eventStatus = EmbeddedDocumentField('EventStatus')
     tags = ListField(ReferenceField('Tags'))
     is_active = BooleanField(default=True)
-    coordinates = EmbeddedDocumentField('Coordinates')
 
     def get_ref_date(self):
         return self.creation_date

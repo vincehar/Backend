@@ -7,6 +7,7 @@ from YouWeesh.Models.Tags import Tags
 from YouWeesh.Models.Events import Events
 from YouWeesh.Models.Medias import Medias
 from YouWeesh.Models.Coordinates import Coordinates
+from YouWeesh.Models.Address import Address
 from YouWeesh.Models.Preferences import Preferences
 from mongoengine.django.auth import User
 from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocumentField, \

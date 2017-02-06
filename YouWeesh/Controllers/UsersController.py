@@ -30,7 +30,7 @@ from datetime import datetime
 @api_view(('GET',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 @permission_classes((AllowAny,))
-def account(request):
+def account(request, _username):
     """
     Get Account information and requests
     :param request:
@@ -38,9 +38,12 @@ def account(request):
     """
     try:
         connected_user = App.getCurrentUser(request)
-        usersSerializer = UsersSerializer(instance=connected_user)
+        selected_user = Users.objects.get(user__username=_username)
+        usersSerializer = UsersSerializer(instance=selected_user)
     except connected_user.DoesNotExist:
         raise Http404('Not logged')
+    except selected_user.DoesNotExist:
+        raise Http404('User doesnt exists')
     else:
         return Response(usersSerializer.data)
 
@@ -216,7 +219,7 @@ def allEvents(request):
         return Response(lstEvents.data)
     else:
         return None
-
+'''
 @api_view(('GET',))
 @permission_classes((AllowAny,))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
@@ -255,7 +258,7 @@ def weeshesevents(request):
     lstWishes = WishSerializer(instance=AllWishes, many=True)
     
     return Response(lstWishes.data)
-
+'''
 
 @api_view(('POST',))
 @permission_classes((AllowAny,))
@@ -264,9 +267,31 @@ def weeshback(request):
     try:
         connected_user = App.getCurrentUser(request)
         current_wish = Wishes.objects.get(id=request.POST['weesh_id'])
-        current_wish.weeshback.append(connected_user)
-        current_wish.save()
+        #Atomic update : allow not to have duplicate !
+        current_wish.update(add_to_set__weeshback=connected_user)
     except connected_user.DoesNotExist:
         raise Http404('Not logged')
+    except current_wish.DoesNotExist:
+        raise Http404('Weesh does not exist')
+    return Response(True)
 
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+@renderer_classes((JSONRenderer,))
+def unweeshback(request, _wish_id):
+    '''
+    Unsubscribe a the connected user to a weeshback
+    :param request:
+    :param _wish_id:
+    :return:
+    '''
+    try:
+        connected_user = App.getCurrentUser(request)
+        current_wish = Wishes.objects.get(id=_wish_id)
+        #Atomic update : allow not to have duplicate !
+        current_wish.update(pull__weeshback=connected_user)
+    except connected_user.DoesNotExist:
+        raise Http404('Not logged')
+    except current_wish.DoesNotExist:
+        raise Http404('Weesh does not exist')
     return Response(True)
