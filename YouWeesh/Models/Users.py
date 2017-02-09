@@ -27,7 +27,7 @@ class Users(Document):
     date_created = DateTimeField(default=datetime.datetime.now())
     current_coordinates = EmbeddedDocumentField('Coordinates')
     address = EmbeddedDocumentField('Address')
-    #social_network = ReferenceField('SocialNetworks')
+    social_network = ReferenceField('SocialNetworks')
     #friends = ListField(ReferenceField('UsersRelationships'))
     #wishes = ListField(ReferenceField('Wishes'))
     #logs = ListField(ReferenceField('Logs'))

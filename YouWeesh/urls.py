@@ -4,6 +4,7 @@ from upto.forms import UsersRegistrationForm
 import YouWeesh.Controllers.WishController as WishController
 import YouWeesh.Controllers.UsersController as UsersController
 import YouWeesh.Controllers.LoginController as LoginController
+import YouWeesh.Controllers.RegisterController as RegisterController
 import YouWeesh.Controllers.EventController as EventController
 import YouWeesh.Controllers.LevelControler as LevelControler
 
@@ -48,5 +49,6 @@ urlpatterns = [
     url(r'^allevents/$', UsersController.allEvents, name='allevents'),
     url(r'^getweeshbackcount/(?P<_wish_id>\w+)$', WishController.getWeeshBackCount, name='getweeshbackcount'),
     url(r'^weeshback/$', UsersController.weeshback, name='weeshback'),
+    url(r'^registeruser/$', RegisterController.registeruser, name='registeruser')
 
 ]
