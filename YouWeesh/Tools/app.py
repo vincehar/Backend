@@ -14,7 +14,7 @@ class App(object):
 
             if token:
                 user = User.objects.get(id=token.user.id)
-                users = Users.objects.get(user__username=user.username)
+                users = Users.objects.get(user__email=user.email)
                 return users
             else:
                 return None
