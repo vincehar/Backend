@@ -110,6 +110,7 @@ class Users(Document):
                 wish.tags.append(tag[0])
 
         wish.save()
+
         return wish
 
     def create_event(self, **kwargs):
