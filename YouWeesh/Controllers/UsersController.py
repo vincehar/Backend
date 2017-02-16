@@ -2,6 +2,7 @@ from operator import methodcaller
 
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.core import serializers as djangoSerializers
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from rest_framework.decorators import api_view, renderer_classes, permission_classes
@@ -30,7 +31,7 @@ from datetime import datetime
 @api_view(('GET',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 @permission_classes((AllowAny,))
-def account(request, _username):
+def account(request, _email):
     """
     Get Account information and requests
     :param request:
@@ -38,7 +39,7 @@ def account(request, _username):
     """
     try:
         connected_user = App.getCurrentUser(request)
-        selected_user = Users.objects.get(user__username=_username)
+        selected_user = Users.objects.get(user__email=_email)
         usersSerializer = UsersSerializer(instance=selected_user)
     except connected_user.DoesNotExist:
         raise Http404('Not logged')
@@ -209,6 +210,19 @@ def updatePosition(request):
         raise Http404('Not logged')
     else:
         return Response(True)
+
+
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
+def useriscreated(request, email):
+
+    try:
+        users = Users.objects.get(user__email=email.lower())
+        return Response(True)
+    except Exception:
+        return Response(False)
+
 
 @api_view(('GET',))
 @permission_classes((AllowAny,))

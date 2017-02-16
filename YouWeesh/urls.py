@@ -4,6 +4,7 @@ from upto.forms import UsersRegistrationForm
 import YouWeesh.Controllers.WishController as WishController
 import YouWeesh.Controllers.UsersController as UsersController
 import YouWeesh.Controllers.LoginController as LoginController
+import YouWeesh.Controllers.RegisterController as RegisterController
 import YouWeesh.Controllers.EventController as EventController
 import YouWeesh.Controllers.LevelControler as LevelControler
 
@@ -14,9 +15,10 @@ urlpatterns = [
     url(r'^$',views.login, name='index'),
     url(r'^login/$', LoginController.loginUser, name='login'),
     url(r'^getToken/$', LoginController.getToken, name='getToken'),
+    url(r'^useriscreated/(?P<email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})$', UsersController.useriscreated, name='useriscreated'),
     url(r'^register/', include('regme.urls')),
     url(r'^account/register/', UsersBackend.as_view(form_class=UsersRegistrationForm), name='register'),
-    url(r'^account/(?P<_username>\w+)/$', UsersController.account, name='account'),
+    url(r'^account/(?P<_email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})$', UsersController.account, name='account'),
     url(r'^myevents/$', UsersController.myNextEvents, name='myevents'),
     url(r'^wishes/$', views.allwishesAndEvent, name='wishes'),
     #url(r'^weeshesevents/$', UsersController.weeshesevents, name='weeshesevents'),
@@ -48,5 +50,6 @@ urlpatterns = [
     url(r'^allevents/$', UsersController.allEvents, name='allevents'),
     url(r'^getweeshbackcount/(?P<_wish_id>\w+)$', WishController.getWeeshBackCount, name='getweeshbackcount'),
     url(r'^weeshback/$', UsersController.weeshback, name='weeshback'),
+    url(r'^registeruser/$', RegisterController.registeruser, name='registeruser')
 
 ]
