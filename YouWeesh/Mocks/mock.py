@@ -126,11 +126,15 @@ addr= Address()
 addr.address_1 ="50 chemin des Vannees"
 addr.city="Veigy Foncenex"
 addr.getorUpdateCoordinates()
+#addr.save()
 print(addr)
-marc.create_event(eventName='#Trail des Roussets !',start_date=datetime.datetime.today(), end_date=datetime.datetime.today())
+vincent.address = addr
+vincent.save()
+marc.create_event(eventName='#Trail des Roussets !',start_date=datetime.datetime.today(), end_date=datetime.datetime.today(), level=lvl, nbrParticipantsMax=12)
 
 ev = Events.objects.get(title='#Trail des Roussets !')
 ev.address = addr
+ev.level = lvl
 f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/trail.jpg", "rb")
 ev.thumbnail.replace(f)
 ev.save()
@@ -143,20 +147,34 @@ marc.save()
 
 vincent.create_wish('#Cycling', lvl)
 vincent.create_wish('Un #futsal organise cette semaine ?', lvl)
-vincent.create_event(eventName='Sortie #Ski a la Clusaz', start_date=datetime.datetime.today(), end_date=datetime.datetime.today())
+vincent.create_event(eventName='Sortie #Ski a la Clusaz', start_date=datetime.datetime.today(), end_date=datetime.datetime.today(), level=lvl2, nbrParticipantsMax=12)
 ev = Events.objects.get(title='Sortie #Ski a la Clusaz')
 f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/ski.jpg", "rb")
 ev.thumbnail.replace(f)
+ev.level = lvl2
+addr2 = Address()
+addr2.city = "La Clusaz"
+addr2.getorUpdateCoordinates()
+addr2.save()
+ev.address = addr2
+print(addr2)
 ev.save()
 vincent.create_wish('Je suis chaud pour un #trail', lvl)
 vincent.save()
 
 alex.create_wish('Je propose un #tennis a un 30-4 ou niveau equivalent', lvl)
 alex.create_wish('Quelqu un connait une salle de #muscu sympa ?', lvl)
-alex.create_event(eventName='#Futsal du dimanche', start_date=datetime.datetime.today(), end_date=datetime.datetime.today())
+alex.create_event(eventName='#Futsal du dimanche', start_date=datetime.datetime.today(), end_date=datetime.datetime.today(), level=lvl3, nbrParticipantsMax=12)
 ev = Events.objects.get(title='#Futsal du dimanche')
 f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/futsal.jpg", "rb")
 ev.thumbnail.replace(f)
+addr3 = Address()
+addr3.city = "Annemasse"
+addr3.save()
+print(addr3)
+addr3.getorUpdateCoordinates()
+ev.level = lvl3
+ev.address = addr3
 ev.save()
 alex.create_wish('Depart de Geneve pour du #ski, quelqu un', lvl)
 alex.save()

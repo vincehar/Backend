@@ -3,5 +3,5 @@ from YouWeesh.Tools.geolocalisation import geolocalisation
 
 geo = geolocalisation()
 
-coo = geo.geoCodeWithAddress("50 chemin des Vannes Veigy Foncenex")
+coo = geo.geoCodeWithAddress("Annemasse")
 print(coo.lat)

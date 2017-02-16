@@ -144,15 +144,51 @@ def createWish(request):
 
         selectedLevel = Level.objects.get(idLevel=_idLevel)
         connected_user = App.getCurrentUser(request)
-
-        connected_user.create_wish(_wish_title, selectedLevel)
-
+        createdWish = connected_user.create_wish(_wish_title, selectedLevel)
+        wishSerializer = WishSerializer(instance=createdWish)
     except selectedLevel.DoesNotExist:
         raise Http404('Level is not existing. Check DB')
     except connected_user.DoesNotExist:
         raise Http404('Not logged')
     else:
-        return Response(True)
+        return Response(wishSerializer.data)
+
+
+
+@api_view(('POST',))
+@permission_classes((AllowAny,))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def createEvent(request):
+    """
+    View used to create a wish for a user
+    :rtype: object
+    :param _id_user:
+    :param request:
+    """
+    try:
+        # 2 - get wish title from form
+        eventName = request.POST['eventName']
+
+        start_date = request.POST['startDate']
+        #end_date = datetime.datetime.strptime(request.POST['endDate'], "%Y/%m/%d %H:%M")
+
+        nbrParticipants = request.POST['nbrParticipants']
+        location = request.POST['location']
+        pvOrPub = request.POST['pvOrPub']
+
+
+
+        if request.FILES:
+            thumbnail = request.FILES['thumbnail']
+            App.getCurrentUser(request).create_event(eventName=eventName, start_date=start_date, thumbnail=thumbnail)
+        else:
+            App.getCurrentUser(request).create_event(eventName=eventName, start_date=start_date, end_date=datetime.now(), nbrParticipants=nbrParticipants)
+
+    except Users.DoesNotExist:
+        raise Http404('User id does not exist')
+    else:
+        return Response()
+
 
 @api_view(('POST',))
 @permission_classes((AllowAny,))
@@ -219,46 +255,6 @@ def allEvents(request):
         return Response(lstEvents.data)
     else:
         return None
-'''
-@api_view(('GET',))
-@permission_classes((AllowAny,))
-@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
-def weeshesevents(request):
-    """
-    Get Weeshes And Events sorted by create_date
-    :param request:
-    :return:
-    """
-    connected_user = App.getCurrentUser(request)
-
-    ### 1 - manage private and public network ###
-    AllEvents = list()
-    AllWishes = list()
-    if connected_user.preferences.selected_network == "PUBLIC":
-        AllEvents = Events.objects
-        AllWishes = Wishes.objects
-    if connected_user.preferences.selected_network == "friends":
-        for relationship in getFriends(connected_user):
-            for event in Events.objects(creator=relationship.from_user.id):
-                AllEvents.append(event)
-            for wish in Wishes.objects(creator=relationship.from_user.id):
-                AllWishes.append(wish)
-    ### 1                                   #######
-    tmplst = list()
-    if connected_user.preferences.display_events:
-        for event in AllEvents:
-            tmplst.append(event)
-    if connected_user.preferences.display_weeshes:
-        for wish in AllWishes:
-            tmplst.append(wish)
-
-
-    context = sorted(tmplst, key=methodcaller('get_ref_date'), reverse=True)
-    lstEvents = EventSerializer(instance=AllEvents, many=True)
-    lstWishes = WishSerializer(instance=AllWishes, many=True)
-    
-    return Response(lstWishes.data)
-'''
 
 @api_view(('POST',))
 @permission_classes((AllowAny,))

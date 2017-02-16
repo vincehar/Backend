@@ -117,7 +117,7 @@ class Users(Document):
         if 'thumbnail' in kwargs:
             event = Events(creator=self.id, title=kwargs['eventName'], start_date=kwargs['start_date'], end_date=kwargs['end_date'], thumbnail=kwargs['thumbnail'], creation_date=datetime.datetime.now())
         else:
-            event = Events(creator=self.id, title=kwargs['eventName'], start_date=kwargs['start_date'], end_date=kwargs['end_date'], creation_date=datetime.datetime.now())
+            event = Events(creator=self.id, title=kwargs['eventName'], start_date=kwargs['start_date'], end_date=kwargs['end_date'], nbrParticipantsMax=kwargs['nbrParticipantsMax'], creation_date=datetime.datetime.now(), )
 
         splitTitle = kwargs['eventName'].split(' ')
         for word in splitTitle:
