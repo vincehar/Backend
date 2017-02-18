@@ -33,6 +33,7 @@ wishes.remove()
 level.remove()
 tags.remove()
 events.remove()
+
 socialnetworks.remove()
 
 #Feed social networks collection
