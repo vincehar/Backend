@@ -173,7 +173,7 @@ def createEvent(request):
         start_date = request.POST['startDate']
         #end_date = datetime.datetime.strptime(request.POST['endDate'], "%Y/%m/%d %H:%M")
 
-        nbrParticipants = request.POST['nbrParticipants']
+        nbrParticipantsMax = request.POST['nbrParticipantsMax']
         location = request.POST['location']
         pvOrPub = request.POST['pvOrPub']
 
@@ -183,7 +183,7 @@ def createEvent(request):
             thumbnail = request.FILES['thumbnail']
             App.getCurrentUser(request).create_event(eventName=eventName, start_date=start_date, thumbnail=thumbnail)
         else:
-            App.getCurrentUser(request).create_event(eventName=eventName, start_date=start_date, end_date=datetime.now(), nbrParticipants=nbrParticipants)
+            App.getCurrentUser(request).create_event(eventName=eventName, start_date=start_date, end_date=datetime.now(), nbrParticipantsMax=nbrParticipantsMax)
 
     except Users.DoesNotExist:
         raise Http404('User id does not exist')
