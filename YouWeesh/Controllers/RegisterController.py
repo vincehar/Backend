@@ -9,6 +9,8 @@ from YouWeesh.Models.Users import Users
 from YouWeesh.Models.Preferences import Preferences
 from YouWeesh.Models.Coordinates import Coordinates
 from YouWeesh.Models.SocialNetworks import SocialNetworks
+from base64 import b64decode
+from django.core.files.base import ContentFile
 from YouWeesh.Models.Token import Token
 from YouWeesh.Tools.app import App
 from mongoengine.django.auth import User
@@ -24,11 +26,14 @@ def registeruser(request):
    lastname = request.POST['lastname']
    firstname = request.POST['firstname']
    socialnetwork = request.POST['socialnetwork']
+   pictureBase64 = request.POST['picture']
+   picturedata = b64decode(pictureBase64)
    socialnetworkObject = SocialNetworks.objects.get(label=socialnetwork)
    u=User.objects.create(username=username, email=email, first_name=firstname, last_name=lastname)
    if socialnetwork == 'Youweesh':
        u.set_password(password)
    u.save()
    users = Users.objects.create(user=u,social_network=socialnetworkObject,preferences=Preferences(),current_coordinates=Coordinates())
+   users.picture.replace(ContentFile(picturedata,'test.png'))
    users.save()
    return Response(True)
