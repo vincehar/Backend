@@ -12,7 +12,7 @@ class UsersSerializer(DocumentSerializer):
 
     class Meta:
         model = Users
-        depth = 1
+        depth = 2
         fields = ('id', 'user', 'base64', 'user_id', 'preferences', 'current_coordinates', 'date_created', 'address')
 
     def get_base64(self, Users):
