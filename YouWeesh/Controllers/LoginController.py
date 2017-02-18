@@ -51,7 +51,7 @@ def getToken(request):
     si on recupere un POST, on essaie de connecter le user
     """
     if request.method == 'POST':
-        email = request.POST['email'].lower();
+        email = request.POST['username'].lower();
         password = request.POST['password']
 
         user = User.objects.get(email=email)

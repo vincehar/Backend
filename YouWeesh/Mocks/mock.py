@@ -44,9 +44,9 @@ for use in ['alex', 'vincent', 'marc']:
     print('create user : ' + use)
     try:
         # password is '123'
-        user = User.objects.get(username=use, email='test@bb.com', password='pbkdf2_sha256$20000$3kBOdJ5Y80Au$e6IP7p5VOZCo5p3wvIrFwVcBYoU24ahZ4qwKjhQeOVY=')
+        user = User.objects.get(username=use, email=use+'@mail.com', password='pbkdf2_sha256$20000$3kBOdJ5Y80Au$e6IP7p5VOZCo5p3wvIrFwVcBYoU24ahZ4qwKjhQeOVY=')
     except User.DoesNotExist:
-        u=User.objects.create(username=use, email='test2@bb.com', password='pbkdf2_sha256$20000$XEl4EhJOYf1y$iTsb3lMssG+pqj4U7rpFXamt2b5QcHAGNsZ85GJ3/jk=')
+        u=User.objects.create(username=use, email=use+'@mail.com', password='pbkdf2_sha256$20000$XEl4EhJOYf1y$iTsb3lMssG+pqj4U7rpFXamt2b5QcHAGNsZ85GJ3/jk=')
         u.save()
 
 #Users.objects
@@ -142,7 +142,7 @@ ev.save()
 marc.create_wish('Du #velo ce week-end qui est chaud ?', lvl)
 
 #set the social network for logging in
-#marc.social_network = facebook
+marc.social_network = youweesh
 marc.save()
 
 vincent.create_wish('#Cycling', lvl)

@@ -54,12 +54,13 @@ def account(request, _email):
 def getNbrFriends(request):
     try:
         connected_user = Users.objects.get(user__username='marc')
-        # TODO : Add criteria for relationship
+        # TODO : Add criteria for relationships
         nbr = len(UsersRelationships.objects(from_user=connected_user.id))
     except connected_user.DoesNotExist:
         raise Http404('Not logged')
     else:
         return Response(nbr)
+
 
 @api_view(('GET',))
 @permission_classes((AllowAny,))
@@ -173,7 +174,7 @@ def createEvent(request):
         start_date = request.POST['startDate']
         #end_date = datetime.datetime.strptime(request.POST['endDate'], "%Y/%m/%d %H:%M")
 
-        nbrParticipants = request.POST['nbrParticipants']
+        nbrParticipantsMax = request.POST['nbrParticipantsMax']
         location = request.POST['location']
         pvOrPub = request.POST['pvOrPub']
 
@@ -183,7 +184,7 @@ def createEvent(request):
             thumbnail = request.FILES['thumbnail']
             App.getCurrentUser(request).create_event(eventName=eventName, start_date=start_date, thumbnail=thumbnail)
         else:
-            App.getCurrentUser(request).create_event(eventName=eventName, start_date=start_date, end_date=datetime.now(), nbrParticipants=nbrParticipants)
+            App.getCurrentUser(request).create_event(eventName=eventName, start_date=start_date, end_date=datetime.now(), nbrParticipantsMax=nbrParticipantsMax)
 
     except Users.DoesNotExist:
         raise Http404('User id does not exist')
