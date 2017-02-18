@@ -54,12 +54,13 @@ def account(request, _email):
 def getNbrFriends(request):
     try:
         connected_user = Users.objects.get(user__username='marc')
-        # TODO : Add criteria for relationship
+        # TODO : Add criteria for relationships
         nbr = len(UsersRelationships.objects(from_user=connected_user.id))
     except connected_user.DoesNotExist:
         raise Http404('Not logged')
     else:
         return Response(nbr)
+
 
 @api_view(('GET',))
 @permission_classes((AllowAny,))
