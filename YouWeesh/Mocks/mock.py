@@ -21,6 +21,7 @@ events = collection['events']
 wishes = collection['wishes']
 level = collection['level']
 tags = collection['tags']
+addresses = collection['address']
 socialnetworks = collection['social_networks']
 
 
@@ -33,6 +34,7 @@ wishes.remove()
 level.remove()
 tags.remove()
 events.remove()
+addresses.remove()
 
 socialnetworks.remove()
 
@@ -131,13 +133,13 @@ addr.getorUpdateCoordinates()
 print(addr)
 vincent.address = addr
 vincent.save()
-marc.create_event(eventName='#Trail des Roussets !',start_date=datetime.datetime.today(), end_date=datetime.datetime.today(), level=lvl, nbrParticipantsMax=12)
+marc.create_event(eventName='#Trail des Roussets !',start_date=datetime.datetime.today(), end_date=datetime.datetime.today(), level=lvl, nbrParticipantsMax=12, address=None)
 
 ev = Events.objects.get(title='#Trail des Roussets !')
 ev.address = addr
 ev.level = lvl
 f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/trail.jpg", "rb")
-ev.thumbnail.replace(f)
+#ev.thumbnail.replace(f)
 ev.save()
 
 marc.create_wish('Du #velo ce week-end qui est chaud ?', lvl)
@@ -148,8 +150,8 @@ marc.save()
 
 vincent.create_wish('#Cycling', lvl)
 vincent.create_wish('Un #futsal organise cette semaine ?', lvl)
-vincent.create_event(eventName='Sortie #Ski a la Clusaz', start_date=datetime.datetime.today(), end_date=datetime.datetime.today(), level=lvl2, nbrParticipantsMax=12)
-ev = Events.objects.get(title='Sortie #Ski a la Clusaz')
+vincent.create_event(eventName='Sortie Ski a la Clusaz', start_date=datetime.datetime.today(), end_date=datetime.datetime.today(), level=lvl2, nbrParticipantsMax=12, address=None)
+ev = Events.objects.get(title='Sortie Ski a la Clusaz')
 f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/ski.jpg", "rb")
 ev.thumbnail.replace(f)
 ev.level = lvl2
@@ -165,7 +167,7 @@ vincent.save()
 
 alex.create_wish('Je propose un #tennis a un 30-4 ou niveau equivalent', lvl)
 alex.create_wish('Quelqu un connait une salle de #muscu sympa ?', lvl)
-alex.create_event(eventName='#Futsal du dimanche', start_date=datetime.datetime.today(), end_date=datetime.datetime.today(), level=lvl3, nbrParticipantsMax=12)
+alex.create_event(eventName='#Futsal du dimanche', start_date=datetime.datetime.today(), end_date=datetime.datetime.today(), level=lvl3, nbrParticipantsMax=12, address=None)
 ev = Events.objects.get(title='#Futsal du dimanche')
 f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/futsal.jpg", "rb")
 ev.thumbnail.replace(f)

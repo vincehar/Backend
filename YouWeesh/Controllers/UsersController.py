@@ -18,6 +18,7 @@ from YouWeesh.Models.Users import Users
 from YouWeesh.Models.Events import Events
 from YouWeesh.Models.Token import Token
 from YouWeesh.Models.Wishes import Wishes
+from YouWeesh.Models.Address import Address
 from YouWeesh.Models.Preferences import Preferences
 from mongoengine.django.auth import User
 from YouWeesh.Models.UsersRelationships import UsersRelationships
@@ -53,7 +54,7 @@ def account(request, _email):
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def getNbrFriends(request):
     try:
-        connected_user = Users.objects.get(user__username='marc')
+        connected_user = App.getCurrentUser(request)
         # TODO : Add criteria for relationships
         nbr = len(UsersRelationships.objects(from_user=connected_user.id))
     except connected_user.DoesNotExist:
@@ -65,13 +66,10 @@ def getNbrFriends(request):
 @api_view(('GET',))
 @permission_classes((AllowAny,))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
-def getFriends(request):
+def getFriends(request, _email):
     try:
         users = Users.objects()
-        for u in users:
-            print u
-        connected_user = Users.objects.get(user__username='marc')
-        # TODO : Add criteria for relationship
+        connected_user = Users.objects.get(user__email=_email)
         lstRelationships = UsersRelationships.objects(from_user=connected_user.id)
         lstFriends = list()
         for rl in lstRelationships:
@@ -177,14 +175,19 @@ def createEvent(request):
         nbrParticipantsMax = request.POST['nbrParticipantsMax']
         location = request.POST['location']
         pvOrPub = request.POST['pvOrPub']
+        _idLevel = request.POST['idLevel']
 
-
+        selectedLevel = Level.objects.get(idLevel=_idLevel)
+        addr= Address()
+        addr.city = location
+        addr.getorUpdateCoordinates()
+        addr.save()
 
         if request.FILES:
             thumbnail = request.FILES['thumbnail']
             App.getCurrentUser(request).create_event(eventName=eventName, start_date=start_date, thumbnail=thumbnail)
         else:
-            App.getCurrentUser(request).create_event(eventName=eventName, start_date=start_date, end_date=datetime.now(), nbrParticipantsMax=nbrParticipantsMax)
+            App.getCurrentUser(request).create_event(level=selectedLevel, eventName=eventName, start_date=start_date, end_date=datetime.now(), nbrParticipantsMax=nbrParticipantsMax, address=addr)
 
     except Users.DoesNotExist:
         raise Http404('User id does not exist')
