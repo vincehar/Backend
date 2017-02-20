@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^$',views.login, name='index'),
     url(r'^login/$', LoginController.loginUser, name='login'),
     url(r'^getToken/$', LoginController.getToken, name='getToken'),
+    url(r'^getTokenForSocialNetwork/$', LoginController.getTokenForSocialNetWork, name='getTokenForSocialNetwork'),
     url(r'^useriscreated/(?P<email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})$', UsersController.useriscreated, name='useriscreated'),
     url(r'^register/', include('regme.urls')),
     url(r'^account/register/', UsersBackend.as_view(form_class=UsersRegistrationForm), name='register'),

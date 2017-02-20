@@ -10,6 +10,7 @@ from YouWeesh.Models.Users import Users
 from YouWeesh.Models.Token import Token
 from YouWeesh.Tools.app import App
 from mongoengine.django.auth import User
+import requests
 
 
 @api_view(('GET',))
@@ -62,14 +63,40 @@ def getToken(request):
             if user.is_active and user.check_password(password):
                 token = Token()
                 Token.objects(user=user).update_one(user=user,token=token.generate_key(),upsert=True)
-
                 return Response(token.get_token())
             else:
                 return HttpResponseForbidden
 
-        elif socialnetworkObject.label == 'Facebook' or socialnetworkObject.label == 'Twitter':
-            token = Token()
-            Token.objects(user=user).update_one(user=user,token=token.generate_key(),upsert=True)
-            return Response(token.get_token())
+
+@api_view(('POST',))
+@permission_classes((AllowAny,))
+@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
+def getTokenForSocialNetWork(request):
+    from mongoengine.queryset import DoesNotExist
+    """
+    si on recupere un POST, on essaie de connecter le user
+    """
+    if request.method == 'POST':
+        email = request.POST['email'].lower();
+        socialtoken = request.POST['socialtoken']
+
+        try:
+          user = User.objects.get(email=email)
+          users = Users.objects.get(user__email=email)
+          socialnetworkObject = users.social_network
+
+          if socialnetworkObject.label == 'Facebook':
+            url = 'https://graph.facebook.com/me'
+            params = {'access_token': socialtoken}
+            r = requests.get(url, params=params)
+            userjson = r.json()
+            userid = {'id':userjson['id']}
+            Token.objects(user=user).update_one(user=user,token=socialtoken,upsert=True)
+            return Response(socialtoken)
+
+        except Exception:
+
+         return HttpResponseForbidden
+
 
 

@@ -32,8 +32,12 @@ def registeruser(request):
    u=User.objects.create(username=username, email=email, first_name=firstname, last_name=lastname)
    if socialnetwork == 'Youweesh':
        u.set_password(password)
+
    u.save()
    users = Users.objects.create(user=u,social_network=socialnetworkObject,preferences=Preferences(),current_coordinates=Coordinates())
-   users.picture.replace(ContentFile(picturedata))
+
+   if socialnetwork == 'Facebook' or socialnetwork == 'Twitter':
+       users.picture.replace(ContentFile(picturedata))
+
    users.save()
    return Response(True)
