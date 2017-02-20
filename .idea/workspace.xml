@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="852d6613-cb4b-4e27-b693-97210e43cefd" name="Default" comment="- Register user">
+    <list default="true" id="852d6613-cb4b-4e27-b693-97210e43cefd" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/YouWeesh/Controllers/RegisterController.py" afterPath="$PROJECT_DIR$/YouWeesh/Controllers/RegisterController.py" />
     </list>
     <ignored path="NHPartners.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,10 +27,10 @@
         <entry file="file://$PROJECT_DIR$/YouWeesh/Controllers/UsersController.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="178" column="19" selection-start-line="178" selection-start-column="19" selection-end-line="178" selection-end-column="19" />
+              <caret line="215" column="19" selection-start-line="215" selection-start-column="19" selection-end-line="215" selection-end-column="19" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
-                <marker date="1486997925915" expanded="true" signature="35:40" placeholder="import ..." />
+                <marker date="1487435357033" expanded="true" signature="35:40" placeholder="import ..." />
               </folding>
             </state>
           </provider>
@@ -51,7 +50,7 @@
         <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Users.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="24" column="24" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="24" />
+              <caret line="25" column="24" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="24" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -59,11 +58,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoginController.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="LoginController.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/YouWeesh/Controllers/LoginController.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.3690909">
+              <caret line="58" column="33" selection-start-line="58" selection-start-column="33" selection-end-line="58" selection-end-column="33" />
               <folding>
                 <element signature="e#53#137#0" expanded="true" />
               </folding>
@@ -75,9 +74,9 @@
         <entry file="file://$PROJECT_DIR$/YouWeesh/Mocks/mock.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="75" column="119" selection-start-line="75" selection-start-column="100" selection-end-line="75" selection-end-column="119" />
+              <caret line="76" column="119" selection-start-line="76" selection-start-column="119" selection-end-line="76" selection-end-column="119" />
               <folding>
-                <element signature="e#0#45#0" expanded="true" />
+                <marker date="1487435357037" expanded="true" signature="0:444" placeholder="import ..." />
               </folding>
             </state>
           </provider>
@@ -93,11 +92,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RegisterController.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RegisterController.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/YouWeesh/Controllers/RegisterController.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.45636365">
-              <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
               </folding>
@@ -109,7 +108,7 @@
         <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Events.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
+              <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -132,7 +131,7 @@
               <caret line="54" column="1" selection-start-line="54" selection-start-column="1" selection-end-line="54" selection-end-column="1" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
-                <marker date="1486992199127" expanded="true" signature="0:447" placeholder="import ..." />
+                <marker date="1487435357077" expanded="true" signature="0:447" placeholder="import ..." />
               </folding>
             </state>
           </provider>
@@ -199,9 +198,9 @@
         <option value="$PROJECT_DIR$/YouWeesh/Models/Users.py" />
         <option value="$PROJECT_DIR$/YouWeesh/Tools/app.py" />
         <option value="$PROJECT_DIR$/YouWeesh/urls.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Controllers/LoginController.py" />
         <option value="$PROJECT_DIR$/YouWeesh/Controllers/UsersController.py" />
         <option value="$PROJECT_DIR$/YouWeesh/Controllers/RegisterController.py" />
+        <option value="$PROJECT_DIR$/YouWeesh/Controllers/LoginController.py" />
       </list>
     </option>
   </component>
@@ -827,7 +826,19 @@
       <option name="project" value="LOCAL" />
       <updated>1487104199951</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="- Register user">
+      <created>1487435329243</created>
+      <option name="number" value="00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1487435329243</updated>
+    </task>
+    <task id="LOCAL-00021" summary="- Register user">
+      <created>1487582593782</created>
+      <option name="number" value="00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1487582593782</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -853,11 +864,11 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.4962325" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21984924" sideWeight="0.712069" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15138191" sideWeight="0.712069" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35698447" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.49748743" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21984924" sideWeight="0.28793103" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15138191" sideWeight="0.28793103" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5025126" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2383592" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -932,6 +943,11 @@
           <line>110</line>
           <option name="timeStamp" value="133" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/YouWeesh/Controllers/LoginController.py</url>
+          <line>54</line>
+          <option name="timeStamp" value="203" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
@@ -940,7 +956,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="203" />
+      <option name="time" value="204" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -1298,14 +1314,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/upto/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="336" column="0" selection-start-line="336" selection-start-column="0" selection-end-line="336" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Wishes.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1320,17 +1328,7 @@
           <caret line="54" column="1" selection-start-line="54" selection-start-column="1" selection-end-line="54" selection-end-column="1" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
-            <marker date="1486992199127" expanded="true" signature="0:447" placeholder="import ..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/YouWeesh/Controllers/LoginController.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
-          <folding>
-            <element signature="e#53#137#0" expanded="true" />
+            <marker date="1487435357077" expanded="true" signature="0:447" placeholder="import ..." />
           </folding>
         </state>
       </provider>
@@ -1338,10 +1336,10 @@
     <entry file="file://$PROJECT_DIR$/YouWeesh/Controllers/UsersController.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="178" column="19" selection-start-line="178" selection-start-column="19" selection-end-line="178" selection-end-column="19" />
+          <caret line="215" column="19" selection-start-line="215" selection-start-column="19" selection-end-line="215" selection-end-column="19" />
           <folding>
             <element signature="e#0#33#0" expanded="true" />
-            <marker date="1486997925915" expanded="true" signature="35:40" placeholder="import ..." />
+            <marker date="1487435357033" expanded="true" signature="35:40" placeholder="import ..." />
           </folding>
         </state>
       </provider>
@@ -1349,7 +1347,7 @@
     <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Users.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="24" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="24" />
+          <caret line="25" column="24" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="24" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
@@ -1359,7 +1357,7 @@
     <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Events.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
+          <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -1367,9 +1365,9 @@
     <entry file="file://$PROJECT_DIR$/YouWeesh/Mocks/mock.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="75" column="119" selection-start-line="75" selection-start-column="100" selection-end-line="75" selection-end-column="119" />
+          <caret line="76" column="119" selection-start-line="76" selection-start-column="119" selection-end-line="76" selection-end-column="119" />
           <folding>
-            <element signature="e#0#45#0" expanded="true" />
+            <marker date="1487435357037" expanded="true" signature="0:444" placeholder="import ..." />
           </folding>
         </state>
       </provider>
@@ -1382,12 +1380,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/upto/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="336" column="0" selection-start-line="336" selection-start-column="0" selection-end-line="336" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/YouWeesh/Controllers/RegisterController.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45636365">
-          <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding>
             <element signature="e#0#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Controllers/LoginController.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3690909">
+          <caret line="58" column="33" selection-start-line="58" selection-start-column="33" selection-end-line="58" selection-end-column="33" />
+          <folding>
+            <element signature="e#53#137#0" expanded="true" />
           </folding>
         </state>
       </provider>
