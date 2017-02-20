@@ -34,6 +34,6 @@ def registeruser(request):
        u.set_password(password)
    u.save()
    users = Users.objects.create(user=u,social_network=socialnetworkObject,preferences=Preferences(),current_coordinates=Coordinates())
-   users.picture.replace(ContentFile(picturedata,'test.png'))
+   users.picture.replace(ContentFile(picturedata))
    users.save()
    return Response(True)
