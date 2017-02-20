@@ -82,6 +82,7 @@ def getFriends(request, _email):
         return Response(usersSerializer.data)
 '''
 @api_view(('GET',))
+
 @permission_classes((AllowAny,))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def getTags(request):
