@@ -8,7 +8,7 @@ class App(object):
     def getCurrentUser(request):
         try:
             tokenCode = request.META['HTTP_AUTHORIZATION']
-            tokenCode = tokenCode[8:-1]
+            tokenCode = tokenCode[7:]
 
             token = Token.objects.get(token=tokenCode)
 

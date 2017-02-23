@@ -86,13 +86,19 @@ def getTokenForSocialNetWork(request):
           socialnetworkObject = users.social_network
 
           if socialnetworkObject.label == 'Facebook':
+            '''
             url = 'https://graph.facebook.com/me'
             params = {'access_token': socialtoken}
             r = requests.get(url, params=params)
             userjson = r.json()
             userid = {'id':userjson['id']}
-            Token.objects(user=user).update_one(user=user,token=socialtoken,upsert=True)
-            return Response(socialtoken)
+            '''
+            url = 'https://graph.facebook.com/oauth/access_token'
+            params = {'grant_type':'fb_exchange_token','client_id':'222535738090638','client_secret':'09a2f8b2122cd05061e50fa00dcc999a', 'fb_exchange_token':socialtoken}
+            r = requests.get(url, params=params)
+            longLiveSocialToken = r.content[13:]
+            Token.objects(user=user).update_one(user=user,token=longLiveSocialToken,upsert=True)
+            return Response(longLiveSocialToken)
 
         except Exception:
 
