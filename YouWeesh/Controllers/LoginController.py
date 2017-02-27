@@ -5,6 +5,7 @@ from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.response import Response
 from django.http import HttpResponseForbidden
 from YouWeesh.Serializers.UsersSerializer import UsersSerializer
+import oauth2
 from YouWeesh.Models.SocialNetworks import SocialNetworks
 from YouWeesh.Models.Users import Users
 from YouWeesh.Models.Token import Token
@@ -79,6 +80,7 @@ def getTokenForSocialNetWork(request):
     if request.method == 'POST':
         email = request.POST['email'].lower();
         socialtoken = request.POST['socialtoken']
+        secretsocialtoken = request.POST['secretsocialtoken']
 
         try:
           user = User.objects.get(email=email)
@@ -99,6 +101,19 @@ def getTokenForSocialNetWork(request):
             longLiveSocialToken = r.content[13:]
             Token.objects(user=user).update_one(user=user,token=longLiveSocialToken,upsert=True)
             return Response(longLiveSocialToken)
+
+          elif socialnetworkObject.label == 'Twitter':
+            consumer = oauth2.Consumer(key='C7VkdO6gbb5l3xSCOXFQRX3z8', secret='CM6A2THzp1oLyqGPfFwLOcHdMVW3TS5vITdBMXOQun522bP09f')
+            token = oauth2.Token(key=socialtoken, secret=secretsocialtoken)
+            client = oauth2.Client(consumer, token)
+            resp, content = client.request('https://api.twitter.com/1.1/account/verify_credentials.json',"GET")
+            if resp['status'] == '200':
+                Token.objects(user=user).update_one(user=user,token=socialtoken,upsert=True)
+                return Response(socialtoken)
+            else:
+                return Response
+
+            return RHttpResponseForbidden
 
         except Exception:
 
