@@ -1,5 +1,5 @@
 from operator import methodcaller
-
+from collections import Counter
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.core import serializers as djangoSerializers
 from django.core.exceptions import ObjectDoesNotExist
@@ -19,15 +19,18 @@ from YouWeesh.Models.Events import Events
 from YouWeesh.Models.Token import Token
 from YouWeesh.Models.Wishes import Wishes
 from YouWeesh.Models.Address import Address
+from YouWeesh.Models.Tags import Tags
 from YouWeesh.Models.Preferences import Preferences
 from mongoengine.django.auth import User
 from YouWeesh.Models.UsersRelationships import UsersRelationships
 from mongoengine.django.auth import User
+from mongoengine.queryset.visitor import Q
 from YouWeesh.Tools.app import App
 #from rest_framework.authtoken.models import Token
 from django.views.decorators.csrf import ensure_csrf_cookie
 from YouWeesh.Serializers.UserSerializer import BaseUserSerializer
 from datetime import datetime
+import json
 
 @api_view(('GET',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
@@ -48,6 +51,41 @@ def account(request, _email):
         raise Http404('User doesnt exists')
     else:
         return Response(usersSerializer.data)
+
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def get_favorite_tags(request, _email):
+    '''
+    Get favorite tags for a user
+    :param request:
+    :param _email:
+    :return:
+    '''
+    try:
+        connected_user = App.getCurrentUser(request)
+        selected_user = Users.objects.get(user__email=_email)
+        lstTags = list()
+        lstEvents = Events.objects(Q(creator=selected_user.id) | Q(participants__contains=connected_user.id))
+        lstWeesh = Wishes.objects(creator=selected_user.id)
+
+        
+
+        for ev in lstEvents:
+            if len(ev.tags) != 0:
+                lstTags.append(ev.tags[0].title.lower())
+        for we in lstWeesh:
+            if len(we.tags) != 0:
+                lstTags.append(we.tags[0].title.lower())
+
+        a = dict(Counter(lstTags).most_common(4))
+        print json.dumps(a)
+    except connected_user.DoesNotExist:
+        raise Http404('Not logged')
+    except selected_user.DoesNotExist:
+        raise Http404('User doesnt exists')
+    else:
+        return Response(json.dumps(a))
 
 @api_view(('GET',))
 @permission_classes((AllowAny,))
@@ -80,21 +118,13 @@ def getFriends(request, _email):
         raise Http404('Not logged')
     else:
         return Response(usersSerializer.data)
-'''
-@api_view(('GET',))
 
-@permission_classes((AllowAny,))
-@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
-def getTags(request):
-    try:
-        connected_user = Users.objects.get(user__username='marc')
-'''
 @api_view(('GET',))
 @permission_classes((AllowAny,))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def myNextEvents(request):
     try:
-        connected_user = Users.objects.get(user__username='marc')
+        connected_user = App.getCurrentUser(request)
         #TODO : Select only objects where current user is creator or participant
         lstNextEvents = Events.objects() #user_id=connected_user.id)end_date__lte=datetime.now()) #LTE a changer an SUP
         eventssrz = EventSerializer(instance=lstNextEvents, many=True)
@@ -103,36 +133,41 @@ def myNextEvents(request):
     else:
         return Response(eventssrz.data)
 
-
-@api_view(('POST',))
+@api_view(('GET',))
 @permission_classes((AllowAny,))
-@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
-def login(request):
-    """
-    si on recupere un POST, on essaie de connecter le user
-    """
-    if request.method == 'POST':
-        #username = request.POST['username'].lower();
-        #password = request.POST['password']
-        username = 'marc'
-        password = '123'
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def weeshTimeline(request):
+    '''
+    Get All Weeshes for profile timeline
+    :return:
+    '''
+    try:
+        connected_user = App.getCurrentUser(request)
+        lstweesh = Wishes.objects(Q(creator=connected_user.id) | Q(weeshback__contains=connected_user.id))
+        lstWishes = WishSerializer(instance=lstweesh, many=True)
 
-        """
-        gestion specifique pour les rendering json => mobile
-        """
-        import json
-        #requser = {'username': request.POST.get('username'), 'password': request.POST.get('password')}
-        #serializer = BaseUserSerializer(data=requser)
-       # data = {}
+    except connected_user.DoesNotExist:
+        raise Http404('Not logged')
+    else:
+        return Response(lstWishes.data)
 
-        user = User.objects.get(username=username)
-        users = Users.objects.get(user__username=username)
-        userAuth = authenticate(username=username, password=password)
-        if user.is_active and user.check_password(password):
-            #request.session['UserName'] = user.username
-            user.backend = 'mongoengine.django.auth.MongoEngineBackend'
-            usersSerializer = UsersSerializer(instance=users)
-            return Response(usersSerializer.data)
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def eventsTimeline(request):
+    '''
+    Get All Events for profile timeline
+    :return:
+    '''
+    try:
+        connected_user = App.getCurrentUser(request)
+        lstevents = Events.objects(Q(creator=connected_user.id) | Q(participants__contains=connected_user.id))
+        lstev = EventSerializer(instance=lstevents, many=True)
+
+    except connected_user.DoesNotExist:
+        raise Http404('Not logged')
+    else:
+        return Response(lstev.data)
 
 @api_view(('POST',))
 @permission_classes((AllowAny,))
@@ -234,15 +269,14 @@ def useriscreated(request, email):
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def allweeshes(request):
     '''
-
     :return:
     '''
     connected_user = App.getCurrentUser(request)
     if connected_user.preferences.display_weeshes:
         AllWishes = list()
         if connected_user.preferences.selected_network == "PUBLIC":
-            AllWishes = Wishes.objects
-        if connected_user.preferences.selected_network == "friends":
+            AllWishes = Wishes.objects(Q(title__contains=connected_user.preferences.search_string))
+        if connected_user.preferences.selected_network == "FRIENDS":
             for relationship in getFriends(connected_user):
                 for wish in Wishes.objects(creator=relationship.from_user.id):
                     AllWishes.append(wish)
@@ -261,7 +295,7 @@ def allEvents(request):
     :return:
     '''
     connected_user = App.getCurrentUser(request)
-    if connected_user.preferences.display_weeshes:
+    if connected_user.preferences.display_events:
         AllEvents = list()
         if connected_user.preferences.selected_network == "PUBLIC":
             AllEvents = Events.objects
@@ -310,3 +344,35 @@ def unweeshback(request, _wish_id):
     except current_wish.DoesNotExist:
         raise Http404('Weesh does not exist')
     return Response(True)
+
+
+@api_view(('POST',))
+@permission_classes((AllowAny,))
+@renderer_classes((JSONRenderer,))
+def filter_list(request):
+    """
+    Define filter for the current user and record it on its preferences
+    :param request:
+    :return:
+    """
+    # 1 - record new conf into user preferences
+    connected_user = App.getCurrentUser(request)
+    try:
+        if "eventOk" in request.POST:
+            connected_user.preferences.display_events = True
+        else:
+            connected_user.preferences.display_events = False
+        if "weeshOk" in request.POST:
+            connected_user.preferences.display_weeshes = True
+        else:
+            connected_user.preferences.display_weeshes = False
+
+        if "searchedString" in request.POST:
+            connected_user.preferences.search_string = request.POST['searchedString']
+
+        connected_user.preferences.selected_network = request.POST['selected_network']
+        connected_user.save()
+    except Wishes.DoesNotExist:
+        raise Http404('Wish id does not exist')
+    else:
+        return redirect('/upto/wishes/')

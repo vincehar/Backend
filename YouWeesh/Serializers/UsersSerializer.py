@@ -2,6 +2,7 @@ from YouWeesh.Models.Users import Users
 from rest_framework_mongoengine.serializers import DocumentSerializer
 from YouWeesh.Serializers.PreferencesSerializer import PreferencesSerializer
 from YouWeesh.Serializers.AddressSerializer import AddressSerializer
+from YouWeesh.Serializers.UserSerializer import BaseUserSerializer
 from rest_framework import serializers
 
 
@@ -9,6 +10,7 @@ class UsersSerializer(DocumentSerializer):
     base64 = serializers.SerializerMethodField()
     preferences = PreferencesSerializer()
     address = AddressSerializer()
+    user = BaseUserSerializer()
 
     class Meta:
         model = Users

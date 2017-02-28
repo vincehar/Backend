@@ -8,10 +8,9 @@ class Preferences(EmbeddedDocument):
     search_distance = IntField(default=50)
     selected_network = StringField(default='PUBLIC')
     background_picture = ImageField()
-
+    search_string = StringField(default='')
 
     def get_background_picture(self):
-        # TODO : Test is null
         if self.background_picture:
             picture = base64.b64encode(self.background_picture.read())
             return picture

@@ -28,6 +28,7 @@ socialnetworks = collection['social_networks']
 print "------------------------------------------"
 print "         clearing Users Collection"
 print "------------------------------------------"
+socialnetworks.remove()
 user.remove()
 users.remove()
 wishes.remove()
@@ -36,7 +37,7 @@ tags.remove()
 events.remove()
 addresses.remove()
 
-socialnetworks.remove()
+
 
 #Feed social networks collection
 youweesh = SocialNetworks.objects.create(label="Youweesh")
@@ -139,7 +140,7 @@ ev = Events.objects.get(title='#Trail des Roussets !')
 ev.address = addr
 ev.level = lvl
 f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/trail.jpg", "rb")
-#ev.thumbnail.replace(f)
+ev.thumbnail.replace(f)
 ev.save()
 
 marc.create_wish('Du #velo ce week-end qui est chaud ?', lvl)
@@ -171,6 +172,7 @@ alex.create_event(eventName='#Futsal du dimanche', start_date=datetime.datetime.
 ev = Events.objects.get(title='#Futsal du dimanche')
 f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/futsal.jpg", "rb")
 ev.thumbnail.replace(f)
+ev.participants.append(marc)
 addr3 = Address()
 addr3.city = "Annemasse"
 addr3.save()

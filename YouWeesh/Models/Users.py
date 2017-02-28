@@ -158,4 +158,3 @@ class Users(Document):
             return picture
         else:
             return None
-
