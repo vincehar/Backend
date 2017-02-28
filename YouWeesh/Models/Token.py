@@ -28,6 +28,10 @@ class Token(Document):
         self.token = binascii.hexlify(os.urandom(20)).decode()
         return self.token
 
+    def set_token(self,token):
+        self.token = token
+        return self.token
+
     def get_date_created(self):
         """
         Get the date when the user has registered.
