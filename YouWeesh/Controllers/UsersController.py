@@ -356,6 +356,7 @@ def filter_list(request):
     :return:
     """
     # 1 - record new conf into user preferences
+    
     connected_user = App.getCurrentUser(request)
     try:
         if "eventOk" in request.POST:
