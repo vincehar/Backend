@@ -55,5 +55,4 @@ urlpatterns = [
     url(r'^weeshback/$', UsersController.weeshback, name='weeshback'),
     url(r'^unweeshback/$', UsersController.unweeshback, name='unweeshback'),
     url(r'^registeruser/$', RegisterController.registeruser, name='registeruser')
-
 ]
