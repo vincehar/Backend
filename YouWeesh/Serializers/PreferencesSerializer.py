@@ -9,7 +9,7 @@ class PreferencesSerializer(DocumentSerializer):
     class Meta:
         model = Preferences
         depth = 1
-        fields = ('display_weeshes', 'display_events', 'background_picture')
+        fields = ('display_weeshes', 'display_events', 'background_picture', 'selected_network', 'search_string')
 
     def get_background_picture(self, preferences):
         return preferences.get_background_picture()
