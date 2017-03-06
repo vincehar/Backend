@@ -43,7 +43,7 @@ def account(request, _email):
     """
     try:
         connected_user = App.getCurrentUser(request)
-        selected_user = Users.objects.get(user__email=_email)
+        selected_user = Users.objects.get(user__email=_email.lower())
         usersSerializer = UsersSerializer(instance=selected_user)
     except connected_user.DoesNotExist:
         raise Http404('Not logged')
