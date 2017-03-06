@@ -53,6 +53,7 @@ urlpatterns = [
     url(r'^allevents/$', UsersController.allEvents, name='allevents'),
     url(r'^getweeshbackcount/(?P<_wish_id>\w+)$', WishController.getWeeshBackCount, name='getweeshbackcount'),
     url(r'^weeshback/$', UsersController.weeshback, name='weeshback'),
+    url(r'^unweeshback/$', UsersController.unweeshback, name='unweeshback'),
     url(r'^registeruser/$', RegisterController.registeruser, name='registeruser')
 
 ]

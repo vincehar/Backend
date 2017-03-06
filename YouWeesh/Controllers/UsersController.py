@@ -275,10 +275,10 @@ def allweeshes(request):
     if connected_user.preferences.display_weeshes:
         AllWishes = list()
         if connected_user.preferences.selected_network == "PUBLIC":
-            AllWishes = Wishes.objects(Q(title__contains=connected_user.preferences.search_string))
+            AllWishes = Wishes.objects(Q(title__icontains=connected_user.preferences.search_string))
         if connected_user.preferences.selected_network == "FRIENDS":
             for relationship in getFriends(connected_user):
-                for wish in Wishes.objects(creator=relationship.from_user.id):
+                for wish in Wishes.objects(Q(creator=relationship.from_user.id) & Q(title__icontains=connected_user.preferences.search_string)):
                     AllWishes.append(wish)
 
         lstWishes = WishSerializer(instance=AllWishes, many=True)
@@ -298,10 +298,10 @@ def allEvents(request):
     if connected_user.preferences.display_events:
         AllEvents = list()
         if connected_user.preferences.selected_network == "PUBLIC":
-            AllEvents = Events.objects
+            AllEvents = Events.objects(Q(title__icontains=connected_user.preferences.search_string))
         if connected_user.preferences.selected_network == "friends":
             for relationship in getFriends(connected_user):
-                for wish in Events.objects(creator=relationship.from_user.id):
+                for wish in Events.objects(Q(creator=relationship.from_user.id) & Q(title__icontains=connected_user.preferences.search_string)):
                     AllEvents.append(wish)
 
         lstEvents = EventSerializer(instance=AllEvents, many=True)
@@ -324,10 +324,10 @@ def weeshback(request):
         raise Http404('Weesh does not exist')
     return Response(True)
 
-@api_view(('GET',))
+@api_view(('POST',))
 @permission_classes((AllowAny,))
 @renderer_classes((JSONRenderer,))
-def unweeshback(request, _wish_id):
+def unweeshback(request):
     '''
     Unsubscribe a the connected user to a weeshback
     :param request:
@@ -336,7 +336,7 @@ def unweeshback(request, _wish_id):
     '''
     try:
         connected_user = App.getCurrentUser(request)
-        current_wish = Wishes.objects.get(id=_wish_id)
+        current_wish = Wishes.objects.get(id=request.POST['weesh_id'])
         #Atomic update : allow not to have duplicate !
         current_wish.update(pull__weeshback=connected_user)
     except connected_user.DoesNotExist:
@@ -356,7 +356,7 @@ def filter_list(request):
     :return:
     """
     # 1 - record new conf into user preferences
-    
+
     connected_user = App.getCurrentUser(request)
     try:
         if "eventOk" in request.POST:
@@ -376,4 +376,4 @@ def filter_list(request):
     except Wishes.DoesNotExist:
         raise Http404('Wish id does not exist')
     else:
-        return redirect('/upto/wishes/')
+        return Response(True)
