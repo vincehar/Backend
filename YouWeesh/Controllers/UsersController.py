@@ -29,6 +29,9 @@ from YouWeesh.Tools.app import App
 #from rest_framework.authtoken.models import Token
 from django.views.decorators.csrf import ensure_csrf_cookie
 from YouWeesh.Serializers.UserSerializer import BaseUserSerializer
+import time
+from django.core.files.base import ContentFile
+from base64 import b64decode
 from datetime import datetime
 import json
 
@@ -86,6 +89,29 @@ def get_favorite_tags(request, _email):
         raise Http404('User doesnt exists')
     else:
         return Response(json.dumps(a))
+
+
+@api_view(('POST',))
+@permission_classes((AllowAny,))
+@renderer_classes((JSONRenderer,))
+def updatepicture(request):
+
+    try:
+
+        connected_user = App.getCurrentUser(request)
+        pictureBase64 = request.data['picture'].encode('utf8')
+        picturedata = b64decode(pictureBase64)
+
+        connected_user.picture.replace(ContentFile(picturedata))
+        connected_user.save()
+
+    except connected_user.DoesNotExist:
+        raise Http404('Not logged')
+    except connected_user.DoesNotExist:
+        raise Http404('User doesnt exists')
+    else:
+        return Response(True)
+
 
 @api_view(('GET',))
 @permission_classes((AllowAny,))
