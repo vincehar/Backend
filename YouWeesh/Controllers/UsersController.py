@@ -90,6 +90,26 @@ def get_favorite_tags(request, _email):
     else:
         return Response(json.dumps(a))
 
+@api_view(('POST',))
+@permission_classes((AllowAny,))
+@renderer_classes((JSONRenderer,))
+def updatebackgroundpicture(request):
+
+    try:
+
+        connected_user = App.getCurrentUser(request)
+        pictureBase64 = request.data['picture'].encode('utf8')
+        picturedata = b64decode(pictureBase64)
+
+        connected_user.preferences.background_picture.replace(ContentFile(picturedata))
+        connected_user.save()
+
+    except connected_user.DoesNotExist:
+        raise Http404('Not logged')
+    except connected_user.DoesNotExist:
+        raise Http404('User doesnt exists')
+    else:
+        return Response(True)
 
 @api_view(('POST',))
 @permission_classes((AllowAny,))

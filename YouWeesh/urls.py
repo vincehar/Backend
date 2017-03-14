@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^useriscreated/(?P<email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})$', UsersController.useriscreated, name='useriscreated'),
     url(r'^register/', include('regme.urls')),
     url(r'^updatepicture/$', UsersController.updatepicture, name='updatepicture'),
+    url(r'^updatebackgroundpicture/$', UsersController.updatebackgroundpicture, name='updatebackgroundpicture'),
     url(r'^account/register/', UsersBackend.as_view(form_class=UsersRegistrationForm), name='register'),
     url(r'^account/(?P<_email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})$', UsersController.account, name='account'),
     url(r'^myevents/$', UsersController.myNextEvents, name='myevents'),
