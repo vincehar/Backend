@@ -249,16 +249,19 @@ def createEvent(request):
     """
     try:
         # 2 - get wish title from form
-        eventName = request.POST['eventName']
+        eventName = request.data['eventName'].encode('utf8')
 
-        start_date = request.POST['startDate']
+        start_date = request.data['startDate'].encode('utf8')
         #end_date = datetime.datetime.strptime(request.POST['endDate'], "%Y/%m/%d %H:%M")
 
-        nbrParticipantsMax = request.POST['nbrParticipantsMax']
-        location = request.POST['location']
-        pvOrPub = request.POST['pvOrPub']
-        _idLevel = request.POST['idLevel']
+        nbrParticipantsMax = request.data['nbrParticipantsMax'].encode('utf8')
+        location = request.data['location'].encode('utf8')
+        pvOrPub = request.data['pvOrPub'].encode('utf8')
+        _idLevel = request.data['idLevel'].encode('utf8')
+        picture = request.data['picture'].encode('utf8')
 
+        picturedata = b64decode(picture)
+        oneFile = ContentFile(picturedata)
         selectedLevel = Level.objects.get(idLevel=_idLevel)
         addr= Address()
         addr.city = location
@@ -269,7 +272,7 @@ def createEvent(request):
             thumbnail = request.FILES['thumbnail']
             App.getCurrentUser(request).create_event(eventName=eventName, start_date=start_date, thumbnail=thumbnail)
         else:
-            App.getCurrentUser(request).create_event(level=selectedLevel, eventName=eventName, start_date=start_date, end_date=datetime.now(), nbrParticipantsMax=nbrParticipantsMax, address=addr)
+            App.getCurrentUser(request).create_event(level=selectedLevel, eventName=eventName, start_date=start_date, end_date=datetime.now(), nbrParticipantsMax=nbrParticipantsMax, address=addr, thumbnail=oneFile)
 
     except Users.DoesNotExist:
         raise Http404('User id does not exist')
