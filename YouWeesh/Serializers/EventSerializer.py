@@ -18,7 +18,7 @@ class EventSerializer(DocumentSerializer):
     class Meta:
         model = Events
         depth = 1
-        fields = ('id', 'thumbnail', 'title', 'start_date', 'creator', 'tags', 'participants', 'level', 'address') #'start_date', 'end_date', 'price', 'name', 'user_id')
+        fields = ('id', 'thumbnail', 'title', 'start_date', 'creator', 'tags', 'participants', 'level', 'address', 'description', 'priv_or_pub', 'nbrParticipantsMax') #'start_date', 'end_date', 'price', 'name', 'user_id')
 
     def get_thumbnail(self, events):
         return events.get_thumbnail()

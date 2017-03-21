@@ -116,7 +116,7 @@ class Users(Document):
     def create_event(self, **kwargs):
 
         if 'thumbnail' in kwargs:
-            event = Events(creator=self.id, title=kwargs['eventName'], start_date=kwargs['start_date'], end_date=kwargs['end_date'], thumbnail=kwargs['thumbnail'], creation_date=datetime.datetime.now())
+            event = Events(creator=self.id, title=kwargs['eventName'], priv_or_pub=kwargs['priv_or_pub'], start_date=kwargs['start_date'], end_date=kwargs['end_date'], thumbnail=kwargs['thumbnail'], nbrParticipantsMax=kwargs['nbrParticipantsMax'], creation_date=datetime.datetime.now(), level=kwargs['level'], address=kwargs['address'], description=kwargs['description'])
         else:
             event = Events(creator=self.id, title=kwargs['eventName'], start_date=kwargs['start_date'], end_date=kwargs['end_date'], nbrParticipantsMax=kwargs['nbrParticipantsMax'], creation_date=datetime.datetime.now(), level=kwargs['level'], address=kwargs['address'])
 

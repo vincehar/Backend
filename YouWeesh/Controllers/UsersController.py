@@ -259,6 +259,7 @@ def createEvent(request):
         pvOrPub = request.data['pvOrPub'].encode('utf8')
         _idLevel = request.data['idLevel'].encode('utf8')
         picture = request.data['picture'].encode('utf8')
+        description = request.data['description'].encode('utf8')
 
         picturedata = b64decode(picture)
         oneFile = ContentFile(picturedata)
@@ -268,11 +269,8 @@ def createEvent(request):
         addr.getorUpdateCoordinates()
         addr.save()
 
-        if request.FILES:
-            thumbnail = request.FILES['thumbnail']
-            App.getCurrentUser(request).create_event(eventName=eventName, start_date=start_date, thumbnail=thumbnail)
-        else:
-            App.getCurrentUser(request).create_event(level=selectedLevel, eventName=eventName, start_date=start_date, end_date=datetime.now(), nbrParticipantsMax=nbrParticipantsMax, address=addr, thumbnail=oneFile)
+        #TODO:Test si image or not
+        App.getCurrentUser(request).create_event(description=description, priv_or_pub=pvOrPub, level=selectedLevel, eventName=eventName, start_date=start_date, end_date=datetime.now(), nbrParticipantsMax=nbrParticipantsMax, address=addr, thumbnail=oneFile)
 
     except Users.DoesNotExist:
         raise Http404('User id does not exist')
