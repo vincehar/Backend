@@ -22,6 +22,7 @@ class Events(Document):
     level = ReferenceField('Level')
     is_active = BooleanField(default=True)
     priv_or_pub = StringField(default="PRIVATE")
+    description = StringField()
 
     def get_ref_date(self):
         return self.creation_date

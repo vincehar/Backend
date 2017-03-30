@@ -30,21 +30,8 @@ from mongoengine.queryset import DoesNotExist
 @api_view(('GET',))
 @permission_classes((AllowAny,))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
-def getEventById(request):
+def getEventById(request, _event_id):
 
-    event = Events.objects.get(id=request.GET['id'])
-
-    if request.accepted_renderer.format == 'html':
-        context = {
-            'object': event
-        }
-        return render(request, 'upto/event.html', context)
-
-    if event.thumbnail:
-        picture = event.get_picture()
-    else:
-        picture = ''
-
+    event = Events.objects.get(id=_event_id)
     eventSerializer = EventSerializer(instance=event)
-
-    return Response({'event': eventSerializer.data, 'event_picture': picture})
+    return Response(eventSerializer.data)
