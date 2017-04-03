@@ -21,6 +21,8 @@ class Users(Document):
     This is the class in which everything is embedded.
     """
     user_id = ObjectIdField(default=ObjectId)
+    date_of_birth = DateTimeField()
+    home_town = EmbeddedDocumentField('Address')
     user = EmbeddedDocumentField('User')
     picture = ImageField()
     preferences = EmbeddedDocumentField('Preferences')
