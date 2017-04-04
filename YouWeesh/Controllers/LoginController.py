@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from django.http import HttpResponseForbidden
 from YouWeesh.Serializers.UsersSerializer import UsersSerializer
 import oauth2
+import ast
 from YouWeesh.Models.SocialNetworks import SocialNetworks
 from YouWeesh.Models.Users import Users
 from YouWeesh.Models.Token import Token
@@ -98,7 +99,8 @@ def getTokenForSocialNetWork(request):
             url = 'https://graph.facebook.com/oauth/access_token'
             params = {'grant_type':'fb_exchange_token','client_id':'222535738090638','client_secret':'09a2f8b2122cd05061e50fa00dcc999a', 'fb_exchange_token':socialtoken}
             r = requests.get(url, params=params)
-            longLiveSocialToken = r.content[13:]
+            response_json = ast.literal_eval(r.content)
+            longLiveSocialToken = response_json.get('access_token')
             Token.objects(user=user).update_one(user=user,token=longLiveSocialToken,upsert=True)
             return Response(longLiveSocialToken)
 
