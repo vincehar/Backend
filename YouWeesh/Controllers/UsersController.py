@@ -426,7 +426,7 @@ def filter_list(request):
 
 def getUserWithUsername(_username):
     return Users.objects.get(user__username=_username)
-
+ 
 @api_view(('POST',))
 @permission_classes((AllowAny,))
 @renderer_classes((JSONRenderer,))
