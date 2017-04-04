@@ -33,3 +33,7 @@ class Events(Document):
             return picture
         else:
             return None
+
+    def add_participant(self, userAdded):
+        self.participants.append(userAdded)
+        self.save()

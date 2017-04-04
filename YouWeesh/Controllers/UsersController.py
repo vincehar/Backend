@@ -55,6 +55,7 @@ def account(request, _email):
     else:
         return Response(usersSerializer.data)
 
+
 @api_view(('GET',))
 @permission_classes((AllowAny,))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
@@ -71,8 +72,6 @@ def get_favorite_tags(request, _email):
         lstTags = list()
         lstEvents = Events.objects(Q(creator=selected_user.id) | Q(participants__contains=connected_user.id))
         lstWeesh = Wishes.objects(creator=selected_user.id)
-
-        
 
         for ev in lstEvents:
             if len(ev.tags) != 0:
@@ -424,3 +423,53 @@ def filter_list(request):
         raise Http404('Wish id does not exist')
     else:
         return Response(True)
+
+def getUserWithUsername(_username):
+    return Users.objects.get(user__username=_username)
+
+@api_view(('POST',))
+@permission_classes((AllowAny,))
+@renderer_classes((JSONRenderer,))
+def addfriend(request):
+    try:
+        connected_user = App.getCurrentUser(request)
+        friend_user = Users.objects.get(user__email=request.POST['email'])
+        connected_user.add_friend(friend_user)
+    except connected_user.DoesNotExist:
+        raise Http404('Wish id does not exist')
+    else:
+        return Response(True)
+
+
+'''
+@api_view(('POST',))
+@permission_classes((AllowAny,))
+@renderer_classes((JSONRenderer,))
+def acceptfriend(request, friend_id):
+    try:
+        connected_user = App.getCurrentUser(request)
+        relation = UsersRelationships.objects.get(from_user=friend_id, to_user=connected_user.id)
+        relation_symetrical = UsersRelationships(from_user=connected_user.id, to_user=friend_id, accepted=True)
+        relation.accepted = True
+        relation_symetrical.save()
+        relation.save()
+    except connected_user.DoesNotExist:
+        raise Http404('Wish id does not exist')
+    else:
+        return redirect('/upto/wishes/')
+
+@api_view(('POST',))
+@permission_classes((AllowAny,))
+@renderer_classes((JSONRenderer,))
+def unfriend(request, _user_id):
+    try:
+        connected_user = App.getCurrentUser(request)
+        relation = UsersRelationships.objects.get(from_user=connected_user.id, to_user=_user_id)
+        relation_symetrical = UsersRelationships.objects.get(to_user=connected_user.id, from_user=_user_id)
+        relation_symetrical.delete()
+        relation.delete()
+    except connected_user.DoesNotExist:
+        raise Http404('Wish id does not exist')
+    else:
+        return redirect('/upto/wishes/')
+'''
