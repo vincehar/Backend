@@ -7,6 +7,7 @@ import YouWeesh.Controllers.LoginController as LoginController
 import YouWeesh.Controllers.RegisterController as RegisterController
 import YouWeesh.Controllers.EventController as EventController
 import YouWeesh.Controllers.LevelControler as LevelControler
+import YouWeesh.Controllers.SportsController as SportsController
 
 from . import views
 
@@ -24,6 +25,7 @@ urlpatterns = [
     url(r'^myevents/$', UsersController.myNextEvents, name='myevents'),
     url(r'^getweeshbyid/(?P<_wish_id>\w+)/$', WishController.getWeeshById, name='getweeshbyid'),
     url(r'^geteventbyid/(?P<_event_id>\w+)$', EventController.getEventById, name='geteventbyid'),
+    url(r'^getsports/(?P<searchterm>\w+)$', SportsController.getsports, name='getsports'),
     url(r'^getnbrfriends/$', UsersController.getNbrFriends, name='getnbrfriends'),
     url(r'^createwish/$', UsersController.createWish, name='createwish'),
     url(r'^filter/$', UsersController.filter_list, name='filter'),

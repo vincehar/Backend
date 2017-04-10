@@ -1,6 +1,6 @@
 #from upto.rabbitmq import rabbitmq
-from YouWeesh.models. import  Users
-    import User, Users, Wishes, UsersRelationships, Events, Preferences, Tags, Coordinates
+from upto.models import  Users
+from upto.models  import User, Users, Wishes, UsersRelationships, Events, Preferences, Tags, Coordinates
 from pymongo import Connection
 #from django.contrib import auth
 import datetime
