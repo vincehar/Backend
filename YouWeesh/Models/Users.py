@@ -30,6 +30,7 @@ class Users(Document):
     current_coordinates = EmbeddedDocumentField('Coordinates')
     address = EmbeddedDocumentField('Address')
     social_network = ReferenceField('SocialNetworks')
+    fcm_token = StringField()
     #friends = ListField(ReferenceField('UsersRelationships'))
     #wishes = ListField(ReferenceField('Wishes'))
     #logs = ListField(ReferenceField('Logs'))
@@ -91,8 +92,10 @@ class Users(Document):
 
         :return:
         """
-        relation = UsersRelationships(from_user=self, to_user=_users, accepted=False)
-        relation.save()
+        isRelation =UsersRelationships.objects(from_user=self, to_user=_users)
+        if len(isRelation) == 0:
+            relation = UsersRelationships(from_user=self, to_user=_users, accepted=False)
+            relation.save()
         return self
 
     def create_wish(self, _title, _level):
@@ -160,3 +163,11 @@ class Users(Document):
             return picture
         else:
             return None
+
+    def update_fcm_token(self, _fcm_token):
+        '''if self.fcm_token:
+            self.update(fcm_token=_fcm_token)
+        else:'''
+        self.fcm_token = _fcm_token
+        self.save()
+        return self

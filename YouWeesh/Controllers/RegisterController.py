@@ -14,6 +14,7 @@ from django.core.files.base import ContentFile
 from YouWeesh.Models.Token import Token
 from YouWeesh.Tools.app import App
 from mongoengine.django.auth import User
+from django.http import Http404
 
 @api_view(('POST',))
 @permission_classes((AllowAny,))
@@ -40,4 +41,15 @@ def registeruser(request):
        users.picture.replace(ContentFile(picturedata))
 
    users.save()
+   return Response(True)
+
+@api_view(('POST',))
+@permission_classes((AllowAny,))
+@renderer_classes((JSONRenderer,))
+def registerFCMToken(request):
+   try:
+      connected_user = App.getCurrentUser(request)
+      connected_user.update_fcm_token(request.POST['fcmToken'])
+   except connected_user.DoesNotExist:
+        raise Http404('Not logged')
    return Response(True)
