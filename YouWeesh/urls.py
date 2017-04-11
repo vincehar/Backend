@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^weeshtimeline/$', UsersController.weeshTimeline, name='weeshtimeline'),
     url(r'^deletewish/(?P<_wish_id>\w+)$', views.deleteWish, name='deletewish'),
     url(r'^createevent/$', UsersController.createEvent, name='createevent'),
+    url(r'^savefavoritessports/$', UsersController.saveFavoritesSports, name='savefavoritessports'),
     url(r'^addfriend/$', UsersController.addfriend, name='addfriend'),
     url(r'^acceptfriend/(?P<friend_id>\w+)/$', views.acceptfriend, name='acceptfriend'),
     url(r'^addparticipant/$', EventController.addParticipant, name='addparticipant'),

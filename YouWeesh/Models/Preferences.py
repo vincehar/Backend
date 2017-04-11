@@ -9,6 +9,7 @@ class Preferences(EmbeddedDocument):
     selected_network = StringField(default='PUBLIC')
     background_picture = ImageField()
     search_string = StringField(default='')
+    favorites_sports = ListField(StringField())
 
     def get_background_picture(self):
         if self.background_picture:

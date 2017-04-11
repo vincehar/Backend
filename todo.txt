@@ -212,3 +212,6 @@ pip install -U googlemaps
 download https://pypi.python.org/pypi/responses/0.5.0
 unzip
 sudo python setup.py install
+
+ubuntu@ubuntu-upto:~$ mongoimport --db upto --collection sports --type json --file SportsList --jsonArray
+

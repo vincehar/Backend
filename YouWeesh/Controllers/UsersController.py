@@ -297,6 +297,31 @@ def updatePosition(request):
     else:
         return Response(True)
 
+@api_view(('POST',))
+@permission_classes((AllowAny,))
+@renderer_classes((JSONRenderer,))
+def saveFavoritesSports(request):
+    """
+
+    :type request: object
+    """
+    try:
+        connected_user = App.getCurrentUser(request)
+        sports = request.POST["favoritessports"].split(";")
+
+        for i, val in enumerate(sports):
+            connected_user.preferences.favorites_sports.append(val)
+
+        connected_user.save()
+
+    except connected_user.DoesNotExist:
+        return Response(False)
+    except Exception:
+        return Response(False)
+    else:
+        return Response(True)
+
+
 
 @api_view(('GET',))
 @permission_classes((AllowAny,))
