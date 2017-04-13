@@ -1,13 +1,15 @@
-from YouWeesh.Models.Users import Users, User
-from YouWeesh.Models.Events import Events
-from YouWeesh.Models.Preferences import Preferences
-from YouWeesh.Models.Tags import Tags
-from YouWeesh.Models.Coordinates import Coordinates
-from YouWeesh.Models.Wishes import Wishes
-from YouWeesh.Models.Level import Level
-from YouWeesh.Models.SocialNetworks import SocialNetworks
-from YouWeesh.Models.Address import Address
 from pymongo import Connection
+
+from YouWeesh.Models.Address import Address
+from YouWeesh.Models.Coordinates import Coordinates
+from YouWeesh.Models.Events import Events
+from YouWeesh.Models.FriendsNotifications import FriendsNotifications
+from YouWeesh.Models.Level import Level
+from YouWeesh.Models.Preferences import Preferences
+from YouWeesh.Models.SocialNetworks import SocialNetworks
+from YouWeesh.Models.Users import Users, User
+from YouWeesh.Models.WeeshbackNotifications import WeeshbackNotifications
+
 #from django.contrib import auth
 import datetime
 
@@ -23,6 +25,7 @@ level = collection['level']
 tags = collection['tags']
 addresses = collection['address']
 socialnetworks = collection['social_networks']
+socialnetworks = collection['notifications']
 
 
 print "------------------------------------------"
@@ -143,7 +146,7 @@ f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/trail.
 ev.thumbnail.replace(f)
 ev.save()
 
-marc.create_wish('Du #velo ce week-end qui est chaud ?', lvl)
+we = marc.create_wish('Du #velo ce week-end qui est chaud ?', lvl)
 
 #set the social network for logging in
 marc.social_network = youweesh
@@ -187,6 +190,30 @@ alex.save()
 f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/sportback.jpeg", "rb")
 marc.preferences.background_picture.replace(f)
 marc.save()
+
+
+#-----------------------------------#
+#       Notifications part          #
+#-----------------------------------#
+
+
+notif_2 = WeeshbackNotifications()
+notif_2.from_user = alex
+notif_2.to_user = marc
+notif_2.content = 'Alex weeshbacked your wish'
+notif_2.referenced_object = we
+notif_2.save()
+
+notif = FriendsNotifications()
+notif.from_user = alex
+notif.to_user = marc
+notif.content = 'Alex added you as sport mate'
+notif.referenced_object = alex
+notif.save()
+
+'''
+notif = FriendsNotifications(alex, marc, 'Alex added you as sport mate' )
+'''
 
 #----------------
 #Events part

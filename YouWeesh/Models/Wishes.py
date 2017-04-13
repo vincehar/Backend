@@ -1,7 +1,6 @@
 import datetime
-from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocumentField, \
-    ReferenceField, StringField, ListField, DateTimeField, BinaryField, BooleanField, ObjectIdField, ImageField, IntField
-from bson import ObjectId
+
+from mongoengine import Document, ReferenceField, StringField, ListField, DateTimeField, BooleanField
 
 
 class Wishes(Document):
@@ -12,7 +11,6 @@ class Wishes(Document):
     is_active = BooleanField(default=True)
     tags = ListField(ReferenceField('Tags'))
     level = ReferenceField('Level')
-
 
     def user_name(self):
         return self.user_id.username

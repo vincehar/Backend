@@ -1,18 +1,17 @@
-import datetime
 import base64
+import datetime
 import string
-from YouWeesh.Models.UsersRelationships import UsersRelationships
-from YouWeesh.Models.Wishes import Wishes
-from YouWeesh.Models.Tags import Tags
+
+from bson import ObjectId
+from mongoengine import Document, EmbeddedDocumentField, \
+    ReferenceField, StringField, DateTimeField, ObjectIdField, ImageField
+
+from YouWeesh.Models.Coordinates import Coordinates
 from YouWeesh.Models.Events import Events
 from YouWeesh.Models.Medias import Medias
-from YouWeesh.Models.Coordinates import Coordinates
-from YouWeesh.Models.Address import Address
-from YouWeesh.Models.Preferences import Preferences
-from mongoengine.django.auth import User
-from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocumentField, \
-    ReferenceField, StringField, ListField, DateTimeField, BinaryField, BooleanField, ObjectIdField, ImageField, IntField
-from bson import ObjectId
+from YouWeesh.Models.Tags import Tags
+from YouWeesh.Models.UsersRelationships import UsersRelationships
+from YouWeesh.Models.Wishes import Wishes
 
 
 class Users(Document):
@@ -165,9 +164,9 @@ class Users(Document):
             return None
 
     def update_fcm_token(self, _fcm_token):
-        '''if self.fcm_token:
+        if hasattr(self, 'fcm_token'):
             self.update(fcm_token=_fcm_token)
-        else:'''
-        self.fcm_token = _fcm_token
+        else:
+            self.fcm_token = _fcm_token
         self.save()
         return self

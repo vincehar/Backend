@@ -1,35 +1,27 @@
-from operator import methodcaller
 from collections import Counter
-from django.http import Http404, HttpResponse, HttpResponseRedirect
-from django.core import serializers as djangoSerializers
-from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+
+from django.http import Http404
+from mongoengine.queryset.visitor import Q
 from rest_framework.decorators import api_view, renderer_classes, permission_classes
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.response import Response
-from YouWeesh.Serializers.UsersSerializer import UsersSerializer
-from YouWeesh.Serializers.EventSerializer import EventSerializer
-from YouWeesh.Serializers.GenericSerializer import GenericSerializer
-from YouWeesh.Serializers.WishSerializer import WishSerializer
+
+from YouWeesh.Models.Address import Address
+from YouWeesh.Models.Events import Events
+from YouWeesh.Models.FriendsNotifications import FriendsNotifications
 from YouWeesh.Models.Level import Level
 from YouWeesh.Models.Users import Users
-from YouWeesh.Models.Events import Events
-from YouWeesh.Models.Token import Token
-from YouWeesh.Models.Wishes import Wishes
-from YouWeesh.Models.Address import Address
-from YouWeesh.Models.Tags import Tags
-from YouWeesh.Models.Preferences import Preferences
-from mongoengine.django.auth import User
 from YouWeesh.Models.UsersRelationships import UsersRelationships
-from mongoengine.django.auth import User
-from mongoengine.queryset.visitor import Q
+from YouWeesh.Models.WeeshbackNotifications import WeeshbackNotifications
+from YouWeesh.Models.Wishes import Wishes
+from YouWeesh.Serializers.EventSerializer import EventSerializer
+from YouWeesh.Serializers.NotificationsSerializer import NotificationsSerializer
+from YouWeesh.Serializers.UsersSerializer import UsersSerializer
+from YouWeesh.Serializers.WishSerializer import WishSerializer
 from YouWeesh.Tools.app import App
+
 #from rest_framework.authtoken.models import Token
-from django.views.decorators.csrf import ensure_csrf_cookie
-from YouWeesh.Serializers.UserSerializer import BaseUserSerializer
-import time
 from django.core.files.base import ContentFile
 from base64 import b64decode
 from datetime import datetime
@@ -88,6 +80,22 @@ def get_favorite_tags(request, _email):
         raise Http404('User doesnt exists')
     else:
         return Response(json.dumps(a))
+
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+@renderer_classes((JSONRenderer,))
+def getNotifications(request):
+    try:
+        lstNotifs = list()
+        connected_user = Users.objects.get(user__username='marc') #App.getCurrentUser(request)
+        lstNotifs.extend(FriendsNotifications.objects(Q(to_user=connected_user) & Q(is_read=False)))
+        lstNotifs.extend(WeeshbackNotifications.objects(Q(to_user=connected_user) & Q(is_read=False)))
+        notifs = NotificationsSerializer(instance=lstNotifs, many=True)
+
+    except connected_user.DoesNotExist:
+        raise Http404('Not logged')
+    else:
+        return Response(notifs.data)
 
 @api_view(('POST',))
 @permission_classes((AllowAny,))

@@ -1,13 +1,13 @@
-from django.conf.urls import url, include
-from upto.regbackend import UsersBackend
-from upto.forms import UsersRegistrationForm
-import YouWeesh.Controllers.WishController as WishController
-import YouWeesh.Controllers.UsersController as UsersController
-import YouWeesh.Controllers.LoginController as LoginController
-import YouWeesh.Controllers.RegisterController as RegisterController
+from django.conf.urls import url
+
 import YouWeesh.Controllers.EventController as EventController
 import YouWeesh.Controllers.LevelControler as LevelControler
-
+import YouWeesh.Controllers.LoginController as LoginController
+import YouWeesh.Controllers.RegisterController as RegisterController
+import YouWeesh.Controllers.UsersController as UsersController
+import YouWeesh.Controllers.WishController as WishController
+from upto.forms import UsersRegistrationForm
+from upto.regbackend import UsersBackend
 from . import views
 
 app_name = 'YouWeesh'
@@ -45,5 +45,6 @@ urlpatterns = [
     url(r'^weeshback/$', UsersController.weeshback, name='weeshback'),
     url(r'^unweeshback/$', UsersController.unweeshback, name='unweeshback'),
     url(r'^registeruser/$', RegisterController.registeruser, name='registeruser'),
-    url(r'^registerfcmtoken/$', RegisterController.registerFCMToken, name='registerFCMToken')
+    url(r'^registerfcmtoken/$', RegisterController.registerFCMToken, name='registerFCMToken'),
+    url(r'^getnotifications/$', UsersController.getNotifications, name='notifications')
 ]
