@@ -1,13 +1,14 @@
-from django.conf.urls import url
-
-import YouWeesh.Controllers.EventController as EventController
-import YouWeesh.Controllers.LevelControler as LevelControler
+from django.conf.urls import url, include
+from upto.regbackend import UsersBackend
+from upto.forms import UsersRegistrationForm
+import YouWeesh.Controllers.WishController as WishController
+import YouWeesh.Controllers.UsersController as UsersController
 import YouWeesh.Controllers.LoginController as LoginController
 import YouWeesh.Controllers.RegisterController as RegisterController
-import YouWeesh.Controllers.UsersController as UsersController
-import YouWeesh.Controllers.WishController as WishController
-from upto.forms import UsersRegistrationForm
-from upto.regbackend import UsersBackend
+import YouWeesh.Controllers.EventController as EventController
+import YouWeesh.Controllers.LevelControler as LevelControler
+import YouWeesh.Controllers.SportsController as SportsController
+
 from . import views
 
 app_name = 'YouWeesh'
@@ -24,6 +25,7 @@ urlpatterns = [
     url(r'^myevents/$', UsersController.myNextEvents, name='myevents'),
     url(r'^getweeshbyid/(?P<_wish_id>\w+)/$', WishController.getWeeshById, name='getweeshbyid'),
     url(r'^geteventbyid/(?P<_event_id>\w+)$', EventController.getEventById, name='geteventbyid'),
+    url(r'^getsports/(?P<searchterm>\w+)$', SportsController.getsports, name='getsports'),
     url(r'^getnbrfriends/$', UsersController.getNbrFriends, name='getnbrfriends'),
     url(r'^createwish/$', UsersController.createWish, name='createwish'),
     url(r'^filter/$', UsersController.filter_list, name='filter'),
@@ -31,6 +33,7 @@ urlpatterns = [
     url(r'^weeshtimeline/$', UsersController.weeshTimeline, name='weeshtimeline'),
     url(r'^deletewish/(?P<_wish_id>\w+)$', views.deleteWish, name='deletewish'),
     url(r'^createevent/$', UsersController.createEvent, name='createevent'),
+    url(r'^savefavoritessports/$', UsersController.saveFavoritesSports, name='savefavoritessports'),
     url(r'^addfriend/$', UsersController.addfriend, name='addfriend'),
     url(r'^acceptfriend/(?P<friend_id>\w+)/$', views.acceptfriend, name='acceptfriend'),
     url(r'^addparticipant/$', EventController.addParticipant, name='addparticipant'),
