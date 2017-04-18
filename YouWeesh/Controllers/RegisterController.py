@@ -9,6 +9,7 @@ from YouWeesh.Models.Users import Users
 from YouWeesh.Models.Preferences import Preferences
 from YouWeesh.Models.Coordinates import Coordinates
 from YouWeesh.Models.SocialNetworks import SocialNetworks
+from YouWeesh.Models.Address import Address
 from base64 import b64decode
 from django.core.files.base import ContentFile
 from YouWeesh.Models.Token import Token
@@ -28,17 +29,31 @@ def registeruser(request):
    firstname = request.POST['firstname']
    socialnetwork = request.POST['socialnetwork']
    pictureBase64 = request.POST['picture']
+   home_town = request.POST['home_town']
    picturedata = b64decode(pictureBase64)
    socialnetworkObject = SocialNetworks.objects.get(label=socialnetwork)
    u=User.objects.create(username=username, email=email, first_name=firstname, last_name=lastname)
+
    if socialnetwork == 'Youweesh':
        u.set_password(password)
 
    u.save()
-   users = Users.objects.create(user=u,social_network=socialnetworkObject,preferences=Preferences(),current_coordinates=Coordinates())
+
+   preferences = Preferences()
+   preferences.save()
+
+   if home_town != "":
+      addr = Address()
+      addr.city = home_town
+      addr.getorUpdateCoordinates()
+      addr.save()
+      users = Users.objects.create(user=u, social_network=socialnetworkObject, address=addr, preferences=preferences)
+   else:
+      users = Users.objects.create(user=u, social_network=socialnetworkObject, preferences=preferences)
+
 
    if socialnetwork == 'Facebook' or socialnetwork == 'Twitter':
-       users.picture.replace(ContentFile(picturedata))
+      users.picture.replace(ContentFile(picturedata))
 
    users.save()
    return Response(True)

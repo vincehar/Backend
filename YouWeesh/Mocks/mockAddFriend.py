@@ -1,4 +1,5 @@
-from YouWeesh.Models.Users import Users, User
+from YouWeesh.Models.Users import Users
+from mongoengine.django.auth import User
 from YouWeesh.Models.UsersRelationships import UsersRelationships
 from YouWeesh.Models.Preferences import Preferences
 from YouWeesh.Models.Coordinates import Coordinates

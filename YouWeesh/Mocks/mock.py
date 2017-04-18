@@ -7,7 +7,8 @@ from YouWeesh.Models.FriendsNotifications import FriendsNotifications
 from YouWeesh.Models.Level import Level
 from YouWeesh.Models.Preferences import Preferences
 from YouWeesh.Models.SocialNetworks import SocialNetworks
-from YouWeesh.Models.Users import Users, User
+from YouWeesh.Models.Users import Users
+from mongoengine.django.auth import User
 from YouWeesh.Models.WeeshbackNotifications import WeeshbackNotifications
 
 #from django.contrib import auth

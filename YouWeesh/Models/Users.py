@@ -21,7 +21,7 @@ class Users(Document):
     """
     user_id = ObjectIdField(default=ObjectId)
     date_of_birth = DateTimeField()
-    home_town = EmbeddedDocumentField('Address')
+    #home_town = EmbeddedDocumentField('Address')
     user = EmbeddedDocumentField('User')
     picture = ImageField()
     preferences = EmbeddedDocumentField('Preferences')
