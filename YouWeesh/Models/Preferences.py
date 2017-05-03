@@ -1,15 +1,16 @@
-from mongoengine import EmbeddedDocument, FloatField, Document, EmbeddedDocumentField, \
-    ReferenceField, StringField, ListField, DateTimeField, BinaryField, BooleanField, ObjectIdField, ImageField, IntField
 import base64
+
+from mongoengine import EmbeddedDocument, StringField, BooleanField, ImageField, \
+    IntField
+
 
 class Preferences(EmbeddedDocument):
     display_weeshes = BooleanField(default=True)
     display_events = BooleanField(default=True)
     search_distance = IntField(default=50)
+    search_string = StringField(default='')
     selected_network = StringField(default='PUBLIC')
     background_picture = ImageField()
-    search_string = StringField(default='')
-    favorites_sports = ListField(StringField())
 
     def get_background_picture(self):
         if self.background_picture:

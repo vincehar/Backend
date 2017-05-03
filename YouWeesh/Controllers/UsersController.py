@@ -11,8 +11,10 @@ from YouWeesh.Models.Address import Address
 from YouWeesh.Models.Events import Events
 from YouWeesh.Models.FriendsNotifications import FriendsNotifications
 from YouWeesh.Models.Level import Level
+from YouWeesh.Models.Notifications import Notifications
 from YouWeesh.Models.Users import Users
 from YouWeesh.Models.UsersRelationships import UsersRelationships
+from YouWeesh.Models.WeeshMatchingNotifications import WeeshMatchingNotifications
 from YouWeesh.Models.WeeshbackNotifications import WeeshbackNotifications
 from YouWeesh.Models.Wishes import Wishes
 from YouWeesh.Serializers.EventSerializer import EventSerializer
@@ -20,6 +22,7 @@ from YouWeesh.Serializers.NotificationsSerializer import NotificationsSerializer
 from YouWeesh.Serializers.UsersSerializer import UsersSerializer
 from YouWeesh.Serializers.WishSerializer import WishSerializer
 from YouWeesh.Tools.app import App
+from YouWeesh.Tools.geolocalisation import geolocalisation
 
 #from rest_framework.authtoken.models import Token
 from django.core.files.base import ContentFile
@@ -87,9 +90,10 @@ def get_favorite_tags(request, _email):
 def getNotifications(request):
     try:
         lstNotifs = list()
-        connected_user = Users.objects.get(user__username='marc') #App.getCurrentUser(request)
+        connected_user = App.getCurrentUser(request)
         lstNotifs.extend(FriendsNotifications.objects(Q(to_user=connected_user) & Q(is_read=False)))
         lstNotifs.extend(WeeshbackNotifications.objects(Q(to_user=connected_user) & Q(is_read=False)))
+        lstNotifs.extend(WeeshMatchingNotifications.objects(Q(to_user=connected_user) & Q(is_read=False)))
         notifs = NotificationsSerializer(instance=lstNotifs, many=True)
 
     except connected_user.DoesNotExist:
@@ -235,6 +239,35 @@ def createWish(request):
         connected_user = App.getCurrentUser(request)
         createdWish = connected_user.create_wish(_wish_title, selectedLevel)
         wishSerializer = WishSerializer(instance=createdWish)
+
+        #TODO : Lancer le code suivant en asynchrone
+        #1 - rechercher les weeshes similaires avec Tags
+        if(len(createdWish.tags) > 0):
+            lstMatchingWishes = Wishes.objects(title__icontains=createdWish.tags[0].title)
+            geoTool = geolocalisation()
+            for aWeesh in lstMatchingWishes:
+                if connected_user.user.email != aWeesh.creator.user.email:
+                    if geoTool.getDistance(connected_user.current_coordinates, aWeesh.creator.current_coordinates) <= connected_user.preferences.search_distance:
+                        isExisting = Notifications.objects(from_user=aWeesh.creator, to_user=connected_user, referenced_object=aWeesh)
+                        if len(isExisting) == 0:
+                            notif = WeeshMatchingNotifications()
+                            notif.referenced_object = aWeesh
+                            notif.from_user= aWeesh.creator
+                            notif.to_user = connected_user
+                            notif.content = aWeesh.creator.user.username + " post a matching Weesh to : "
+                            notif.save()
+
+                    if geoTool.getDistance(connected_user.current_coordinates, aWeesh.creator.current_coordinates) <= aWeesh.creator.preferences.search_distance:
+                        isExisting = Notifications.objects(from_user=connected_user, to_user=aWeesh.creator, referenced_object=createdWish)
+                        if len(isExisting) == 0:
+                            notif = WeeshMatchingNotifications()
+                            notif.referenced_object = createdWish
+                            notif.from_user= connected_user
+                            notif.to_user = aWeesh.creator
+                            notif.content = connected_user.user.username + " post a matching Weesh to : "
+                            notif.save()
+
+
     except selectedLevel.DoesNotExist:
         raise Http404('Level is not existing. Check DB')
     except connected_user.DoesNotExist:
@@ -397,6 +430,17 @@ def weeshback(request):
         current_wish = Wishes.objects.get(id=request.POST['weesh_id'])
         #Atomic update : allow not to have duplicate !
         current_wish.update(add_to_set__weeshback=connected_user)
+        if current_wish.creator.user.email != connected_user.user.email:
+            isExisting = Notifications.objects(from_user=connected_user, to_user=current_wish.creator, referenced_object=current_wish)
+
+            if len(isExisting) == 0:
+                notif = WeeshbackNotifications()
+                notif.referenced_object = current_wish
+                notif.from_user= connected_user
+                notif.to_user = current_wish.creator
+                #TODO : Stock label and message and manage multilang <-> in __init__ of object
+                notif.content = connected_user.user.username + " backed you Weesh"
+                notif.save()
     except connected_user.DoesNotExist:
         raise Http404('Not logged')
     except current_wish.DoesNotExist:
@@ -468,6 +512,13 @@ def addfriend(request):
         connected_user = App.getCurrentUser(request)
         friend_user = Users.objects.get(user__email=request.POST['email'])
         connected_user.add_friend(friend_user)
+
+        notif = FriendsNotifications()
+        notif.from_user = connected_user
+        notif.to_user = friend_user
+        notif.content = connected_user.user.username + " added you as a sport mate"
+        notif.referenced_object = friend_user
+        notif.save()
     except connected_user.DoesNotExist:
         raise Http404('Wish id does not exist')
     else:

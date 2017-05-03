@@ -1,7 +1,8 @@
 import googlemaps
+
 from YouWeesh.Models.Coordinates import Coordinates
-from datetime import datetime
 #import responses
+from math import sin, cos, sqrt, atan2, radians
 
 class geolocalisation():
 
@@ -22,19 +23,20 @@ class geolocalisation():
 
 
 
-    def getDistance(self):
-       # responses.add(responses.GET,
-        #              self.matrixServiceAdress,
-         #             body='{"status":"OK","rows":[]}',
-          #            status=200,
-           #           content_type='application/json')
+    def getDistance(self, _origin, _distination):
 
-        # sample adresses
-        origins = [{ "lat" : 46.1954229 , "lng" : 6.1552161 }] #["8 place Camoletti, 1205 Geneve"]
-        destinations = ["28 Rue Des contamines, 1206 Geneve"]
+        R = 6373.0
 
-        matrix = self.client.distance_matrix(origins, destinations)
-        return matrix
+        lat1 = radians(_origin.lat)
+        lon1 = radians(_origin.lng)
+        lat2 = radians(_distination.lat)
+        lon2 = radians(_distination.lng)
 
-    def test(self, _string):
-        return _string
+        dlon = lon2 - lon1
+        dlat = lat2 - lat1
+
+        a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+        c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+        distance = R * c
+        return distance

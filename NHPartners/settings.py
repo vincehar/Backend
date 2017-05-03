@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 import django
 import mongoengine
 from pymongo.read_preferences import ReadPreference
@@ -185,6 +186,8 @@ STATIC_URL = '/static/'
 FACEBOOK_APP_ID = '222535738090638'
 FACEBOOK_API_SECRET = '09a2f8b2122cd05061e50fa00dcc999a'
 FACEBOOK_EXTENDED_PERMISSIONS = ['email']
+
+FCM_API_KEY = 'AIzaSyCmXqLvUggroOQvuCFObVTdo7KnVffqzeo'
 django.setup()
 #SOCIAL_AUTH_MODELS = 'social_auth.db.mongoengine_models'
 #SOCIAL_AUTH_USER_MODEL = 'mongoengine.django.auth.User'
@@ -203,7 +206,7 @@ SITE = {'domain': '127.0.0.1:8000', 'name': 'YouWeesh'}
 # TODO : Configure email and try to know how to use it
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'marc.negri@nh-partners.com'
-EMAIL_HOST_PASSWORD = 'Youweesh2016'
+EMAIL_HOST_PASSWORD = 'xxxxxxxx'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

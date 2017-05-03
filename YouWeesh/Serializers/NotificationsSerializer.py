@@ -13,7 +13,7 @@ class NotificationsSerializer(DocumentSerializer):
 
     class Meta:
         model = Notifications
-        depth = 2
+        depth = 3
         fields = ('id', 'from_user', 'to_user', 'creation_date', 'is_read', 'content', 'referenced_object_message', 'notif_type')
 
     def get_referenced_object_message(self, FriendsNotifications):

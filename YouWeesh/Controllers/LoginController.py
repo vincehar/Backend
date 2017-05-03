@@ -1,17 +1,19 @@
 #from django.contrib.auth import authenticate, login
+import ast
+
+import oauth2
+from django.http import HttpResponseForbidden
 from rest_framework.decorators import api_view, renderer_classes, permission_classes
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.response import Response
-from django.http import HttpResponseForbidden
-from YouWeesh.Serializers.UsersSerializer import UsersSerializer
-import oauth2
-import ast
-from YouWeesh.Models.SocialNetworks import SocialNetworks
-from YouWeesh.Models.Users import Users
+
 from YouWeesh.Models.Token import Token
+from YouWeesh.Models.Users import Users, User
+from YouWeesh.Serializers.UsersSerializer import UsersSerializer
 from YouWeesh.Tools.app import App
-from mongoengine.django.auth import User
+
+#from mongoengine.django.auth import User
 import requests
 
 
@@ -19,7 +21,6 @@ import requests
 @permission_classes((AllowAny,))
 @renderer_classes((JSONRenderer, TemplateHTMLRenderer))
 def loginUser(request):
-    from mongoengine.queryset import DoesNotExist
     """
     si on recupere un POST, on essaie de connecter le user
     """
@@ -49,12 +50,11 @@ def loginUser(request):
 @permission_classes((AllowAny,))
 @renderer_classes((JSONRenderer, TemplateHTMLRenderer))
 def getToken(request):
-    from mongoengine.queryset import DoesNotExist
     """
     si on recupere un POST, on essaie de connecter le user
     """
     if request.method == 'POST':
-        email = request.POST['email'].lower();
+        email = request.POST['email'].lower()
         password = request.POST['password']
 
         user = User.objects.get(email=email)
@@ -74,7 +74,6 @@ def getToken(request):
 @permission_classes((AllowAny,))
 @renderer_classes((JSONRenderer, TemplateHTMLRenderer))
 def getTokenForSocialNetWork(request):
-    from mongoengine.queryset import DoesNotExist
     """
     si on recupere un POST, on essaie de connecter le user
     """

@@ -30,15 +30,6 @@ class Users(Document):
     address = EmbeddedDocumentField('Address')
     social_network = ReferenceField('SocialNetworks')
     fcm_token = StringField()
-    #friends = ListField(ReferenceField('UsersRelationships'))
-    #wishes = ListField(ReferenceField('Wishes'))
-    #logs = ListField(ReferenceField('Logs'))
-    #messages = ListField(EmbeddedDocumentField('Messages'))
-    #categories_Selected = ListField(EmbeddedDocumentField('Categories'))
-    #medias = ListField(ReferenceField('Medias'))
-    #events_Owned = ListField(ReferenceField('Events'))
-    #interested_in = ListField(ReferenceField('Wishes'))
-
 
     def get_position(self):
         """

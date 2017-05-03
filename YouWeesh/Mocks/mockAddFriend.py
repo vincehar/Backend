@@ -1,11 +1,9 @@
-from YouWeesh.Models.Users import Users, User
-from YouWeesh.Models.UsersRelationships import UsersRelationships
-from YouWeesh.Models.Preferences import Preferences
-from YouWeesh.Models.Coordinates import Coordinates
-
 from pymongo import Connection
+
+from YouWeesh.Models.Users import Users
+from YouWeesh.Models.UsersRelationships import UsersRelationships
+
 #from django.contrib import auth
-import datetime
 
 # Connect to DB
 databaseName = "upto"
@@ -16,7 +14,6 @@ user = collection['user']
 events = collection['events_Owned']
 copains = collection['UsersRelationships']
 
-copains = collection['UsersRelationships']
 print "-----------------------------------"
 print "Create Relationships - add friends"
 print "-----------------------------------"

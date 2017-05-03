@@ -1,3 +1,5 @@
+import datetime
+
 from pymongo import Connection
 
 from YouWeesh.Models.Address import Address
@@ -9,9 +11,6 @@ from YouWeesh.Models.Preferences import Preferences
 from YouWeesh.Models.SocialNetworks import SocialNetworks
 from YouWeesh.Models.Users import Users, User
 from YouWeesh.Models.WeeshbackNotifications import WeeshbackNotifications
-
-#from django.contrib import auth
-import datetime
 
 # Clean users
 databaseName = "upto"
@@ -25,13 +24,15 @@ level = collection['level']
 tags = collection['tags']
 addresses = collection['address']
 socialnetworks = collection['social_networks']
-socialnetworks = collection['notifications']
+notifications = collection['notifications']
+tokens = collection['token']
 
 
 print "------------------------------------------"
 print "         clearing Users Collection"
 print "------------------------------------------"
 socialnetworks.remove()
+tokens.remove()
 user.remove()
 users.remove()
 wishes.remove()
@@ -39,6 +40,7 @@ level.remove()
 tags.remove()
 events.remove()
 addresses.remove()
+notifications.remove()
 
 
 
@@ -197,7 +199,7 @@ marc.save()
 #-----------------------------------#
 
 
-notif_2 = WeeshbackNotifications()
+notif_2 = WeeshbackNotifications(we)
 notif_2.from_user = alex
 notif_2.to_user = marc
 notif_2.content = 'Alex weeshbacked your wish'
