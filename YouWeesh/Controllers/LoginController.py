@@ -16,6 +16,7 @@ from YouWeesh.Serializers.UsersSerializer import UsersSerializer
 from YouWeesh.Tools.app import App
 
 
+
 @api_view(('GET',))
 @permission_classes((AllowAny,))
 @renderer_classes((JSONRenderer, TemplateHTMLRenderer))
