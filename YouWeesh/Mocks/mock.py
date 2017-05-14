@@ -1,5 +1,6 @@
 import datetime
 
+from mongoengine.django.auth import User
 from pymongo import Connection
 
 from YouWeesh.Models.Address import Address
@@ -10,7 +11,6 @@ from YouWeesh.Models.Level import Level
 from YouWeesh.Models.Preferences import Preferences
 from YouWeesh.Models.SocialNetworks import SocialNetworks
 from YouWeesh.Models.Users import Users
-from mongoengine.django.auth import User
 from YouWeesh.Models.WeeshbackNotifications import WeeshbackNotifications
 
 # Clean users
@@ -124,7 +124,7 @@ vincent.save()
 #----------------
 #Wishes part
 #----------------
-#f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/sportback.jpeg", "rb")
+#f = open("/home/ubuntu/PycharmProjects/Backend/YouWeesh/Mocks/Pictures/sportback.jpeg", "rb")
 #marc.preferences.background_picture.replace(f)
 #marc.save()
 
@@ -145,7 +145,7 @@ marc.create_event(eventName='#Trail des Roussets !',start_date=datetime.datetime
 ev = Events.objects.get(title='#Trail des Roussets !')
 ev.address = addr
 ev.level = lvl
-f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/trail.jpg", "rb")
+f = open("/home/ubuntu/PycharmProjects/Backend/YouWeesh/Mocks/Pictures/trail.jpg", "rb")
 ev.thumbnail.replace(f)
 ev.save()
 
@@ -159,7 +159,7 @@ vincent.create_wish('#Cycling', lvl)
 vincent.create_wish('Un #futsal organise cette semaine ?', lvl)
 vincent.create_event(eventName='Sortie Ski a la Clusaz', start_date=datetime.datetime.today(), end_date=datetime.datetime.today(), level=lvl2, nbrParticipantsMax=12, address=None)
 ev = Events.objects.get(title='Sortie Ski a la Clusaz')
-f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/ski.jpg", "rb")
+f = open("/home/ubuntu/PycharmProjects/Backend/YouWeesh/Mocks/Pictures/ski.jpg", "rb")
 ev.thumbnail.replace(f)
 ev.level = lvl2
 addr2 = Address()
@@ -176,7 +176,7 @@ alex.create_wish('Je propose un #tennis a un 30-4 ou niveau equivalent', lvl)
 alex.create_wish('Quelqu un connait une salle de #muscu sympa ?', lvl)
 alex.create_event(eventName='#Futsal du dimanche', start_date=datetime.datetime.today(), end_date=datetime.datetime.today(), level=lvl3, nbrParticipantsMax=12, address=None)
 ev = Events.objects.get(title='#Futsal du dimanche')
-f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/futsal.jpg", "rb")
+f = open("/home/ubuntu/PycharmProjects/Backend/YouWeesh/Mocks/Pictures/futsal.jpg", "rb")
 ev.thumbnail.replace(f)
 ev.participants.append(marc)
 addr3 = Address()
@@ -190,7 +190,7 @@ ev.save()
 alex.create_wish('Depart de Geneve pour du #ski, quelqu un', lvl)
 alex.save()
 
-f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/sportback.jpeg", "rb")
+f = open("/home/ubuntu/PycharmProjects/Backend/YouWeesh/Mocks/Pictures/sportback.jpeg", "rb")
 marc.preferences.background_picture.replace(f)
 marc.save()
 

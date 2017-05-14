@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="852d6613-cb4b-4e27-b693-97210e43cefd" name="Default" comment="[MARC]&#10;&#10;+ Add geolocalisation calc distance feature&#10;+ Add WeeshBackNotif&#10;+ Add WeeshMatching Notif&#10;+ Add AddFriendNotif">
+    <list default="true" id="852d6613-cb4b-4e27-b693-97210e43cefd" name="Default" comment="[MARC]&#10;&#10;OK">
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/NHPartners.iml" afterPath="$PROJECT_DIR$/.idea/Backend.iml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/NHPartners/__init__.py" afterPath="$PROJECT_DIR$/Backend/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/NHPartners/settings.py" afterPath="$PROJECT_DIR$/Backend/settings.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/NHPartners/urls.py" afterPath="$PROJECT_DIR$/Backend/urls.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/NHPartners/wsgi.py" afterPath="$PROJECT_DIR$/Backend/wsgi.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="$PROJECT_DIR$/.idea/.name" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/YouWeesh/Controllers/LoginController.py" afterPath="$PROJECT_DIR$/YouWeesh/Controllers/LoginController.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/YouWeesh/Controllers/RegisterController.py" afterPath="$PROJECT_DIR$/YouWeesh/Controllers/RegisterController.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/YouWeesh/Controllers/UsersController.py" afterPath="$PROJECT_DIR$/YouWeesh/Controllers/UsersController.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/YouWeesh/Models/Users.py" afterPath="$PROJECT_DIR$/YouWeesh/Models/Users.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/YouWeesh/Serializers/EventSerializer.py" afterPath="$PROJECT_DIR$/YouWeesh/Serializers/EventSerializer.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/YouWeesh/Mocks/mock.py" afterPath="$PROJECT_DIR$/YouWeesh/Mocks/mock.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/YouWeesh/Mocks/mockAddFriend.py" afterPath="$PROJECT_DIR$/YouWeesh/Mocks/mockAddFriend.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/manage.py" afterPath="$PROJECT_DIR$/manage.py" />
     </list>
     <ignored path="NHPartners.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,28 +32,7 @@
     <favorites_list name="NHPartners" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="LoginController.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/YouWeesh/Controllers/LoginController.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.47817838">
-              <caret line="14" column="36" selection-start-line="14" selection-start-column="36" selection-end-line="14" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="auth.py" pinned="false" current-in-tab="false">
-        <entry file="file:///usr/local/lib/python2.7/dist-packages/mongoengine/django/auth.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="201" column="6" selection-start-line="201" selection-start-column="6" selection-end-line="201" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -64,57 +48,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/YouWeesh/Serializers/WishSerializer.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Serializers/UsersRelationShipsSerializer.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Serializers/TagSerializer.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Controllers/WeeshController.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Controllers/WishController.py" />
-        <option value="$PROJECT_DIR$/.ebextensions/django.config" />
-        <option value="$PROJECT_DIR$/.ebextensions/variables.config" />
-        <option value="$PROJECT_DIR$/YouWeesh/Serializers/UserSerializer.py" />
-        <option value="$PROJECT_DIR$/NHPartners/urls.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Serializers/CoordinatesSerializer.py" />
-        <option value="$PROJECT_DIR$/upto/mockAddFriend.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Serializers/UsersSerializer.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Serializers/UsersRelationShipsSerializer.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Serializers/TagSerializer.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Controllers/WeeshController.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Controllers/WishController.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/.ebextensions/django.config" />
+        <option value="$PROJECT_DIR$/../NHPartners/.ebextensions/variables.config" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Serializers/UserSerializer.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/NHPartners/urls.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Serializers/CoordinatesSerializer.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/upto/mockAddFriend.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Serializers/UsersSerializer.py" />
         <option value="/usr/local/lib/python2.7/dist-packages/django/contrib/auth/__init__.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/MongoToken.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/test.py" />
-        <option value="$PROJECT_DIR$/upto/views.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/views.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Tools/tools.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/SocialNetworks.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/Token.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Controllers/SocialController.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Tools/app.py" />
-        <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/YouWeesh/Tools/firebaseCloudMessaging.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/Events.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Controllers/EventController.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Mocks/mockNotifications.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/Messages.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/urls.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/NotificationsType.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/YouWeeshItem.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/Wishes.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/EventsNotifications.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/EventMatchingNotifications.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Serializers/PreferencesSerializer.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Serializers/NotificationsSerializer.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/Notifications.py" />
-        <option value="$PROJECT_DIR$/NHPartners/settings.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Mocks/mockAddFriend.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/WeeshbackNotifications.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/FriendsNotifications.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Models/MongoToken.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/test.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/upto/views.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/views.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Tools/tools.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Models/SocialNetworks.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Models/Token.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Controllers/SocialController.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Tools/app.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/requirements.txt" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Tools/firebaseCloudMessaging.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Models/Events.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Controllers/EventController.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Mocks/mockNotifications.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Models/Messages.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/urls.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Models/NotificationsType.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Models/YouWeeshItem.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Models/Wishes.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Models/EventsNotifications.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Models/EventMatchingNotifications.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Serializers/PreferencesSerializer.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Serializers/NotificationsSerializer.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Models/Notifications.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/NHPartners/settings.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Mocks/mockAddFriend.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Models/WeeshbackNotifications.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Models/FriendsNotifications.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Models/Preferences.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Models/WeeshMatchingNotifications.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Tools/geolocalisation.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Models/Users.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Controllers/UsersController.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Serializers/EventSerializer.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Controllers/RegisterController.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/todo.txt" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Controllers/LoginController.py" />
+        <option value="$PROJECT_DIR$/../NHPartners/YouWeesh/Mocks/mock.py" />
         <option value="$PROJECT_DIR$/YouWeesh/Mocks/mock.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/Preferences.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/WeeshMatchingNotifications.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Tools/geolocalisation.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Controllers/LoginController.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Models/Users.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Controllers/UsersController.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Serializers/EventSerializer.py" />
-        <option value="$PROJECT_DIR$/YouWeesh/Controllers/RegisterController.py" />
-        <option value="$PROJECT_DIR$/todo.txt" />
       </list>
     </option>
   </component>
@@ -150,91 +134,31 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="NHPartners" />
+              <option name="myItemId" value="Backend" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="NHPartners" />
+              <option name="myItemId" value="Backend" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="NHPartners" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NHPartners" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NHPartners" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="YouWeesh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NHPartners" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NHPartners" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="YouWeesh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NHPartners" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NHPartners" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value=".elasticbeanstalk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NHPartners" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NHPartners" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value=".ebextensions" />
+              <option name="myItemId" value="Backend" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/manage.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../NHPartners/manage.py" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="145" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="164" />
@@ -256,14 +180,14 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/YouWeesh/Serializers" />
-      <recent name="$PROJECT_DIR$/YouWeesh/Models" />
-      <recent name="$PROJECT_DIR$/YouWeesh/Controllers" />
+      <recent name="$PROJECT_DIR$/../NHPartners/YouWeesh/Serializers" />
+      <recent name="$PROJECT_DIR$/../NHPartners/YouWeesh/Models" />
+      <recent name="$PROJECT_DIR$/../NHPartners/YouWeesh/Controllers" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/YouWeesh/Models" />
-      <recent name="$PROJECT_DIR$/YouWeesh/Serializers" />
-      <recent name="$PROJECT_DIR$/YouWeesh" />
+      <recent name="$PROJECT_DIR$/../NHPartners/YouWeesh/Models" />
+      <recent name="$PROJECT_DIR$/../NHPartners/YouWeesh/Serializers" />
+      <recent name="$PROJECT_DIR$/../NHPartners/YouWeesh" />
     </key>
   </component>
   <component name="RunManager" selected="Python.NHPartners">
@@ -277,12 +201,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="/usr/bin/python2.7" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../NHPartners" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="NHPartners" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/manage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../NHPartners/manage.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -396,16 +320,16 @@
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
         <env name="DATABASE_URL" value="127.0.0.1" />
         <env name="DATABASE_NAME" value="upto" />
+        <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="/usr/bin/python2.7" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="NHPartners" />
+      <module name="Backend" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/manage.py" />
       <option name="PARAMETERS" value="runserver 0.0.0.0:8000" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -648,7 +572,13 @@
       <option name="project" value="LOCAL" />
       <updated>1493833274128</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="[MARC]&#10;&#10;OK">
+      <created>1494786946344</created>
+      <option name="number" value="00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1494786946344</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -667,26 +597,26 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1615" height="1026" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.4892562" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20603015" sideWeight="0.6694215" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38248336" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20603015" sideWeight="0.6694215" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38248336" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.49748743" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28580403" sideWeight="0.3305785" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5025126" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46674058" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -715,7 +645,8 @@
     <MESSAGE value="[MARC]&#10;&#10;Register fcm_token to user&#10;" />
     <MESSAGE value="[MARC]&#10;&#10;Modify model : inheritance on Notifications&#10;&#10;Notifications system : IN PROGRESS" />
     <MESSAGE value="[MARC]&#10;&#10;+ Add geolocalisation calc distance feature&#10;+ Add WeeshBackNotif&#10;+ Add WeeshMatching Notif&#10;+ Add AddFriendNotif" />
-    <option name="LAST_COMMIT_MESSAGE" value="[MARC]&#10;&#10;+ Add geolocalisation calc distance feature&#10;+ Add WeeshBackNotif&#10;+ Add WeeshMatching Notif&#10;+ Add AddFriendNotif" />
+    <MESSAGE value="[MARC]&#10;&#10;OK" />
+    <option name="LAST_COMMIT_MESSAGE" value="[MARC]&#10;&#10;OK" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -767,7 +698,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/YouWeesh/Controllers/RegisterController.py</url>
-          <line>24</line>
+          <line>22</line>
           <option name="timeStamp" value="309" />
         </line-breakpoint>
       </breakpoints>
@@ -778,7 +709,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="311" />
+      <option name="time" value="312" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -790,21 +721,7 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/YouWeesh/Models/Sports.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/mongoengine/connection.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="131" column="0" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NHPartners/urls.py">
+    <entry file="file://$PROJECT_DIR$/Backend/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -937,13 +854,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NHPartners/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="188" column="54" selection-start-line="188" selection-start-column="54" selection-end-line="188" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/YouWeesh/Mocks/mockAddFriend.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.37571156">
@@ -955,13 +865,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.37571156">
           <caret line="13" column="4" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/YouWeesh/Mocks/mock.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="7.6850095">
-          <caret line="225" column="26" selection-start-line="225" selection-start-column="26" selection-end-line="225" selection-end-column="26" />
         </state>
       </provider>
     </entry>
@@ -1039,7 +942,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1047,7 +949,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="17" column="31" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1062,7 +963,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="48" selection-start-line="20" selection-start-column="48" selection-end-line="20" selection-end-column="48" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1070,7 +970,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1078,7 +977,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="11" column="8" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1086,7 +984,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1094,9 +991,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="15" column="33" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1104,9 +998,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1114,7 +1006,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="216" column="0" selection-start-line="216" selection-start-column="0" selection-end-line="216" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1122,9 +1013,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="54" column="32" selection-start-line="54" selection-start-column="32" selection-end-line="54" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1132,9 +1020,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="27" column="34" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1142,7 +1027,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.62428844">
           <caret line="48" column="76" selection-start-line="48" selection-start-column="76" selection-end-line="48" selection-end-column="76" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1150,15 +1034,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.30740038">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#15#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file:///usr/local/lib/python2.7/dist-packages/mongoengine/django/auth.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="5.9791303">
           <caret line="201" column="6" selection-start-line="201" selection-start-column="6" selection-end-line="201" selection-end-column="6" />
           <folding />
         </state>
@@ -1166,9 +1047,47 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/YouWeesh/Controllers/LoginController.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47817838">
-          <caret line="14" column="36" selection-start-line="14" selection-start-column="36" selection-end-line="14" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="34" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.7/dist-packages/pymongo/connection.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.1895652">
+          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+          <folding>
+            <element signature="e#1350#1394#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YouWeesh/Mocks/mock.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="192" column="46" selection-start-line="192" selection-start-column="46" selection-end-line="192" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Backend/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="188" column="0" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31304348">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding>
+            <element signature="e#22#31#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

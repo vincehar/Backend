@@ -39,16 +39,16 @@ print "-----------------------------------"
 #antho=Users.objects.get_or_create(user=User.objects.get(username='Anthony'), preferences=Preferences(), current_coordinates=Coordinates(), picture="")
 
 # 1 - insert picture on DB
-f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/profile.png", "rb")
+f = open("/home/ubuntu/PycharmProjects/Backend/YouWeesh/Mocks/Pictures/profile.png", "rb")
 marc.picture.replace(f)
 marc.save()
 
-f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/index3.jpeg", "rb")
+f = open("/home/ubuntu/PycharmProjects/Backend/YouWeesh/Mocks/Pictures/index3.jpeg", "rb")
 vincent.picture.replace(f)
 vincent.save()
 
 
-f = open("/home/ubuntu/PycharmProjects/NHPartners/YouWeesh/Mocks/Pictures/index2.jpeg", "rb")
+f = open("/home/ubuntu/PycharmProjects/Backend/YouWeesh/Mocks/Pictures/index2.jpeg", "rb")
 alex.picture.replace(f)
 
 alex.save()

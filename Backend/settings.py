@@ -121,9 +121,9 @@ REST_FRAMEWORK = {
     )
 }
 
-ROOT_URLCONF = 'NHPartners.urls'
+ROOT_URLCONF = 'Backend.urls'
 
-WSGI_APPLICATION = 'NHPartners.wsgi.application'
+WSGI_APPLICATION = 'Backend.wsgi.application'
 
 CORS_ALLOW_CREDENTIALS = True
 
