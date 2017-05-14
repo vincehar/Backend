@@ -2,19 +2,18 @@
 import ast
 
 import oauth2
+import requests
 from django.http import HttpResponseForbidden
+from mongoengine.django.auth import User
 from rest_framework.decorators import api_view, renderer_classes, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.response import Response
 
 from YouWeesh.Models.Token import Token
-from YouWeesh.Models.Users import Users, User
+from YouWeesh.Models.Users import Users
 from YouWeesh.Serializers.UsersSerializer import UsersSerializer
 from YouWeesh.Tools.app import App
-
-#from mongoengine.django.auth import User
-import requests
 
 
 @api_view(('GET',))

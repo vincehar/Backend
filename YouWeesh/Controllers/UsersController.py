@@ -183,7 +183,7 @@ def myNextEvents(request):
     try:
         connected_user = App.getCurrentUser(request)
         #TODO : Select only objects where current user is creator or participant
-        lstNextEvents = Events.objects() #user_id=connected_user.id)end_date__lte=datetime.now()) #LTE a changer an SUP
+        lstNextEvents = Events.objects(user_id=connected_user.id)#end_date__lte=datetime.now()) #LTE a changer an SUP
         eventssrz = EventSerializer(instance=lstNextEvents, many=True)
     except connected_user.DoesNotExist:
         raise Http404('Not logged')
@@ -387,10 +387,10 @@ def allweeshes(request):
     if connected_user.preferences.display_weeshes:
         AllWishes = list()
         if connected_user.preferences.selected_network == "PUBLIC":
-            AllWishes = Wishes.objects(Q(title__icontains=connected_user.preferences.search_string))
+            AllWishes = Wishes.objects(Q(title__icontains=connected_user.preferences.search_string)).order_by('-creation_date')[0:4]
         if connected_user.preferences.selected_network == "FRIENDS":
             for relationship in getFriends(connected_user):
-                for wish in Wishes.objects(Q(creator=relationship.from_user.id) & Q(title__icontains=connected_user.preferences.search_string)):
+                for wish in Wishes.objects(Q(creator=relationship.from_user.id) & Q(title__icontains=connected_user.preferences.search_string)).order_by('-creation_date')[0:4]:
                     AllWishes.append(wish)
 
         lstWishes = WishSerializer(instance=AllWishes, many=True)
@@ -410,10 +410,10 @@ def allEvents(request):
     if connected_user.preferences.display_events:
         AllEvents = list()
         if connected_user.preferences.selected_network == "PUBLIC":
-            AllEvents = Events.objects(Q(title__icontains=connected_user.preferences.search_string))
+            AllEvents = Events.objects(Q(title__icontains=connected_user.preferences.search_string)).order_by('-creation_date')[0:4]
         if connected_user.preferences.selected_network == "friends":
             for relationship in getFriends(connected_user):
-                for wish in Events.objects(Q(creator=relationship.from_user.id) & Q(title__icontains=connected_user.preferences.search_string)):
+                for wish in Events.objects(Q(creator=relationship.from_user.id) & Q(title__icontains=connected_user.preferences.search_string)).order_by('-creation_date')[0:4]:
                     AllEvents.append(wish)
 
         lstEvents = EventSerializer(instance=AllEvents, many=True)

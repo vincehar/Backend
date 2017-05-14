@@ -1,21 +1,19 @@
-from django.contrib.auth import authenticate, login
-from rest_framework.decorators import api_view, renderer_classes, permission_classes
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
-from rest_framework.response import Response
-from django.http import HttpResponseForbidden
-from YouWeesh.Serializers.UsersSerializer import UsersSerializer
-from YouWeesh.Models.Users import Users
-from YouWeesh.Models.Preferences import Preferences
-from YouWeesh.Models.Coordinates import Coordinates
-from YouWeesh.Models.SocialNetworks import SocialNetworks
-from YouWeesh.Models.Address import Address
 from base64 import b64decode
+
 from django.core.files.base import ContentFile
-from YouWeesh.Models.Token import Token
-from YouWeesh.Tools.app import App
-from mongoengine.django.auth import User
 from django.http import Http404
+from mongoengine.django.auth import User
+from rest_framework.decorators import api_view, renderer_classes, permission_classes
+from rest_framework.permissions import AllowAny
+from rest_framework.renderers import JSONRenderer
+from rest_framework.response import Response
+
+from YouWeesh.Models.Address import Address
+from YouWeesh.Models.Preferences import Preferences
+from YouWeesh.Models.SocialNetworks import SocialNetworks
+from YouWeesh.Models.Users import Users
+from YouWeesh.Tools.app import App
+
 
 @api_view(('POST',))
 @permission_classes((AllowAny,))
@@ -29,7 +27,7 @@ def registeruser(request):
    firstname = request.POST['firstname']
    socialnetwork = request.POST['socialnetwork']
    pictureBase64 = request.POST['picture']
-   home_town = request.POST['home_town']
+   home_town = 'Geneve'#request.POST['home_town']
    picturedata = b64decode(pictureBase64)
    socialnetworkObject = SocialNetworks.objects.get(label=socialnetwork)
    u=User.objects.create(username=username, email=email, first_name=firstname, last_name=lastname)
